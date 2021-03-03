@@ -1,0 +1,21 @@
+{
+  "name": "inklii-moderation",
+  "version": "1.0.0",
+  "main": "main.js",
+  "license": "AGPL-3.0",
+  "scripts": {
+    "start": "node ."
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "fastify": "^3.12.0",
+    "fastify-autoload": "^3.5.0",
+    "fastify-cookie": "^5.1.0",
+    "fastify-helmet": "^5.2.0",
+    "fastify-jwt": "^2.3.0",
+    "fastify-plugin": "^3.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "make-promises-safe": "^5.1.0",
+    "mongoose": "^5.11.14"
+  }
+}
