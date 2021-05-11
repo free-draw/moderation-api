@@ -27,4 +27,9 @@ async function createApp(port) {
 	return app.listen(port)
 }
 
-createApp(80)
+const app = createApp(80)
+
+process.on("SIGINT", async () => {
+	await app.close()
+	process.exit()
+})
