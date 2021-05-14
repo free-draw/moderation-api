@@ -12,7 +12,7 @@ const ModeratorSchema = new mongoose.Schema({
 		},
 	],
 }, {
-	collection: "moderators"
+	collection: "moderators",
 })
 
 ModeratorSchema.virtual("id").get(function() {
