@@ -14,7 +14,7 @@ async function createApp(port) {
 	// Register plugins
 	app.register(Helmet)
 	app.register(Cookie)
-	app.register(JWT, { secret: process.env.SECRET })
+	app.register(JWT, { secret: process.env.JWT_SECRET })
 
 	// Register custom plugins
 	app.register(require("./plugins/mongoose"))
