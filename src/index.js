@@ -24,12 +24,17 @@ async function createApp(port) {
 	// Register services
 	app.register(AutoLoad, { dir: path.join(__dirname, "services") })
 
-	return app.listen(port)
+	await app.listen(port)
+
+	return app
 }
 
-const app = createApp(80)
+async function main() {
+	const app = await createApp(80)
+	process.on("SIGINT", async () => {
+		await app.close()
+		process.exit()
+	})
+}
 
-process.on("SIGINT", async () => {
-	await app.close()
-	process.exit()
-})
+main()
