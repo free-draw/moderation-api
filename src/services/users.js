@@ -116,6 +116,12 @@ async function UsersService(fastify) {
 					notes: { type: "string" },
 					snapshot: { type: "string" },
 				},
+				required: [
+					"type",
+					"data",
+					"reason",
+					"snapshot",
+				],
 			},
 
 			response: {

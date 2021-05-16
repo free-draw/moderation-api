@@ -15,6 +15,10 @@ async function SnapshotsService(fastify) {
 						id: { type: "number" },
 						name: { type: "string" },
 					},
+					required: [
+						"id",
+						"name",
+					],
 				},
 			},
 			logs: {
@@ -25,6 +29,10 @@ async function SnapshotsService(fastify) {
 						player: { type: "number" },
 						message: { type: "string" },
 					},
+					required: [
+						"player",
+						"message",
+					],
 				},
 			},
 			canvas: {
@@ -38,9 +46,18 @@ async function SnapshotsService(fastify) {
 							media: { binaryEncoding: "base64" },
 						},
 					},
+					required: [
+						"player",
+						"data",
+					],
 				},
 			},
 		},
+		required: [
+			"players",
+			"logs",
+			"canvas",
+		],
 	})
 
 	fastify.route({

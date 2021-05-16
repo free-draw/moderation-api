@@ -17,6 +17,12 @@ async function ModeratorsService(fastify) {
 			active: { type: "boolean" },
 			accounts: { type: "array", items: { $ref: "#ModeratorAccount" } },
 		},
+		required: [
+			"id",
+			"name",
+			"active",
+			"accounts",
+		],
 	})
 
 	fastify.addSchema({
@@ -26,6 +32,10 @@ async function ModeratorsService(fastify) {
 			type: { type: "string" },
 			id: { oneOf: [ { type: "string" }, { type: "number" } ] },
 		},
+		required: [
+			"type",
+			"id",
+		],
 	})
 
 	fastify.route({
@@ -165,6 +175,10 @@ async function ModeratorsService(fastify) {
 					type: { type: "string", enum: Object.keys(AccountType) },
 					id: { type: "string" },
 				},
+				required: [
+					"type",
+					"id",
+				],
 			},
 
 			response: {
