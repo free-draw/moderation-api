@@ -8,6 +8,7 @@ const ActionSchema = new mongoose.Schema({
 	expiry: Date,
 
 	reason: String,
+	notes: String,
 	snapshot: { type: mongoose.Types.ObjectId, ref: "Snapshot" },
 
 	timestamp: { type: Date, default: Date.now },
@@ -27,6 +28,7 @@ ActionSchema.methods.serialize = function() {
 
 		reason: this.reason,
 		attachments: this.attachments,
+		notes: this.notes,
 
 		timestamp: this.timestamp,
 	}
@@ -71,6 +73,7 @@ UserSchema.methods.issueAction = function(data) {
 		expiry: data.expiry,
 
 		reason: data.reason,
+		notes: data.notes,
 		snapshot: data.snapshot,
 	})
 

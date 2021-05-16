@@ -114,6 +114,7 @@ async function UsersService(fastify) {
 					expiry: { type: "string", format: "date-time" },
 					reason: { type: "string" },
 					attachments: { type: "array", items: { type: "string" } },
+					notes: { type: "string" },
 				},
 			},
 
