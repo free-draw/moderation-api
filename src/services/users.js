@@ -113,8 +113,8 @@ async function UsersService(fastify) {
 					data: { type: "object" },
 					expiry: { type: "string", format: "date-time" },
 					reason: { type: "string" },
-					attachments: { type: "array", items: { type: "string" } },
 					notes: { type: "string" },
+					snapshot: { type: "string" },
 				},
 			},
 

@@ -27,8 +27,8 @@ ActionSchema.methods.serialize = function() {
 		expiry: this.expiry,
 
 		reason: this.reason,
-		attachments: this.attachments,
 		notes: this.notes,
+		snapshot: this.snapshot,
 
 		timestamp: this.timestamp,
 	}
