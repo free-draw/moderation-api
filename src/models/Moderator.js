@@ -4,7 +4,7 @@ const AccountType = require("../enum/AccountType")
 
 const ModeratorSchema = new mongoose.Schema({
 	name: String,
-	active: { type: Boolean, default: true },
+	enabled: { type: Boolean, default: true },
 	accounts: [
 		{
 			type: { type: String, enum: Object.keys(AccountType), index: true },
@@ -38,6 +38,7 @@ ModeratorSchema.methods.serialize = function() {
 	return {
 		id: this.id,
 		name: this.name,
+		enabled: this.enabled,
 		accounts: this.accounts,
 	}
 }

@@ -14,13 +14,13 @@ async function ModeratorsService(fastify) {
 		properties: {
 			id: { type: "string" },
 			name: { type: "string" },
-			active: { type: "boolean" },
+			enabled: { type: "boolean" },
 			accounts: { type: "array", items: { $ref: "#ModeratorAccount" } },
 		},
 		required: [
 			"id",
 			"name",
-			"active",
+			"enabled",
 			"accounts",
 		],
 	})
