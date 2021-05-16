@@ -8,6 +8,10 @@ const SnapshotSchema = new mongoose.Schema({
 	collection: "snapshots",
 })
 
+SnapshotSchema.virtual("id").get(function() {
+	return this._id.toString()
+})
+
 SnapshotSchema.methods.serialize = function() {
 	return {
 		players: this.players,
