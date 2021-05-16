@@ -12,12 +12,12 @@ async function SnapshotsService(fastify) {
 				items: {
 					type: "object",
 					properties: {
-						id: { type: "number" },
-						name: { type: "string" },
+						userId: { type: "number" },
+						username: { type: "string" },
 					},
 					required: [
-						"id",
-						"name",
+						"userId",
+						"username",
 					],
 				},
 			},
@@ -26,11 +26,11 @@ async function SnapshotsService(fastify) {
 				items: {
 					type: "object",
 					properties: {
-						player: { type: "number" },
+						userId: { type: "number" },
 						message: { type: "string" },
 					},
 					required: [
-						"player",
+						"userId",
 						"message",
 					],
 				},
@@ -40,14 +40,14 @@ async function SnapshotsService(fastify) {
 				items: {
 					type: "object",
 					properties: {
-						player: { type: "number" },
+						userId: { type: "number" },
 						data: {
 							type: "string",
 							media: { binaryEncoding: "base64" },
 						},
 					},
 					required: [
-						"player",
+						"userId",
 						"data",
 					],
 				},
