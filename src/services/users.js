@@ -96,7 +96,7 @@ async function UsersService(fastify) {
 
 	fastify.route({
 		method: "POST",
-		path: "/:userId",
+		path: "/:userId/actions",
 
 		schema: {
 			params: {
