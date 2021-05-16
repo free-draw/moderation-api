@@ -125,8 +125,7 @@ async function SnapshotsService(fastify) {
 				}
 			})
 
-			const snapshot = new Snapshot({ players, logs, canvas })
-			await snapshot.save()
+			await Snapshot.create({ players, logs, canvas })
 
 			return {
 				message: {
