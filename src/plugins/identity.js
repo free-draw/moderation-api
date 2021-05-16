@@ -40,7 +40,7 @@ async function IdentifyPlugin(fastify) {
 			if (!AccountType[matchAccountType]) {
 				throw {
 					statusCode: BAD_REQUEST,
-					message: "Unknown account type"
+					message: "Unknown account type",
 				}
 			}
 
