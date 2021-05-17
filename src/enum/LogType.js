@@ -14,6 +14,11 @@ const LogType = enumerate("LogType", [
 
 	// Snapshots
 	"CREATE_SNAPSHOT",
+
+	// Reports
+	"CREATE_REPORT",
+	"ACCEPT_REPORT",
+	"DECLINE_REPORT",
 ])
 
 module.exports = LogType

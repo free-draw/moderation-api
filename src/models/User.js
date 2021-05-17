@@ -10,6 +10,7 @@ const ActionSchema = new mongoose.Schema({
 	reason: String,
 	notes: String,
 	snapshot: { type: mongoose.Types.ObjectId, ref: "Snapshot" },
+	report: { type: mongoose.Types.ObjectId, ref: "Report" },
 
 	timestamp: { type: Date, default: Date.now },
 })
@@ -28,7 +29,8 @@ ActionSchema.methods.serialize = function() {
 
 		reason: this.reason,
 		notes: this.notes,
-		snapshot: this.snapshot,
+		snapshot: this.snapshot ? this.snapshot.toString() : null,
+		report: this.report ? this.report.toString() : null,
 
 		timestamp: this.timestamp,
 	}

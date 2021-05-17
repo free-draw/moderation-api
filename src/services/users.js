@@ -18,7 +18,9 @@ async function UsersService(fastify) {
 			active: { type: "boolean" },
 
 			reason: { type: "string" },
-			attachments: { type: "array", items: { type: "string" } },
+			notes: { type: "string" },
+			snapshot: { type: "string" },
+			report: { type: "string" },
 			
 			timestamp: { type: "string", format: "date-time" },
 		},
@@ -128,7 +130,7 @@ async function UsersService(fastify) {
 				[CREATED]: {
 					type: "object",
 					properties: {
-						id: { type: "string" },
+						actionId: { type: "string" },
 					},
 				},
 			}
@@ -143,13 +145,15 @@ async function UsersService(fastify) {
 			await Log.create({
 				type: LogType.CREATE_ACTION,
 				identity: request.identity,
-				userId: user.id,
-				action: action.serialize(),
+				data: {
+					userId: user.id,
+					action: action.serialize(),
+				},
 			})
 
 			reply.status(CREATED)
 			return {
-				id: action.id,
+				actionId: action.id,
 			}
 		},
 	})
@@ -171,7 +175,7 @@ async function UsersService(fastify) {
 				[OK]: {
 					type: "object",
 					properties: {
-						discarded: { type: "array", items: { $ref: "#Action" } },
+						discardedActions: { type: "array", items: { $ref: "#Action" } },
 					},
 				},
 			},
@@ -192,13 +196,13 @@ async function UsersService(fastify) {
 						identity: request.identity,
 						data: {
 							userId: user.id,
-							actionId: action.id,
+							action: action.serialize(),
 						},
 					})
 				}
 
 				return {
-					discarded: filteredActions.map(action => action.serialize())
+					discardedActions: filteredActions.map(action => action.serialize())
 				}
 			} else {
 				throw {
@@ -226,7 +230,7 @@ async function UsersService(fastify) {
 				[OK]: {
 					type: "object",
 					properties: {
-						discarded: { type: "array", items: { $ref: "#Action" } },
+						discardedActions: { type: "array", items: { $ref: "#Action" } },
 					},
 				},
 			},
@@ -248,13 +252,13 @@ async function UsersService(fastify) {
 						data: {
 							type: request.params.actionType,
 							userId: user.id,
-							actionId: action.id,
+							actionId: action.serialize(),
 						},
 					})
 				}
 
 				return {
-					discarded: filteredActions.map(action => action.serialize())
+					discardedActions: filteredActions.map(action => action.serialize())
 				}
 			} else {
 				throw {
