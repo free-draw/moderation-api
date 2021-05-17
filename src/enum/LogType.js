@@ -11,6 +11,9 @@ const LogType = enumerate("LogType", [
 	"DELETE_MODERATOR",
 	"CREATE_MODERATOR_ACCOUNT",
 	"DELETE_MODERATOR_ACCOUNT",
+
+	// Snapshots
+	"CREATE_SNAPSHOT",
 ])
 
 module.exports = LogType

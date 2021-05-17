@@ -1,6 +1,9 @@
 const { OK, CREATED, NOT_FOUND } = require("../util/statusCodes")
 
 const Snapshot = require("../models/Snapshot")
+const Log = require("../models/Log")
+
+const LogType = require("../enum/LogType")
 
 async function SnapshotsService(fastify) {
 	fastify.addSchema({
@@ -120,17 +123,23 @@ async function SnapshotsService(fastify) {
 			const logs = request.body.logs
 			const canvas = request.body.canvas.map((collector) => {
 				return {
-					player: collector.player,
+					userId: collector.userId,
 					data: Buffer.from(collector.data, "base64"),
 				}
 			})
 
-			await Snapshot.create({ players, logs, canvas })
+			const snapshot = await Snapshot.create({ players, logs, canvas })
+
+			await Log.create({
+				type: LogType.CREATE_SNAPSHOT,
+				identity: request.identity,
+				data: {
+					snapshotId: snapshot.id,
+				},
+			})
 
 			return {
-				message: {
-					id: snapshot._id,
-				},
+				snapshotId: snapshot.id,
 			}
 		},
 	})
