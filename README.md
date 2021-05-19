@@ -5,6 +5,5 @@
 TODO:
 - Migrate to TypeScript
 - Better authentication and permissions interface (currently no form of roles/permissions!)
-- File uploading API
-- Logs API
+- Logs web API
 - Maybe some tests?
