@@ -32,7 +32,7 @@ async function AuthPlugin(fastify) {
 
 			token = match[2]
 		} else if (cookie) {
-			
+			token = cookie
 		} else {
 			throw {
 				statusCode: BAD_REQUEST,
