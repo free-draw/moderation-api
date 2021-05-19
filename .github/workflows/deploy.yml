@@ -23,6 +23,6 @@ jobs:
         run: docker build -t moderation-server .
       
       - name: Upload
-        run:
+        run: |
           docker tag moderation-server registry.digitalocean.com/free-draw/moderation-server:latest
           docker push registry.digitalocean.com/free-draw/moderation-server:latest
