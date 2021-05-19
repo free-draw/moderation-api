@@ -1,7 +1,5 @@
 <div align="center">
-	<img src=".github/logo.svg" height=300>
-	<br><br>
-	The web API handling all moderation actions for Inklii and Free Draw.
+	The web API handling all moderation actions for Free Draw.
 </div>
 
 TODO:
