@@ -1,0 +1,28 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_TOKEN }}
+      
+      - name: Authenticate with registry
+        run: docttl registry login --expiry-seconds 1000
+      
+      - name: Build
+        run: docker build -t moderation-server .
+      
+      - name: Upload
+        run:
+          docker tag moderation-server registry.digitalocean.com/free-draw/moderation-server:latest
+          docker push registry.digitalocean.com/free-draw/moderation-server:latest
