@@ -3,11 +3,6 @@ const { OK } = require("../util/statusCodes")
 const TokenType = require("../enum/TokenType")
 
 async function AuthService(fastify) {
-	// TODO: This is temporary
-	fastify.log.info({
-		token: fastify.jwt.sign({ type: "SERVER", time: Date.now() }),
-	})
-
 	fastify.route({
 		method: "GET",
 		path: "/me",
