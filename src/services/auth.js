@@ -10,7 +10,7 @@ async function AuthService(fastify) {
 
 	fastify.route({
 		method: "GET",
-		path: "/current",
+		path: "/me",
 
 		schema: {
 			response: {
