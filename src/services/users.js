@@ -59,7 +59,7 @@ async function UsersService(fastify) {
 		},
 
 		async handler(request) {
-			let user = await User.get(request.params.userId)
+			const user = await User.get(request.params.userId)
 
 			return {
 				user: user.serialize(),
@@ -137,9 +137,9 @@ async function UsersService(fastify) {
 		},
 
 		async handler(request, reply) {
-			let user = await User.get(request.params.userId)
+			const user = await User.get(request.params.userId)
 
-			let action = user.issueAction(request.body)
+			const action = user.issueAction(request.body)
 			await user.save()
 
 			await Log.create({
@@ -182,14 +182,14 @@ async function UsersService(fastify) {
 		},
 
 		async handler(request) {
-			let user = await User.get(request.params.userId)
-			let filteredActions = user.filterActions(action => action.id === request.params.actionId)
+			const user = await User.get(request.params.userId)
+			const filteredActions = user.filterActions(action => action.id === request.params.actionId)
 
 			if (filteredActions.length > 0) {
 				await user.save()
 
-				for (let index = 0; index < filteredActions.length; index++) {
-					let action = filteredActions[index]
+				for (const index = 0; index < filteredActions.length; index++) {
+					const action = filteredActions[index]
 
 					await Log.create({
 						type: LogType.DISCARD_ACTION_BY_ID,
@@ -237,14 +237,14 @@ async function UsersService(fastify) {
 		},
 
 		async handler(request) {
-			let user = await User.get(request.params.userId)
-			let filteredActions = user.filterActions(action => action.type === request.params.actionType)
+			const user = await User.get(request.params.userId)
+			const filteredActions = user.filterActions(action => action.type === request.params.actionType)
 
 			if (filteredActions.length > 0) {
 				await user.save()
 
-				for (let index = 0; index < filteredActions.length; index++) {
-					let action = filteredActions[index]
+				for (const index = 0; index < filteredActions.length; index++) {
+					const action = filteredActions[index]
 
 					await Log.create({
 						type: LogType.DISCARD_ACTION_BY_TYPE,

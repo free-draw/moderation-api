@@ -8,10 +8,10 @@ async function AuthPlugin(fastify) {
 	fastify.decorateRequest("token", null)
 
 	fastify.addHook("preValidation", async (request) => {
-		let authorization = request.headers.authorization
+		const authorization = request.headers.authorization
 
 		if (authorization) {
-			let [ match, tokenType, token ] = TOKEN_REGEX.exec(authorization) ?? []
+			const [ match, tokenType, token ] = TOKEN_REGEX.exec(authorization) ?? []
 
 			if (match && tokenType === "Bearer" && token.length > 0) {
 				let tokenData

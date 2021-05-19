@@ -61,7 +61,7 @@ async function ModeratorsService(fastify) {
 		},
 
 		async handler(request) {
-			let moderator = await Moderator.findById(request.params.moderatorId)
+			const moderator = await Moderator.findById(request.params.moderatorId)
 			
 			if (moderator) {
 				return {
@@ -100,8 +100,8 @@ async function ModeratorsService(fastify) {
 		},
 
 		async handler(request) {
-			let [ accountType, accountId ] = parseAccount(request.params.accountType, request.params.accountId)
-			let moderator = await Moderator.findByAccount(accountType, accountId)
+			const [ accountType, accountId ] = parseAccount(request.params.accountType, request.params.accountId)
+			const moderator = await Moderator.findByAccount(accountType, accountId)
 
 			if (moderator) {
 				return {
@@ -139,7 +139,7 @@ async function ModeratorsService(fastify) {
 		},
 		
 		async handler(request, reply) {
-			let moderator = new Moderator({
+			const moderator = new Moderator({
 				name: request.body.name,
 			})
 
@@ -193,7 +193,7 @@ async function ModeratorsService(fastify) {
 		},
 
 		async handler(request, reply) {
-			let moderator = await Moderator.findById(request.params.moderatorId)
+			const moderator = await Moderator.findById(request.params.moderatorId)
 
 			if (moderator) {
 				const [ accountType, accountId ] = parseAccount(request.body.type, request.body.id)
@@ -250,7 +250,7 @@ async function ModeratorsService(fastify) {
 		},
 
 		async handler(request) {
-			let moderator = await Moderator.findByIdAndDelete(request.params.moderatorId)
+			const moderator = await Moderator.findByIdAndDelete(request.params.moderatorId)
 
 			await Log.create({
 				type: LogType.DELETE_MODERATOR,
@@ -290,13 +290,13 @@ async function ModeratorsService(fastify) {
 		},
 
 		async handler(request) {
-			let moderator = await Moderator.findById(request.params.moderatorId)
+			const moderator = await Moderator.findById(request.params.moderatorId)
 
-			let [ accountType, accountId ] = parseAccount(request.params.accountType, request.params.accountId)
-			let accountIndex = moderator.accounts.findIndex(account => account.type === accountType && account.id === accountId)
+			const [ accountType, accountId ] = parseAccount(request.params.accountType, request.params.accountId)
+			const accountIndex = moderator.accounts.findIndex(account => account.type === accountType && account.id === accountId)
 			
 			if (accountIndex !== -1) {
-				let account = moderator.accounts[accountIndex]
+				const account = moderator.accounts[accountIndex]
 				moderator.accounts.splice(accountIndex)
 
 				await moderator.save()

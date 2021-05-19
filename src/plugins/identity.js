@@ -14,7 +14,7 @@ async function IdentifyPlugin(fastify) {
 	fastify.decorateRequest("identity", null)
 
 	fastify.addHook("preValidation", async (request) => {
-		let token = request.token
+		const token = request.token
 		
 		if (!token) {
 			fastify.error("auth must be added before identify")
@@ -28,7 +28,7 @@ async function IdentifyPlugin(fastify) {
 				}
 			}
 
-			let [ match, matchAccountType, matchAccountId ] = MODERATOR_ACCOUNT_REGEX.exec(request.query.identity) ?? []
+			const [ match, matchAccountType, matchAccountId ] = MODERATOR_ACCOUNT_REGEX.exec(request.query.identity) ?? []
 
 			if (!match) {
 				throw {
@@ -45,7 +45,7 @@ async function IdentifyPlugin(fastify) {
 			}
 
 			const [ accountType, accountId ] = parseAccount(matchAccountType, matchAccountId)
-			let moderator = await Moderator.findByAccount(accountType, accountId)
+			const moderator = await Moderator.findByAccount(accountType, accountId)
 
 			if (!moderator) {
 				throw {
@@ -57,7 +57,7 @@ async function IdentifyPlugin(fastify) {
 			request.identity = moderator
 		} else {
 			if (token.type === TokenType.USER) {
-				let moderator = await Moderator.findById(token.id)
+				const moderator = await Moderator.findById(token.id)
 
 				if (!moderator) {
 					throw {

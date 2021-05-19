@@ -17,7 +17,7 @@ function connectMongoose(url) {
 }
 
 async function MongoosePlugin(fastify) {
-	let connection = await connectMongoose(process.env.DATABASE)
+	const connection = await connectMongoose(process.env.DATABASE)
 	fastify.decorate("mongoose", connection)
 }
 

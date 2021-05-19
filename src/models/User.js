@@ -49,7 +49,7 @@ UserSchema.virtual("id").get(function() {
 })
 
 UserSchema.statics.get = async function(userId) {
-	let user = await this.findById(userId)
+	const user = await this.findById(userId)
 
 	if (user) {
 		return user
@@ -59,8 +59,8 @@ UserSchema.statics.get = async function(userId) {
 }
 
 UserSchema.methods.filterActions = function(filter) {
-	let filteredActions = this.actions.filter(action => filter(action))
-	let unfilteredActions = this.actions.filter(action => !filter(action))
+	const filteredActions = this.actions.filter(action => filter(action))
+	const unfilteredActions = this.actions.filter(action => !filter(action))
 
 	this.actions = unfilteredActions
 	this.history = this.history.concat(filteredActions)
@@ -69,7 +69,7 @@ UserSchema.methods.filterActions = function(filter) {
 }
 
 UserSchema.methods.issueAction = function(data) {
-	let action = this.actions.create({
+	const action = this.actions.create({
 		type: data.type,
 		data: data.data,
 		expiry: data.expiry,
