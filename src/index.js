@@ -30,7 +30,7 @@ async function createApp(port) {
 }
 
 async function main() {
-	const app = await createApp(80)
+	const app = await createApp(process.env.PORT)
 	process.on("SIGINT", async () => {
 		await app.close()
 		process.exit()
