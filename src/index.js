@@ -5,6 +5,7 @@ const AutoLoad = require("fastify-autoload")
 const Helmet = require("fastify-helmet")
 const Cookie = require("fastify-cookie")
 const JWT = require("fastify-jwt")
+const Redis = require("fastify-redis")
 
 async function createApp(port) {
 	let app = fastify({
@@ -15,6 +16,7 @@ async function createApp(port) {
 	app.register(Helmet)
 	app.register(Cookie)
 	app.register(JWT, { secret: process.env.JWT_SECRET })
+	app.register(Redis, { url: process.env.REDIS })
 
 	// Register custom plugins
 	app.register(require("./plugins/mongoose"))
