@@ -4,7 +4,8 @@
   "main": "main.js",
   "license": "AGPL-3.0",
   "scripts": {
-    "start": "node ."
+    "start": "node .",
+    "dev": "node . | pino-pretty -c -t"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -19,5 +20,8 @@
     "jsonwebtoken": "^8.5.1",
     "make-promises-safe": "^5.1.0",
     "mongoose": "^5.11.14"
+  },
+  "devDependencies": {
+    "pino-pretty": "^4.8.0"
   }
 }
