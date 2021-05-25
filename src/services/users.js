@@ -7,6 +7,8 @@ const ActionType = require("../enum/ActionType")
 const LogType = require("../enum/LogType")
 
 async function UsersService(fastify) {
+	const redis = fastify.redis
+
 	fastify.addSchema({
 		$id: "#Action",
 		type: "object",
@@ -142,6 +144,10 @@ async function UsersService(fastify) {
 			const action = user.issueAction(request.body)
 			await user.save()
 
+			redis.publish("actionCreate", JSON.stringify({
+				userId: user.id,
+				action: action.serialize(),
+			}))
 			await Log.create({
 				type: LogType.CREATE_ACTION,
 				identity: request.identity,
@@ -191,6 +197,10 @@ async function UsersService(fastify) {
 				for (const index = 0; index < filteredActions.length; index++) {
 					const action = filteredActions[index]
 
+					redis.publish("actionDelete", JSON.stringify({
+						userId: user.id,
+						action: action.serialize(),
+					}))
 					await Log.create({
 						type: LogType.DISCARD_ACTION_BY_ID,
 						identity: request.identity,
@@ -246,6 +256,10 @@ async function UsersService(fastify) {
 				for (const index = 0; index < filteredActions.length; index++) {
 					const action = filteredActions[index]
 
+					redis.publish("actionDelete", JSON.stringify({
+						userId: user.id,
+						action: action.serialize(),
+					}))
 					await Log.create({
 						type: LogType.DISCARD_ACTION_BY_TYPE,
 						identity: request.identity,

@@ -9,6 +9,8 @@ const LogType = require("../enum/LogType")
 const ReportResult = require("../enum/ReportResult")
 
 async function ReportsService(fastify) {
+	const redis = fastify.redis
+	
 	fastify.addSchema({
 		$id: "#Report",
 		type: "object",
@@ -78,6 +80,7 @@ async function ReportsService(fastify) {
 			if (snapshot) {
 				const report = await Report.create(request.body)
 
+				redis.publish("reportCreate", JSON.stringify(report.serialize()))
 				await Log.create({
 					type: LogType.CREATE_REPORT,
 					identity: request.identity,
@@ -176,6 +179,7 @@ async function ReportsService(fastify) {
 			if (report) {
 				await report.accept(request.body.type, request.body.duration)
 
+				redis.publish("reportDelete", JSON.stringify(report.serialize()))
 				await Log.create({
 					type: LogType.ACCEPT_REPORT,
 					identity: request.identity,
@@ -215,6 +219,7 @@ async function ReportsService(fastify) {
 			if (report) {
 				await report.decline()
 
+				redis.publish("reportDelete", JSON.stringify(report.serialize()))
 				await Log.create({
 					type: LogType.DECLINE_REPORT,
 					identity: request.identity,
