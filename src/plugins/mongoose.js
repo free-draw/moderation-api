@@ -1,6 +1,11 @@
 const mongoose = require("mongoose")
 const plugin = require("fastify-plugin")
 
+const host = process.env.MONGODB_HOST
+const database = process.env.MONGODB_DATABASE
+const user = process.env.MONGODB_USER
+const password = process.env.MONGODB_PASSWORD
+
 function connectMongoose(url) {
 	return new Promise((resolve, reject) => {
 		mongoose.connect(url, {
@@ -17,7 +22,8 @@ function connectMongoose(url) {
 }
 
 async function MongoosePlugin(fastify) {
-	const connection = await connectMongoose(process.env.MONGODB)
+	const url = `mongodb://${user}:${password}@${host}/${database}?authSource=admin&tls=false&ssl=false`
+	const connection = await connectMongoose(url)
 	fastify.decorate("mongoose", connection)
 }
 

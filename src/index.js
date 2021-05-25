@@ -16,7 +16,10 @@ async function createApp(port) {
 	app.register(Helmet)
 	app.register(Cookie)
 	app.register(JWT, { secret: process.env.JWT_SECRET })
-	app.register(Redis, { url: process.env.REDIS })
+	app.register(Redis, {
+		host: process.env.REDIS_HOST,
+		password: process.env.REDIS_PASSWORD,
+	})
 
 	// Register custom plugins
 	app.register(require("./plugins/mongoose"))
