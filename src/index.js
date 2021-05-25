@@ -29,7 +29,7 @@ async function createApp(port) {
 	// Register services
 	app.register(AutoLoad, { dir: path.join(__dirname, "services") })
 
-	await app.listen(port)
+	await app.listen(port, "0.0.0.0")
 
 	return app
 }
