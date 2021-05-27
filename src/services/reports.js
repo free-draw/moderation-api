@@ -141,7 +141,7 @@ async function ReportsService(fastify) {
 	})
 
 	fastify.route({
-		method: "PATCH",
+		method: "POST",
 		path: "/:reportId/accept",
 
 		schema: {
@@ -201,7 +201,7 @@ async function ReportsService(fastify) {
 	})
 
 	fastify.route({
-		method: "PATCH",
+		method: "POST",
 		path: "/:reportId/decline",
 
 		schema: {
