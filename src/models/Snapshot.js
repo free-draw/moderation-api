@@ -1,9 +1,9 @@
 const mongoose = require("mongoose")
 
 const SnapshotSchema = new mongoose.Schema({
-	players: [ { id: Number, name: String } ],
-	logs: [ { player: Number, message: String } ],
-	canvas: [ { player: Number, data: Buffer } ]
+	players: [ { userId: Number, username: String } ],
+	logs: [ { userId: Number, message: String } ],
+	canvas: [ { userId: Number, data: Buffer } ]
 }, {
 	collection: "snapshots",
 })
@@ -18,7 +18,7 @@ SnapshotSchema.methods.serialize = function() {
 		logs: this.logs,
 		canvas: this.canvas.map((collector) => {
 			return {
-				player: collector.player,
+				userId: collector.userId,
 				data: collector.data.toString("base64"),
 			}
 		}),
