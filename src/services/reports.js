@@ -125,7 +125,7 @@ async function ReportsService(fastify) {
 		},
 
 		async handler(request) {
-			const report = Report.findById(request.params.reportId)
+			const report = await Report.findById(request.params.reportId)
 
 			if (report) {
 				return {
