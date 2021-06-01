@@ -42,6 +42,10 @@ async function ModeratorsService(fastify) {
 		method: "GET",
 		path: "/:moderatorId",
 
+		preValidation: [
+			fastify.createPermissionValidator("moderators/get/id"),
+		],
+
 		schema: {
 			params: {
 				type: "object",
@@ -79,6 +83,10 @@ async function ModeratorsService(fastify) {
 	fastify.route({
 		method: "GET",
 		path: "/:accountType/:accountId",
+
+		preValidation: [
+			fastify.createPermissionValidator("moderators/get/account"),
+		],
 
 		schema: {
 			params: {
@@ -120,6 +128,10 @@ async function ModeratorsService(fastify) {
 		method: "POST",
 		path: "/",
 
+		preValidation: [
+			fastify.createPermissionValidator("moderators/manage/create"),
+		],
+
 		schema: {
 			body: {
 				type: "object",
@@ -160,6 +172,10 @@ async function ModeratorsService(fastify) {
 	fastify.route({
 		method: "POST",
 		path: "/:moderatorId/accounts",
+
+		preValidation: [
+			fastify.createPermissionValidator("moderators/manage/link-account"),
+		],
 
 		schema: {
 			params: {
@@ -231,6 +247,10 @@ async function ModeratorsService(fastify) {
 		method: "DELETE",
 		path: "/:moderatorId",
 
+		preValidation: [
+			fastify.createPermissionValidator("moderators/manage/delete"),
+		],
+
 		schema: {
 			params: {
 				type: "object",
@@ -267,6 +287,10 @@ async function ModeratorsService(fastify) {
 	fastify.route({
 		method: "DELETE",
 		path: "/:moderatorId/accounts/:accountType/:accountId",
+
+		preValidation: [
+			fastify.createPermissionValidator("moderators/manage/unlink-account"),
+		],
 
 		schema: {
 			params: {

@@ -11,6 +11,10 @@ async function AuthService(fastify) {
 		method: "GET",
 		path: "/me",
 
+		preValidation: [
+			fastify.createPermissionValidator("auth/me"),
+		],
+
 		schema: {
 			response: {
 				[OK]: {

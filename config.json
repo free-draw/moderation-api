@@ -1,0 +1,21 @@
+{
+	"permissionGroups": {
+		"admin": [
+			"group:basic",
+			"group:mod"
+		],
+
+		"mod": [
+			"group:basic",
+			"literal:reports/accept",
+			"literal:reports/decline",
+			"literal:snapshots/get"
+		],
+
+		"basic": [
+			"literal:auth/me",
+			"literal:roblox",
+			"literal:moderators/get"
+		]
+	}
+}

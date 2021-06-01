@@ -25,6 +25,7 @@ async function createApp(port) {
 	app.register(require("./plugins/mongoose"))
 	app.register(require("./plugins/auth"))
 	app.register(require("./plugins/identity"))
+	app.register(require("./plugins/permissions"))
 
 	// Register services
 	app.register(AutoLoad, { dir: path.join(__dirname, "services") })

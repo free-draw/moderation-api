@@ -8,10 +8,10 @@ const TokenType = require("../enum/TokenType")
 
 const Moderator = require("../models/Moderator")
 
-const MODERATOR_ACCOUNT_REGEX = /^(\w+)\/(\w+)$/
-
 async function IdentifyPlugin(fastify) {
 	fastify.decorateRequest("identity", null)
+
+	console.log(fastify.jwt.sign({ type: TokenType.USER, id: "60b5ff480d25a7001359d7bb" }))
 
 	fastify.addHook("preValidation", async (request) => {
 		const token = request.token
@@ -28,7 +28,7 @@ async function IdentifyPlugin(fastify) {
 				}
 			}
 
-			const [ match, matchAccountType, matchAccountId ] = MODERATOR_ACCOUNT_REGEX.exec(request.query.identity) ?? []
+			const [ match, matchAccountType, matchAccountId ] = /^(\w+)\/(\w+)$/.exec(request.query.identity) ?? []
 
 			if (!match) {
 				throw {
@@ -61,15 +61,15 @@ async function IdentifyPlugin(fastify) {
 
 				if (!moderator) {
 					throw {
-						statusCode: FORBIDDEN,
+						statusCode: BAD_REQUEST,
 						message: "Unknown moderator with provided ID",
 					}
 				}
 
-				if (!moderator.active) {
+				if (!moderator.enabled) {
 					throw {
 						statusCode: FORBIDDEN,
-						message: "Moderator status is no longer active",
+						message: "Moderator status is no longer enabled",
 					}
 				}
 

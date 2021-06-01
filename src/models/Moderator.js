@@ -11,6 +11,7 @@ const ModeratorSchema = new mongoose.Schema({
 			id: { type: mongoose.Schema.Types.Mixed, index: true },
 		},
 	],
+	permissions: [ String ],
 }, {
 	collection: "moderators",
 })

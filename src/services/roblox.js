@@ -7,6 +7,10 @@ async function RobloxService(fastify) {
 		method: "POST",
 		path: "/users",
 
+		preValidation: [
+			fastify.createPermissionValidator("roblox/users"),
+		],
+
 		schema: {
 			body: {
 				type: "object",
@@ -49,6 +53,10 @@ async function RobloxService(fastify) {
 	fastify.route({
 		method: "POST",
 		path: "/thumbnails",
+
+		preValidation: [
+			fastify.createPermissionValidator("roblox/thumbnails"),
+		],
 
 		schema: {
 			body: {

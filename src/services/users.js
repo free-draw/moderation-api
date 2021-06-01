@@ -42,6 +42,10 @@ async function UsersService(fastify) {
 		method: "GET",
 		path: "/:userId",
 
+		preValidation: [
+			fastify.createPermissionValidator("users/get/id"),
+		],
+
 		schema: {
 			params: {
 				type: "object",
@@ -72,6 +76,10 @@ async function UsersService(fastify) {
 	fastify.route({
 		method: "POST",
 		path: "/",
+
+		preValidation: [
+			fastify.createPermissionValidator("users/get/id/bulk"),
+		],
 
 		schema: {
 			body: {

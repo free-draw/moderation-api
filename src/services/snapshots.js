@@ -67,6 +67,10 @@ async function SnapshotsService(fastify) {
 		method: "GET",
 		path: "/:snapshotId",
 
+		preValidation: [
+			fastify.createPermissionValidator("snapshots/get/id"),
+		],
+
 		schema: {
 			params: {
 				type: "object",
@@ -104,6 +108,10 @@ async function SnapshotsService(fastify) {
 	fastify.route({
 		method: "POST",
 		path: "/",
+
+		preValidation: [
+			fastify.createPermissionValidator("snapshots/create"),
+		],
 
 		schema: {
 			body: { $ref: "#Snapshot" },
