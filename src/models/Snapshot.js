@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const SnapshotSchema = new mongoose.Schema({
-	players: [ { userId: Number, username: String } ],
+	players: [ Number ],
 	logs: [ { userId: Number, message: String } ],
 	canvas: [ { userId: Number, data: Buffer } ]
 }, {
