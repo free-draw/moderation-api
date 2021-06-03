@@ -11,8 +11,6 @@ const Moderator = require("../models/Moderator")
 async function IdentifyPlugin(fastify) {
 	fastify.decorateRequest("identity", null)
 
-	console.log(fastify.jwt.sign({ type: TokenType.USER, id: "60b5ff480d25a7001359d7bb" }))
-
 	fastify.addHook("preValidation", async (request) => {
 		const token = request.token
 		
