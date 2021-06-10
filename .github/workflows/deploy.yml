@@ -30,7 +30,7 @@ jobs:
       - name: Download cluster configuration
         run: doctl kubernetes cluster kubeconfig save $CLUSTER_ID
         env:
-          CLUSTER_ID: ${{ secrets.CLUTER_ID }}
+          CLUSTER_ID: ${{ secrets.CLUSTER_ID }}
       
       - name: Apply latest deployment
         run: kubectl apply -f https://raw.githubusercontent.com/free-draw/moderation-deployment/main/deployment/frontend/api.yml
