@@ -26,3 +26,14 @@ jobs:
         run: |
           docker tag moderation-api registry.digitalocean.com/free-draw/moderation-api:latest
           docker push registry.digitalocean.com/free-draw/moderation-api:latest
+
+      - name: Download cluster configuration
+        run: doctl kubernetes cluster kubeconfig save $CLUSTER_ID
+        env:
+          CLUSTER_ID: ${{ secrets.CLUTER_ID }}
+      
+      - name: Apply latest deployment
+        run: kubectl apply -f https://raw.githubusercontent.com/free-draw/moderation-deployment/main/deployment/frontend/api.yml
+      
+      - name: Rollout deployment
+        run: kubectl rollout restart deployment/api --namespace moderation
