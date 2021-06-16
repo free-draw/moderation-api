@@ -1,5 +1,4 @@
 const plugin = require("fastify-plugin")
-const TokenType = require("../enum/TokenType")
 
 const { BAD_REQUEST, UNAUTHORIZED } = require("../util/statusCodes")
 
