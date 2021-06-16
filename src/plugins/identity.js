@@ -14,64 +14,62 @@ async function IdentifyPlugin(fastify) {
 	fastify.addHook("preValidation", async (request) => {
 		const token = request.token
 		
-		if (!token) {
-			fastify.error("auth must be added before identify")
-		}
-
-		if (request.query.identity) {
-			if (token.type !== TokenType.SERVER) {
-				throw {
-					statusCode: FORBIDDEN,
-					message: "Authorized token is not allowed to set identity",
+		if (token) {
+			if (request.query.identity) {
+				if (token.type !== TokenType.SERVER) {
+					throw {
+						statusCode: FORBIDDEN,
+						message: "Authorized token is not allowed to set identity",
+					}
 				}
-			}
-
-			const [ match, matchAccountType, matchAccountId ] = /^(\w+)\/(\w+)$/.exec(request.query.identity) ?? []
-
-			if (!match) {
-				throw {
-					statusCode: BAD_REQUEST,
-					message: "Invalid format for identity parameter",
+	
+				const [ match, matchAccountType, matchAccountId ] = /^(\w+)\/(\w+)$/.exec(request.query.identity) ?? []
+	
+				if (!match) {
+					throw {
+						statusCode: BAD_REQUEST,
+						message: "Invalid format for identity parameter",
+					}
 				}
-			}
-
-			if (!AccountType[matchAccountType]) {
-				throw {
-					statusCode: BAD_REQUEST,
-					message: "Unknown account type",
+	
+				if (!AccountType[matchAccountType]) {
+					throw {
+						statusCode: BAD_REQUEST,
+						message: "Unknown account type",
+					}
 				}
-			}
-
-			const [ accountType, accountId ] = parseAccount(matchAccountType, matchAccountId)
-			const moderator = await Moderator.findByAccount(accountType, accountId)
-
-			if (!moderator) {
-				throw {
-					statusCode: BAD_REQUEST,
-					message: "Can't find account for provided identity",
-				}
-			}
-
-			request.identity = moderator
-		} else {
-			if (token.type === TokenType.USER) {
-				const moderator = await Moderator.findById(token.id)
-
+	
+				const [ accountType, accountId ] = parseAccount(matchAccountType, matchAccountId)
+				const moderator = await Moderator.findByAccount(accountType, accountId)
+	
 				if (!moderator) {
 					throw {
 						statusCode: BAD_REQUEST,
-						message: "Unknown moderator with provided ID",
+						message: "Can't find account for provided identity",
 					}
 				}
-
-				if (!moderator.enabled) {
-					throw {
-						statusCode: FORBIDDEN,
-						message: "Moderator status is no longer enabled",
-					}
-				}
-
+	
 				request.identity = moderator
+			} else {
+				if (token.type === TokenType.USER) {
+					const moderator = await Moderator.findById(token.id)
+	
+					if (!moderator) {
+						throw {
+							statusCode: BAD_REQUEST,
+							message: "Unknown moderator with provided ID",
+						}
+					}
+	
+					if (!moderator.enabled) {
+						throw {
+							statusCode: FORBIDDEN,
+							message: "Moderator status is no longer enabled",
+						}
+					}
+	
+					request.identity = moderator
+				}
 			}
 		}
 	})

@@ -11,50 +11,52 @@ async function AuthPlugin(fastify) {
 	console.log(fastify.jwt.sign({ type: TokenType.USER, id: "60b5ff480d25a7001359d7bb" }))
 
 	fastify.addHook("preValidation", async (request) => {
-		const authorization = request.headers.authorization
-		const cookie = request.cookies.token
+		if (request.context.config.auth) {
+			const authorization = request.headers.authorization
+			const cookie = request.cookies.token
 
-		let token
+			let token
 
-		if (authorization) {
-			const match = AUTHORIZATION_REGEX.exec(authorization)
+			if (authorization) {
+				const match = AUTHORIZATION_REGEX.exec(authorization)
 
-			if (!match) {
+				if (!match) {
+					throw {
+						statusCode: BAD_REQUEST,
+						message: "Invalid Authorization header",
+					}
+				}
+
+				if (match[1] !== "Bearer") {
+					throw {
+						statusCode: BAD_REQUEST,
+						message: "Authorization scheme must be Bearer",
+					}
+				}
+
+				token = match[2]
+			} else if (cookie) {
+				token = cookie
+			} else {
 				throw {
 					statusCode: BAD_REQUEST,
-					message: "Invalid Authorization header",
+					message: "Request must include either Authorization header or token cookie",
 				}
 			}
 
-			if (match[1] !== "Bearer") {
+			let tokenData
+
+			try {
+				tokenData = fastify.jwt.verify(token)
+			} catch {
 				throw {
-					statusCode: BAD_REQUEST,
-					message: "Authorization scheme must be Bearer",
+					statusCode: UNAUTHORIZED,
+					message: "Invalid Bearer token",
 				}
 			}
 
-			token = match[2]
-		} else if (cookie) {
-			token = cookie
-		} else {
-			throw {
-				statusCode: BAD_REQUEST,
-				message: "Request must include either Authorization header or token cookie",
-			}
+			request.token = tokenData
 		}
-
-		let tokenData
-
-		try {
-			tokenData = fastify.jwt.verify(token)
-		} catch {
-			throw {
-				statusCode: UNAUTHORIZED,
-				message: "Invalid Bearer token",
-			}
-		}
-
-		request.token = tokenData
 	})
 }
 

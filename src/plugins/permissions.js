@@ -39,9 +39,13 @@ async function PermissionsPlugin(fastify) {
 	})
 
 	fastify.addHook("preValidation", async (request) => {
-		let permissions = request.context.config.permissions
+		let { auth, permissions } = request.context.config
 
 		if (permissions) {
+			if (!auth) {
+				throw new Error("auth must be enabled before permissions can be defined")
+			}
+
 			if (typeof permissions === "string") {
 				permissions = [ permissions ]
 			}	
