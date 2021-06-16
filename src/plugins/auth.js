@@ -8,8 +8,6 @@ const AUTHORIZATION_REGEX = /^(\w+) (.+)$/
 async function AuthPlugin(fastify) {
 	fastify.decorateRequest("token", null)
 
-	console.log(fastify.jwt.sign({ type: TokenType.USER, id: "60b5ff480d25a7001359d7bb" }))
-
 	fastify.addHook("preValidation", async (request) => {
 		if (request.context.config.auth) {
 			const authorization = request.headers.authorization
