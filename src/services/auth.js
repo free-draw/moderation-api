@@ -11,9 +11,10 @@ async function AuthService(fastify) {
 		method: "GET",
 		path: "/me",
 
-		preValidation: [
-			fastify.createPermissionValidator("auth/me"),
-		],
+		config: {
+			auth: true,
+			permissions: [],
+		},
 
 		schema: {
 			response: {
@@ -35,6 +36,8 @@ async function AuthService(fastify) {
 	fastify.route({
 		method: "GET",
 		path: "/discord",
+
+		config: {},
 
 		schema: {
 			query: {

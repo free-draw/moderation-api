@@ -57,9 +57,10 @@ async function SnapshotsService(fastify) {
 		method: "GET",
 		path: "/:snapshotId",
 
-		preValidation: [
-			fastify.createPermissionValidator("snapshots/get/id"),
-		],
+		config: {
+			auth: true,
+			permissions: "snapshots/get/id",
+		},
 
 		schema: {
 			params: {
@@ -99,9 +100,10 @@ async function SnapshotsService(fastify) {
 		method: "POST",
 		path: "/",
 
-		preValidation: [
-			fastify.createPermissionValidator("snapshots/create"),
-		],
+		config: {
+			auth: true,
+			permissions: "snapshots/create",
+		},
 
 		schema: {
 			body: { $ref: "#Snapshot" },

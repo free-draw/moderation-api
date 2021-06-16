@@ -42,9 +42,12 @@ async function UsersService(fastify) {
 		method: "GET",
 		path: "/:userId",
 
-		preValidation: [
-			fastify.createPermissionValidator("users/get/id"),
-		],
+		config: {
+			require: {
+				auth: true,
+				permissions: "users/get/id",
+			},
+		},
 
 		schema: {
 			params: {
@@ -77,9 +80,12 @@ async function UsersService(fastify) {
 		method: "POST",
 		path: "/",
 
-		preValidation: [
-			fastify.createPermissionValidator("users/get/id/bulk"),
-		],
+		config: {
+			require: {
+				auth: true,
+				permissions: "users/get/id/bulk",
+			},
+		},
 
 		schema: {
 			body: {
@@ -109,6 +115,13 @@ async function UsersService(fastify) {
 	fastify.route({
 		method: "POST",
 		path: "/:userId/actions",
+
+		config: {
+			require: {
+				auth: true,
+				permissions: "users/actions/create",
+			},
+		},
 
 		schema: {
 			params: {
@@ -176,6 +189,13 @@ async function UsersService(fastify) {
 		method: "DELETE",
 		path: "/:userId/action/:actionId",
 
+		config: {
+			require: {
+				auth: true,
+				permissions: "users/actions/delete/id",
+			},
+		},
+
 		schema: {
 			params: {
 				type: "object",
@@ -202,7 +222,7 @@ async function UsersService(fastify) {
 			if (filteredActions.length > 0) {
 				await user.save()
 
-				for (const index = 0; index < filteredActions.length; index++) {
+				for (let index = 0; index < filteredActions.length; index++) {
 					const action = filteredActions[index]
 
 					redis.publish("actionDelete", JSON.stringify({
@@ -235,6 +255,11 @@ async function UsersService(fastify) {
 		method: "DELETE",
 		path: "/:userId/type/:actionType",
 
+		config: {
+			auth: true,
+			permissions: "users/actions/delete/type",
+		},
+
 		schema: {
 			params: {
 				type: "object",
@@ -261,7 +286,7 @@ async function UsersService(fastify) {
 			if (filteredActions.length > 0) {
 				await user.save()
 
-				for (const index = 0; index < filteredActions.length; index++) {
+				for (let index = 0; index < filteredActions.length; index++) {
 					const action = filteredActions[index]
 
 					redis.publish("actionDelete", JSON.stringify({

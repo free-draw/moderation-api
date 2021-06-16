@@ -35,9 +35,10 @@ async function ReportsService(fastify) {
 		method: "GET",
 		path: "/",
 
-		preValidation: [
-			fastify.createPermissionValidator("reports/list"),
-		],
+		config: {
+			auth: true,
+			permissions: "reports/list",
+		},
 
 		schema: {
 			response: {
@@ -65,9 +66,12 @@ async function ReportsService(fastify) {
 		method: "POST",
 		path: "/",
 
-		preValidation: [
-			fastify.createPermissionValidator("reports/create"),
-		],
+		config: {
+			require: {
+				auth: true,
+				permissions: "reports/create",
+			},
+		},
 
 		schema: {
 			body: { $ref: "#Report" },
@@ -114,9 +118,12 @@ async function ReportsService(fastify) {
 		method: "GET",
 		path: "/:reportId",
 
-		preValidation: [
-			fastify.createPermissionValidator("reports/get"),
-		],
+		config: {
+			require: {
+				auth: true,
+				permissions: "reports/get/id",
+			},
+		},
 
 		schema: {
 			params: {
@@ -156,9 +163,12 @@ async function ReportsService(fastify) {
 		method: "POST",
 		path: "/:reportId/accept",
 
-		preValidation: [
-			fastify.createPermissionValidator("reports/accept"),
-		],
+		config: {
+			require: {
+				auth: true,
+				permissions: "reports/actions/accept",
+			},
+		},
 
 		schema: {
 			params: {
@@ -220,9 +230,10 @@ async function ReportsService(fastify) {
 		method: "POST",
 		path: "/:reportId/decline",
 
-		preValidation: [
-			fastify.createPermissionValidator("reports/decline"),
-		],
+		config: {
+			auth: true,
+			permissions: "reports/actions/decline",
+		},
 
 		schema: {
 			params: {
