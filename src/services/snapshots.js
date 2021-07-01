@@ -112,7 +112,7 @@ async function SnapshotsService(fastify) {
 				[CREATED]: {
 					type: "object",
 					properties: {
-						id: { type: "string" },
+						snapshotId: { type: "string" },
 					},
 				},
 			},
