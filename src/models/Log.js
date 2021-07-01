@@ -15,4 +15,13 @@ LogSchema.virtual("id").get(function() {
 	return this._id.toString()
 })
 
+LogSchema.methods.serialize = function() {
+	return {
+		timestamp: this.timestamp,
+		type: this.type,
+		identity: this.identity.toString(),
+		data: this.data,
+	}
+}
+
 module.exports = mongoose.model("Log", LogSchema)
