@@ -16,16 +16,15 @@ jobs:
         with:
           token: ${{ secrets.DIGITALOCEAN_TOKEN }}
       
-      - name: Authenticate with registry
-        run: doctl registry login --expiry-seconds 120
-      
       - name: Build
         run: docker build -t moderation-api .
       
       - name: Upload
         run: |
-          docker tag moderation-api registry.digitalocean.com/free-draw/moderation-api:latest
-          docker push registry.digitalocean.com/free-draw/moderation-api:latest
+          docker tag moderation-api ghcr.io/freedraw/moderation-api:latest
+          docker push ghcr.io/freedraw/moderation-api:latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download cluster configuration
         run: doctl kubernetes cluster kubeconfig save $CLUSTER_ID
