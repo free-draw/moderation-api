@@ -23,17 +23,18 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Extract metadata for Docker
+        id: metadata
         uses: docker/metadata-action@v3.3.0
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}{% raw %}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
       
       - name: Build and push Docker image
         uses: docker/build-push-action@v5.5
         with:
           context: .
           push: true
-          tags: {% raw %}${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
 
   deploy:
     runs-on: ubuntu-latest
