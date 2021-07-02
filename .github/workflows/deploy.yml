@@ -4,27 +4,46 @@ on:
   push:
     branches: [ main ]
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v2
       
+      - name: Log into the container registry
+        uses: docker/login-action@v1.10.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Extract metadata for Docker
+        uses: docker/metadata-action@v3.3.0
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}{% raw %}
+      
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5.5
+        with:
+          context: .
+          push: true
+          tags: {% raw %}${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    steps:
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_TOKEN }}
-      
-      - name: Build
-        run: docker build -t moderation-api .
-      
-      - name: Upload
-        run: |
-          docker tag moderation-api ghcr.io/freedraw/moderation-api:latest
-          docker push ghcr.io/freedraw/moderation-api:latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download cluster configuration
         run: doctl kubernetes cluster kubeconfig save $CLUSTER_ID
