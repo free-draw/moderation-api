@@ -22,7 +22,7 @@ function connectMongoose(url) {
 }
 
 async function MongoosePlugin(fastify) {
-	const url = `mongodb://${user}:${password}@${host}/${database}?authSource=admin&tls=false&ssl=false`
+	const url = `mongodb://${user}:${password}@${host}/${database}?tls=false&ssl=false`
 	const connection = await connectMongoose(url)
 	fastify.decorate("mongoose", connection)
 }
