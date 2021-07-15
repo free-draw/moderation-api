@@ -12,7 +12,7 @@ async function getAccessToken(code) {
 		client_secret: process.env.DISCORD_CLIENT_SECRET,
 		grant_type: "authorization_code",
 		code: code,
-		redirect_uri: process.env.DISCORD_REDIRECT_URI,
+		redirect_uri: process.env.DISCORD_REDIRECT_URL,
 	})
 
 	const { data } = await axios.post("https://discord.com/api/oauth2/token", params, {
@@ -117,7 +117,7 @@ async function AuthService(fastify) {
 		async handler(_, reply) {
 			const url = new URL("https://discord.com/oauth2/authorize")
 			url.searchParams.set("client_id", process.env.DISCORD_CLIENT_ID)
-			url.searchParams.set("redirect_uri", process.env.DISCORD_REDIRECT_URI)
+			url.searchParams.set("redirect_uri", process.env.DISCORD_REDIRECT_URL)
 			url.searchParams.set("scope", "identify")
 			url.searchParams.set("response_type", "code")
 
