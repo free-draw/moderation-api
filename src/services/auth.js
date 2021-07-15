@@ -69,7 +69,12 @@ async function AuthService(fastify) {
 			const moderator = await Moderator.findByAccount(AccountType.DISCORD, user.id)
 
 			if (moderator) {
-				const token = fastify.jwt.sign({ type: TokenType.USER, id: moderator.id })
+				const token = fastify.jwt.sign({
+					type: TokenType.USER,
+					id: moderator.id,
+					tag: "login",
+					time: Date.now(),
+				})
 
 				reply.cookie("token", token)
 				reply.redirect("/")
