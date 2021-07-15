@@ -6,6 +6,30 @@ const Moderator = require("../models/Moderator")
 const TokenType = require("../enum/TokenType")
 const AccountType = require("../enum/AccountType")
 
+async function getAccessToken(code) {
+	const params = new URLSearchParams({
+		client_id: process.env.DISCORD_CLIENT_ID,
+		client_secret: process.env.DISCORD_CLIENT_SECRET,
+		grant_type: "authorization_code",
+		code: code,
+		redirect_uri: process.env.DISCORD_REDIRECT_URI,
+	})
+
+	const { data } = await axios.post("https://discord.com/api/oauth2/token", params, {
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded",
+		},
+	})
+
+	return {
+		token: data.access_token,
+		duration: data.expires_in,
+		refreshToken: data.refresh_token,
+		scope: data.scope,
+		tokenType: data.token_type,
+	}
+}
+
 async function AuthService(fastify) {
 	fastify.route({
 		method: "GET",
@@ -43,25 +67,20 @@ async function AuthService(fastify) {
 			query: {
 				type: "object",
 				properties: {
-					access_token: { type: "string" },
-					token_type: { const: "Bearer" },
-					expires_in: { type: "number" },
-					scope: { const: "identify" },
-					state: { type: "string" },
+					code: { type: "string" },
 				},
 				required: [
-					"access_token",
-					"token_type",
-					"expires_in",
-					"scope",
+					"code",
 				],
 			},
 		},
 
 		async handler(request, reply) {
+			const { tokenType, token } = await getAccessToken(request.query.code)
+
 			const response = await axios.get("https://discord.com/api/users/@me", {
 				headers: {
-					authorization: `${request.query.token_type} ${request.query.access_token}`,
+					authorization: `${tokenType} ${token}`,
 				},
 			})
 
