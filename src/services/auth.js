@@ -1,5 +1,5 @@
 const axios = require("axios")
-const { OK, FORBIDDEN } = require("../util/statusCodes")
+const { OK, FORBIDDEN, NOT_FOUND } = require("../util/statusCodes")
 
 const Moderator = require("../models/Moderator")
 
@@ -79,6 +79,105 @@ async function AuthService(fastify) {
 				throw {
 					statusCode: FORBIDDEN,
 					message: "Discord user is not registered in database",
+				}
+			}
+		},
+	})
+
+	fastify.route({
+		method: "POST",
+		path: "/create/server",
+
+		config: {
+			auth: true,
+			permissions: "auth/create/server",
+		},
+
+		schema: {
+			body: {
+				type: "object",
+				properties: {
+					tag: { type: "string" },
+				},
+				required: [
+					"tag",
+				],
+			},
+
+			response: {
+				[OK]: {
+					type: "object",
+					properties: {
+						token: { type: "string" },
+					},
+				},
+			},
+		},
+
+		async handler(request) {
+			return {
+				token: fastify.jwt.sign({
+					type: TokenType.SERVER,
+					tag: request.body.tag,
+					time: Date.now(),
+				}),
+			}
+		},
+	})
+
+	fastify.route({
+		method: "POST",
+		path: "/create/moderator/:moderatorId",
+
+		config: {
+			auth: true,
+			permissions: "auth/create/moderator",
+		},
+
+		schema: {
+			params: {
+				type: "object",
+				properties: {
+					moderatorId: { type: "string" },
+				},
+			},
+			
+			body: {
+				type: "object",
+				properties: {
+					tag: { type: "string" },
+				},
+				required: [
+					"tag",
+				],
+			},
+
+			response: {
+				[OK]: {
+					type: "object",
+					properties: {
+						token: { type: "string" },
+					},
+				},
+			},
+		},
+
+		async handler(request) {
+			const moderator = await Moderator.findById(request.params.moderatorId)
+
+			if (moderator) {
+				return {
+					token: fastify.jwt.sign({
+						type: TokenType.USER,
+						id: moderator.id,
+						tag: request.body.tag,
+						time: Date.now(),
+					}),
+				}
+			} else {
+				throw {
+					statusCode: NOT_FOUND,
+					message: `Can't find moderator with id ${request.params.id}`,
 				}
 			}
 		},
