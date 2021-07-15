@@ -1,5 +1,5 @@
 const axios = require("axios")
-const { OK, FORBIDDEN, NOT_FOUND } = require("../util/statusCodes")
+const { OK, TEMPORARY_REDIRECT, FORBIDDEN, NOT_FOUND } = require("../util/statusCodes")
 
 const Moderator = require("../models/Moderator")
 
@@ -86,6 +86,25 @@ async function AuthService(fastify) {
 					message: "Discord user is not registered in database",
 				}
 			}
+		},
+	})
+
+	fastify.route({
+		method: "GET",
+		path: "/redirect/discord",
+
+		config: {},
+
+		async handler(_, reply) {
+			const url = new URL("https://discord.com/oauth2/authorize")
+			url.searchParams.set("client_id", process.env.DISCORD_CLIENT_ID)
+			url.searchParams.set("redirect_uri", process.env.DISCORD_REDIRECT_URI)
+			url.searchParams.set("scope", "identify")
+			url.searchParams.set("response_type", "code")
+
+			reply.status(TEMPORARY_REDIRECT)
+			reply.header("Location", url.toString())
+			reply.send(url.toString())
 		},
 	})
 
