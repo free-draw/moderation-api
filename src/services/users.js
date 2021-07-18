@@ -143,9 +143,7 @@ async function UsersService(fastify) {
 				},
 				required: [
 					"type",
-					"data",
 					"reason",
-					"snapshot",
 				],
 			},
 
