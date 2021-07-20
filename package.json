@@ -17,7 +17,9 @@
     "fastify-plugin": "^3.0.0",
     "fastify-redis": "^4.3.0",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
     "make-promises-safe": "^5.1.0",
+    "minimatch": "^3.0.4",
     "mongoose": "^5.11.14"
   },
   "devDependencies": {

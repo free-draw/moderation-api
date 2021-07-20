@@ -1,21 +1,28 @@
 {
 	"permissionGroups": {
+		"creator": [
+			"**"
+		],
+
 		"admin": [
-			"group:basic",
+			"group:full-mod"
+		],
+
+		"full-mod": [
+			"users/actions/**",
 			"group:mod"
 		],
 
 		"mod": [
-			"group:basic",
-			"literal:reports/accept",
-			"literal:reports/decline",
-			"literal:snapshots/get"
+			"reports/actions/*",
+			"snapshots/get/**",
+			"logs/get/**"
 		],
 
 		"basic": [
-			"literal:auth/me",
-			"literal:roblox",
-			"literal:moderators/get"
+			"auth/me",
+			"roblox/**",
+			"moderators/get"
 		]
 	}
 }
