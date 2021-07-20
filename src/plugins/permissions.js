@@ -1,5 +1,4 @@
 const plugin = require("fastify-plugin")
-const path = require("path")
 
 const { FORBIDDEN } = require("../util/statusCodes")
 
