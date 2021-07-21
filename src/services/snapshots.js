@@ -42,11 +42,11 @@ async function SnapshotsService(fastify) {
 					properties: {
 						userId: { type: "number" },
 						type: { type: "string", enum: Object.keys(SnapshotLogType) },
-						message: { type: "string" },
+						data: { type: "object" },
 					},
 					required: [
 						"userId",
-						"message",
+						"type",
 					],
 				},
 			},
