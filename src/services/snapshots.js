@@ -12,7 +12,27 @@ async function SnapshotsService(fastify) {
 		properties: {
 			players: {
 				type: "array",
-				items: { type: "number" },
+				items: {
+					type: "object",
+					properties: {
+						userId: { type: "number" },
+						position: {
+							type: "object",
+							properties: {
+								x: { type: "number" },
+								y: { type: "number" },
+							},
+							required: [
+								"x",
+								"y",
+							],
+						},
+					},
+					required: [
+						"userId",
+						"position",
+					],
+				},
 			},
 			logs: {
 				type: "array",
