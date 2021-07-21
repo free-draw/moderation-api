@@ -41,8 +41,17 @@ async function SnapshotsService(fastify) {
 					type: "object",
 					properties: {
 						userId: { type: "number" },
-						type: { type: "string", enum: Object.keys(SnapshotLogType) },
-						data: { type: "object" },
+						type: {
+							type: "string",
+							enum: Object.keys(SnapshotLogType)
+						},
+						data: {
+							oneOf: [
+								{ type: "string" },
+								{ type: "number" },
+								{ type: "object" },
+							],
+						},
 					},
 					required: [
 						"userId",
