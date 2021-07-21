@@ -1,5 +1,7 @@
 const mongoose = require("mongoose")
 
+const SnapshotLogType = require("../enum/SnapshotLogType")
+
 const SnapshotSchema = new mongoose.Schema({
 	players: [
 		{
@@ -12,8 +14,9 @@ const SnapshotSchema = new mongoose.Schema({
 	],
 	logs: [
 		{
-			userId: Number,
-			message: String,
+			source: Number,
+			type: { type: mongoose.Schema.Types.Mixed, enum: Object.keys(SnapshotLogType) },
+			data: Any,
 		},
 	],
 	canvas: [

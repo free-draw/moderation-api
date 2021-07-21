@@ -4,6 +4,7 @@ const Snapshot = require("../models/Snapshot")
 const Log = require("../models/Log")
 
 const LogType = require("../enum/LogType")
+const SnapshotLogType = require("../enum/SnapshotLogType")
 
 async function SnapshotsService(fastify) {
 	fastify.addSchema({
@@ -39,7 +40,8 @@ async function SnapshotsService(fastify) {
 				items: {
 					type: "object",
 					properties: {
-						userId: { type: "number" },
+						source: { type: "number" },
+						type: { type: "string", enum: Object.keys(SnapshotLogType) },
 						message: { type: "string" },
 					},
 					required: [
