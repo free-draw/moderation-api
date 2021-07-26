@@ -56,6 +56,9 @@ async function SnapshotsService(fastify) {
 										filtered: { type: "boolean", nullable: true },
 									},
 								},
+								{ // SnapshotLogType.COMMAND
+									type: "string",
+								},
 							],
 						},
 					},
