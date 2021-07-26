@@ -46,10 +46,16 @@ async function SnapshotsService(fastify) {
 							enum: Object.keys(SnapshotLogType)
 						},
 						data: {
+							nullable: true,
 							oneOf: [
-								{ type: "string" },
-								{ type: "number" },
-								{ type: "object" },
+								{ // SnapshotLogType.CHAT
+									type: "object",
+									properties: {
+										content: { type: "string" },
+										type: { type: "string" },
+										filtered: { type: "boolean", nullable: true },
+									},
+								},
 							],
 						},
 					},
