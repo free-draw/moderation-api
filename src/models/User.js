@@ -77,6 +77,7 @@ UserSchema.methods.issueAction = function(data) {
 		reason: data.reason,
 		notes: data.notes,
 		snapshot: data.snapshot,
+		report: data.report,
 	})
 
 	this.actions.push(action)

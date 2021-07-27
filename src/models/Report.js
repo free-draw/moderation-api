@@ -22,7 +22,7 @@ ReportSchema.virtual("id").get(function() {
 
 ReportSchema.methods.accept = async function(type, duration) {
 	const user = await User.findById(this.targetUserId)
-				
+
 	let expiry
 	if (duration) {
 		expiry = new Date()
@@ -36,6 +36,7 @@ ReportSchema.methods.accept = async function(type, duration) {
 		reason: this.reason,
 		notes: this.notes,
 		snapshot: this.snapshot,
+		report: this.id,
 	})
 	
 	await user.save()
