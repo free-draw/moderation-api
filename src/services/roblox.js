@@ -47,7 +47,6 @@ async function RobloxService(fastify) {
 		},
 
 		async handler(request) {
-			console.log(request.body)
 			const response = await axios.post("https://users.roblox.com/v1/users", request.body)
 			return response.data
 		},
