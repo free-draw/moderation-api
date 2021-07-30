@@ -56,6 +56,54 @@ async function RobloxService(fastify) {
 
 	fastify.route({
 		method: "POST",
+		path: "/usernames",
+
+		config: {
+			auth: true,
+			permissions: "roblox/usernames",
+		},
+
+		schema: {
+			body: {
+				type: "object",
+				properties: {
+					usernames: { type: "array", items: { type: "string" } },
+					excludeBannedUsers: { type: "boolean", default: true },
+				},
+				required: [
+					"usernames",
+				],
+			},
+
+			response: {
+				[OK]: {
+					type: "object",
+					properties: {
+						data: {
+							type: "array",
+							items: {
+								type: "object",
+								properties: {
+									requestedUsername: { type: "string" },
+									id: { type: "integer" },
+									name: { type: "string" },
+									displayName: { type: "string" },
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+
+		async handler(request) {
+			const response = await axios.post("https://users.roblox.com/v1/usernames/users", request.body)
+			return response.data
+		},
+	})
+
+	fastify.route({
+		method: "POST",
 		path: "/thumbnails",
 
 		config: {
