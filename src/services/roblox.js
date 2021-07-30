@@ -8,10 +8,8 @@ async function RobloxService(fastify) {
 		path: "/users",
 
 		config: {
-			require: {
-				auth: true,
-				permissions: "roblox/users",
-			},
+			auth: true,
+			permissions: "roblox/users",
 		},
 
 		schema: {
