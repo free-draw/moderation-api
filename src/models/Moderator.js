@@ -41,6 +41,7 @@ ModeratorSchema.methods.serialize = function() {
 		name: this.name,
 		enabled: this.enabled,
 		accounts: this.accounts,
+		permissions: this.permissions,
 	}
 }
 

@@ -16,12 +16,14 @@ async function ModeratorsService(fastify) {
 			name: { type: "string" },
 			enabled: { type: "boolean" },
 			accounts: { type: "array", items: { $ref: "#ModeratorAccount" } },
+			permissions: { type: "array", items: { type: "string" } },
 		},
 		required: [
 			"id",
 			"name",
 			"enabled",
 			"accounts",
+			"permissions",
 		],
 	})
 
@@ -67,7 +69,7 @@ async function ModeratorsService(fastify) {
 
 		async handler(request) {
 			const moderator = await Moderator.findById(request.params.moderatorId)
-			
+
 			if (moderator) {
 				return {
 					moderator: moderator.serialize(),
@@ -152,7 +154,7 @@ async function ModeratorsService(fastify) {
 				},
 			},
 		},
-		
+
 		async handler(request, reply) {
 			const moderator = new Moderator({
 				name: request.body.name,
@@ -324,7 +326,7 @@ async function ModeratorsService(fastify) {
 
 			const [ accountType, accountId ] = parseAccount(request.params.accountType, request.params.accountId)
 			const accountIndex = moderator.accounts.findIndex(account => account.type === accountType && account.id === accountId)
-			
+
 			if (accountIndex !== -1) {
 				const account = moderator.accounts[accountIndex]
 				moderator.accounts.splice(accountIndex)
