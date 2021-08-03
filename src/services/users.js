@@ -23,7 +23,7 @@ async function UsersService(fastify) {
 			notes: { type: "string" },
 			snapshot: { type: "string" },
 			report: { type: "string" },
-			
+
 			timestamp: { type: "string", format: "date-time" },
 		},
 	})
@@ -140,6 +140,7 @@ async function UsersService(fastify) {
 					reason: { type: "string" },
 					notes: { type: "string" },
 					snapshot: { type: "string" },
+					moderator: { type: "string" },
 				},
 				required: [
 					"type",

@@ -11,6 +11,7 @@ const ActionSchema = new mongoose.Schema({
 	notes: String,
 	snapshot: { type: mongoose.Types.ObjectId, ref: "Snapshot" },
 	report: { type: mongoose.Types.ObjectId, ref: "Report" },
+	moderator: { type: mongoose.Types.ObjectId, ref: "Moderator" },
 
 	timestamp: { type: Date, default: Date.now },
 })
@@ -31,6 +32,7 @@ ActionSchema.methods.serialize = function() {
 		notes: this.notes,
 		snapshot: this.snapshot ? this.snapshot.toString() : null,
 		report: this.report ? this.report.toString() : null,
+		moderator: this.moderator ? this.moderator.toString() : null,
 
 		timestamp: this.timestamp,
 	}
@@ -78,6 +80,7 @@ UserSchema.methods.issueAction = function(data) {
 		notes: data.notes,
 		snapshot: data.snapshot,
 		report: data.report,
+		moderator: data.moderator,
 	})
 
 	this.actions.push(action)
