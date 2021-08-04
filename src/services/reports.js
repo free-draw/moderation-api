@@ -198,26 +198,33 @@ async function ReportsService(fastify) {
 			const report = await Report.findById(request.params.reportId)
 
 			if (report) {
-				const { type, reason, duration } = request.body
+				if (report.result === ReportResult.PENDING) {
+					const { type, reason, duration } = request.body
 
-				await report.accept({
-					type,
-					reason,
-					duration,
-					moderator: request.identity,
-				})
+					await report.accept({
+						type,
+						reason,
+						duration,
+						moderator: request.identity,
+					})
 
-				redis.publish("reportDelete", JSON.stringify(report.serialize()))
-				await Log.create({
-					type: LogType.ACCEPT_REPORT,
-					identity: request.identity,
-					data: {
+					redis.publish("reportDelete", JSON.stringify(report.serialize()))
+					await Log.create({
+						type: LogType.ACCEPT_REPORT,
+						identity: request.identity,
+						data: {
+							report: report.serialize(),
+						},
+					})
+
+					return {
 						report: report.serialize(),
-					},
-				})
-
-				return {
-					report: report.serialize(),
+					}
+				} else {
+					throw {
+						statusCode: BAD_REQUEST,
+						message: "Report is not pending",
+					}
 				}
 			} else {
 				throw {
@@ -250,19 +257,26 @@ async function ReportsService(fastify) {
 			const report = await Report.findById(request.params.reportId)
 
 			if (report) {
-				await report.decline()
+				if (report.result === ReportResult.PENDING) {
+					await report.decline()
 
-				redis.publish("reportDelete", JSON.stringify(report.serialize()))
-				await Log.create({
-					type: LogType.DECLINE_REPORT,
-					identity: request.identity,
-					data: {
+					redis.publish("reportDelete", JSON.stringify(report.serialize()))
+					await Log.create({
+						type: LogType.DECLINE_REPORT,
+						identity: request.identity,
+						data: {
+							report: report.serialize(),
+						},
+					})
+
+					return {
 						report: report.serialize(),
-					},
-				})
-
-				return {
-					report: report.serialize(),
+					}
+				} else {
+					throw {
+						statusCode: BAD_REQUEST,
+						message: "Report is not pending",
+					}
 				}
 			} else {
 				throw {
