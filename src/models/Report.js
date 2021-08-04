@@ -21,7 +21,7 @@ ReportSchema.virtual("id").get(function() {
 })
 
 ReportSchema.methods.accept = async function({ type, reason, duration, moderator }) {
-	const user = await User.findById(this.targetUserId)
+	const user = await User.get(this.targetUserId)
 
 	let expiry
 	if (duration) {
