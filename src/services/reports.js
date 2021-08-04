@@ -210,7 +210,7 @@ async function ReportsService(fastify) {
 					type,
 					reason,
 					duration,
-					moderator: identity,
+					moderator: request.identity,
 				})
 
 				redis.publish("reportDelete", JSON.stringify(report.serialize()))
