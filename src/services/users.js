@@ -43,10 +43,8 @@ async function UsersService(fastify) {
 		path: "/:userId",
 
 		config: {
-			require: {
-				auth: true,
-				permissions: "users/get/id",
-			},
+			auth: true,
+			permissions: "users/get/id",
 		},
 
 		schema: {
@@ -81,10 +79,8 @@ async function UsersService(fastify) {
 		path: "/",
 
 		config: {
-			require: {
-				auth: true,
-				permissions: "users/get/id/bulk",
-			},
+			auth: true,
+			permissions: "users/get/id/bulk",
 		},
 
 		schema: {
@@ -117,10 +113,8 @@ async function UsersService(fastify) {
 		path: "/:userId/actions",
 
 		config: {
-			require: {
-				auth: true,
-				permissions: "users/actions/create",
-			},
+			auth: true,
+			permissions: "users/actions/create",
 		},
 
 		schema: {
@@ -190,10 +184,8 @@ async function UsersService(fastify) {
 		path: "/:userId/action/:actionId",
 
 		config: {
-			require: {
-				auth: true,
-				permissions: "users/actions/delete/id",
-			},
+			auth: true,
+			permissions: "users/actions/delete/id",
 		},
 
 		schema: {

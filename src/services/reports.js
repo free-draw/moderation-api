@@ -67,10 +67,8 @@ async function ReportsService(fastify) {
 		path: "/",
 
 		config: {
-			require: {
-				auth: true,
-				permissions: "reports/create",
-			},
+			auth: true,
+			permissions: "reports/create",
 		},
 
 		schema: {
@@ -119,10 +117,8 @@ async function ReportsService(fastify) {
 		path: "/:reportId",
 
 		config: {
-			require: {
-				auth: true,
-				permissions: "reports/get/id",
-			},
+			auth: true,
+			permissions: "reports/get/id",
 		},
 
 		schema: {
@@ -164,10 +160,8 @@ async function ReportsService(fastify) {
 		path: "/:reportId/accept",
 
 		config: {
-			require: {
-				auth: true,
-				permissions: "reports/actions/accept",
-			},
+			auth: true,
+			permissions: "reports/actions/accept",
 		},
 
 		schema: {
