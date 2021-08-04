@@ -161,7 +161,8 @@ async function UsersService(fastify) {
 		async handler(request, reply) {
 			const user = await User.get(request.params.userId)
 
-			const action = user.issueAction(request.body)
+			const actionData = Object.assign({}, request.body, { moderator: request.identity ?? null })
+			const action = user.issueAction(actionData)
 			await user.save()
 
 			redis.publish("actionCreate", JSON.stringify({

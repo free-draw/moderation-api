@@ -205,7 +205,13 @@ async function ReportsService(fastify) {
 
 			if (report) {
 				const { type, reason, duration } = request.body
-				await report.accept(type, reason, duration)
+
+				await report.accept({
+					type,
+					reason,
+					duration,
+					moderator: identity,
+				})
 
 				redis.publish("reportDelete", JSON.stringify(report.serialize()))
 				await Log.create({
