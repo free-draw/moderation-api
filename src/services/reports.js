@@ -10,7 +10,7 @@ const ReportResult = require("../enum/ReportResult")
 
 async function ReportsService(fastify) {
 	const redis = fastify.redis
-	
+
 	fastify.addSchema({
 		$id: "#Report",
 		type: "object",
@@ -21,7 +21,7 @@ async function ReportsService(fastify) {
 			reason: { type: "string" },
 			notes: { type: "string" },
 			result: { type: "string", enum: Object.keys(ReportResult) },
-			snapshot: { type: "string" }, 
+			snapshot: { type: "string" },
 		},
 		required: [
 			"targetUserId",
@@ -61,7 +61,7 @@ async function ReportsService(fastify) {
 			}
 		},
 	})
-	
+
 	fastify.route({
 		method: "POST",
 		path: "/",
@@ -182,6 +182,7 @@ async function ReportsService(fastify) {
 				type: "object",
 				properties: {
 					type: { type: "string", enum: Object.keys(ActionType) },
+					reason: { type: "string", nullable: true },
 					duration: { type: "number", nullable: true },
 				},
 				required: [
@@ -203,7 +204,8 @@ async function ReportsService(fastify) {
 			const report = await Report.findById(request.params.reportId)
 
 			if (report) {
-				await report.accept(request.body.type, request.body.duration)
+				const { type, reason, duration } = request.body
+				await report.accept(type, reason, duration)
 
 				redis.publish("reportDelete", JSON.stringify(report.serialize()))
 				await Log.create({

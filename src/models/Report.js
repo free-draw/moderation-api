@@ -20,7 +20,7 @@ ReportSchema.virtual("id").get(function() {
 	return this._id.toString()
 })
 
-ReportSchema.methods.accept = async function(type, duration) {
+ReportSchema.methods.accept = async function(type, reason, duration) {
 	const user = await User.findById(this.targetUserId)
 
 	let expiry
@@ -33,14 +33,14 @@ ReportSchema.methods.accept = async function(type, duration) {
 		type,
 		expiry,
 
-		reason: this.reason,
+		reason: reason ?? this.reason,
 		notes: this.notes,
 		snapshot: this.snapshot,
 		report: this.id,
 	})
-	
+
 	await user.save()
-	
+
 	this.result = ReportResult.ACCEPTED
 	await this.save()
 }
