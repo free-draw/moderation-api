@@ -182,7 +182,7 @@ async function ReportsService(fastify) {
 				type: "object",
 				properties: {
 					type: { type: "string", enum: Object.keys(ActionType) },
-					duration: { type: "number" },
+					duration: { type: "number", nullable: true },
 				},
 				required: [
 					"type",
