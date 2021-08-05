@@ -38,12 +38,28 @@ ActionSchema.methods.serialize = function() {
 	}
 }
 
+ActionSchema.methods.isExpired = function() {
+	if (this.expiry) {
+		return Date.now() > this.expiry.getTime()
+	} else {
+		return false
+	}
+}
+
 const UserSchema = new mongoose.Schema({
 	_id: Number,
 	actions: [ ActionSchema ],
 	history: [ ActionSchema ],
 }, {
 	collection: "users",
+})
+
+UserSchema.post("init", function() {
+	const activeActions = this.actions.filter(action => !action.isExpired())
+	const expiredActions = this.actions.filter(action => action.isExpired())
+
+	this.actions = activeActions
+	this.history = [ ...this.history ].concat(expiredActions)
 })
 
 UserSchema.virtual("id").get(function() {
