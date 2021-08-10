@@ -95,7 +95,7 @@ async function AuthService(fastify) {
 					time: Date.now(),
 				})
 
-				reply.cookie("token", token)
+				reply.cookie("token", token, { path: "/" })
 				reply.redirect("/")
 
 				return { token, tokenType: "Bearer" }
@@ -184,7 +184,7 @@ async function AuthService(fastify) {
 					moderatorId: { type: "string" },
 				},
 			},
-			
+
 			body: {
 				type: "object",
 				properties: {
