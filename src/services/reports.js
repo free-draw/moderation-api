@@ -93,7 +93,7 @@ async function ReportsService(fastify) {
 				redis.publish("reportCreate", JSON.stringify(report.serialize()))
 				await Log.create({
 					type: LogType.CREATE_REPORT,
-					identity: request.identity,
+					source: request.identity,
 					data: {
 						report: report.serialize(),
 					},
@@ -211,7 +211,7 @@ async function ReportsService(fastify) {
 					redis.publish("reportDelete", JSON.stringify(report.serialize()))
 					await Log.create({
 						type: LogType.ACCEPT_REPORT,
-						identity: request.identity,
+						source: request.identity,
 						data: {
 							report: report.serialize(),
 						},
@@ -263,7 +263,7 @@ async function ReportsService(fastify) {
 					redis.publish("reportDelete", JSON.stringify(report.serialize()))
 					await Log.create({
 						type: LogType.DECLINE_REPORT,
-						identity: request.identity,
+						source: request.identity,
 						data: {
 							report: report.serialize(),
 						},

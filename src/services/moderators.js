@@ -163,7 +163,7 @@ async function ModeratorsService(fastify) {
 			await moderator.save()
 			await Log.create({
 				type: LogType.CREATE_MODERATOR,
-				identity: request.identity,
+				source: request.identity,
 				moderator: moderator.serialize(),
 			})
 
@@ -230,7 +230,7 @@ async function ModeratorsService(fastify) {
 
 				await Log.create({
 					type: LogType.CREATE_MODERATOR_ACCOUNT,
-					identity: request.identity,
+					source: request.identity,
 					moderator: moderator.serialize(),
 					account: account,
 				})
@@ -281,7 +281,7 @@ async function ModeratorsService(fastify) {
 
 			await Log.create({
 				type: LogType.DELETE_MODERATOR,
-				identity: request.identity,
+				source: request.identity,
 				moderator: moderator.serialize(),
 			})
 
@@ -334,7 +334,7 @@ async function ModeratorsService(fastify) {
 				await moderator.save()
 				await Log.create({
 					type: LogType.DELETE_MODERATOR_ACCOUNT,
-					identity: request.identity,
+					source: request.identity,
 					moderator: moderator.serialize(),
 					account: account,
 				})

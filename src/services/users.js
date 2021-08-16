@@ -166,7 +166,7 @@ async function UsersService(fastify) {
 			}))
 			await Log.create({
 				type: LogType.CREATE_ACTION,
-				identity: request.identity,
+				source: request.identity,
 				data: {
 					userId: user.id,
 					action: action.serialize(),
@@ -224,7 +224,7 @@ async function UsersService(fastify) {
 					}))
 					await Log.create({
 						type: LogType.DISCARD_ACTION_BY_ID,
-						identity: request.identity,
+						source: request.identity,
 						data: {
 							userId: user.id,
 							action: action.serialize(),
@@ -288,7 +288,7 @@ async function UsersService(fastify) {
 					}))
 					await Log.create({
 						type: LogType.DISCARD_ACTION_BY_TYPE,
-						identity: request.identity,
+						source: request.identity,
 						data: {
 							type: request.params.actionType,
 							userId: user.id,

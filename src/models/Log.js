@@ -5,7 +5,7 @@ const LogType = require("../enum/LogType")
 const LogSchema = new mongoose.Schema({
 	time: { type: Date, default: Date.now, index: true },
 	type: { type: String, enum: Object.keys(LogType) },
-	identity: { type: mongoose.Types.ObjectId, ref: "Moderator" },
+	source: { type: mongoose.Types.ObjectId, ref: "Moderator" },
 	data: Object,
 }, {
 	collection: "logs",

@@ -172,7 +172,7 @@ async function SnapshotsService(fastify) {
 
 			await Log.create({
 				type: LogType.CREATE_SNAPSHOT,
-				identity: request.identity,
+				source: request.identity,
 				data: {
 					snapshotId: snapshot.id,
 				},
