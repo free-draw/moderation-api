@@ -164,7 +164,9 @@ async function ModeratorsService(fastify) {
 			await Log.create({
 				type: LogType.CREATE_MODERATOR,
 				source: request.identity,
-				moderator: moderator.serialize(),
+				data: {
+					moderator: moderator.serialize(),
+				},
 			})
 
 			reply.status(CREATED)
@@ -231,8 +233,10 @@ async function ModeratorsService(fastify) {
 				await Log.create({
 					type: LogType.CREATE_MODERATOR_ACCOUNT,
 					source: request.identity,
-					moderator: moderator.serialize(),
-					account: account,
+					data: {
+						moderator: moderator.serialize(),
+						account: account,
+					},
 				})
 
 				reply.status(CREATED)
@@ -282,7 +286,9 @@ async function ModeratorsService(fastify) {
 			await Log.create({
 				type: LogType.DELETE_MODERATOR,
 				source: request.identity,
-				moderator: moderator.serialize(),
+				data: {
+					moderator: moderator.serialize(),
+				},
 			})
 
 			return {
@@ -335,8 +341,10 @@ async function ModeratorsService(fastify) {
 				await Log.create({
 					type: LogType.DELETE_MODERATOR_ACCOUNT,
 					source: request.identity,
-					moderator: moderator.serialize(),
-					account: account,
+					data: {
+						moderator: moderator.serialize(),
+						account: account,
+					},
 				})
 
 				return {
