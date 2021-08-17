@@ -246,7 +246,7 @@ async function UsersService(fastify) {
 
 	fastify.route({
 		method: "DELETE",
-		path: "/:userId/type/:actionType",
+		path: "/:userId/actions/type/:actionType",
 
 		config: {
 			auth: true,
