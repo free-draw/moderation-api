@@ -1,5 +1,6 @@
 const lodash = require("lodash")
 const clearUndefinedFields = require("./clearUndefinedFields")
+const toNumber = require("./toNumber")
 
 const SortDirection = require("../enum/SortDirection")
 const NavigationAction = require("../enum/NavigationAction")
@@ -7,14 +8,6 @@ const NavigationAction = require("../enum/NavigationAction")
 const sortMap = {
 	[SortDirection.ASCENDING]: 1,
 	[SortDirection.DESCENDING]: -1,
-}
-
-function toNumber(value) {
-	if (value instanceof Date) {
-		return value.getTime()
-	} else {
-		return parseInt(value)
-	}
 }
 
 class PaginatedCursor {
