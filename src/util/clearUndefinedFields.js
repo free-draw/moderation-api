@@ -1,4 +1,4 @@
-function clean(object) {
+function removeUndefinedFields(object) {
 	const newObject = {}
 
 	for (const key in object) {
@@ -11,4 +11,4 @@ function clean(object) {
 	return newObject
 }
 
-module.exports = clean
+module.exports = removeUndefinedFields

@@ -1,5 +1,5 @@
 const lodash = require("lodash")
-const clean = require("../util/clean")
+const clearUndefinedFields = require("./clearUndefinedFields")
 
 const SortDirection = require("../enum/SortDirection")
 const NavigationAction = require("../enum/NavigationAction")
@@ -75,7 +75,7 @@ class PaginatedCursor {
 		}
 
 		const results = await model
-			.find(clean({ ...options.filter, [options.sortProperty]: propertyFilter }))
+			.find(clearUndefinedFields({ ...options.filter, [options.sortProperty]: propertyFilter }))
 			.sort({ [options.sortProperty]: sortMap[options.sortDirection] })
 			.limit(options.pageSize)
 

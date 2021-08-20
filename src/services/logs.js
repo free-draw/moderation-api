@@ -1,6 +1,6 @@
 const { OK, BAD_REQUEST } = require("../util/statusCodes")
 const PaginatedCursor = require("../util/PaginatedCursor")
-const clean = require("../util/clean")
+const clearUndefinedFields = require("../util/clearUndefinedFields")
 
 const Log = require("../models/Log")
 
@@ -84,10 +84,10 @@ async function LogsService(fastify) {
 					pageSize: size ?? 2,
 					sortProperty: "time",
 					sortDirection: direction ?? SortDirection.DESCENDING,
-					filter: clean({
+					filter: clearUndefinedFields({
 						type,
 						source,
-						time: after || before ? clean({
+						time: after || before ? clearUndefinedFields({
 							$gt: after ? new Date(after) : undefined,
 							$lt: before ? new Date(before) : undefined,
 						}) : undefined,
