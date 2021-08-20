@@ -30,9 +30,9 @@ ActionSchema.methods.serialize = function() {
 
 		reason: this.reason,
 		notes: this.notes,
-		snapshot: this.snapshot ? this.snapshot.toString() : null,
-		report: this.report ? this.report.toString() : null,
-		moderator: this.moderator ? this.moderator.toString() : null,
+		snapshot: getObjectId(this.snapshot),
+		report: getObjectId(this.report),
+		moderator: getObjectId(this.moderator),
 
 		timestamp: this.timestamp,
 	}
