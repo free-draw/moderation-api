@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const getObjectId = require("../util/getObjectId")
 
 const User = require("./User")
 
@@ -58,7 +59,7 @@ ReportSchema.methods.serialize = function() {
 		fromUserId: this.fromUserId,
 		reason: this.reason,
 		notes: this.notes,
-		snapshot: this.snapshot.toString(),
+		snapshot: getObjectId(this.snapshot),
 	}
 }
 

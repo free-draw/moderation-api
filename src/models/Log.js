@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const getObjectId = require("../util/getObjectId")
 
 const LogType = require("../enum/LogType")
 
@@ -19,7 +20,7 @@ LogSchema.methods.serialize = function() {
 	return {
 		time: this.time,
 		type: this.type,
-		identity: this.identity.toString(),
+		identity: getObjectId(this.identity),
 		data: this.data,
 	}
 }
