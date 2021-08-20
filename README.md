@@ -4,5 +4,4 @@
 
 TODO:
 - Migrate to TypeScript
-- Logs web API
 - Maybe some tests?
