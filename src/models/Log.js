@@ -20,7 +20,7 @@ LogSchema.methods.serialize = function() {
 	return {
 		time: this.time,
 		type: this.type,
-		identity: getObjectId(this.identity),
+		source: getObjectId(this.source),
 		data: this.data,
 	}
 }
