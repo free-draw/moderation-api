@@ -292,7 +292,7 @@ async function UsersService(fastify) {
 						data: {
 							type: request.params.actionType,
 							userId: user.id,
-							actionId: action.serialize(),
+							action: action.serialize(),
 						},
 					})
 				}
