@@ -81,7 +81,7 @@ async function LogsService(fastify) {
 				}
 			} else {
 				cursor = PaginatedCursor.create(Log, {
-					pageSize: size ?? 2,
+					pageSize: size ?? 50,
 					sortProperty: "time",
 					sortDirection: direction ?? SortDirection.DESCENDING,
 					filter: clearUndefinedFields({
