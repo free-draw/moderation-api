@@ -16,7 +16,7 @@ const SnapshotSchema = new mongoose.Schema({
 		{
 			userId: Number,
 			type: { type: String, enum: Object.keys(SnapshotLogType) },
-			data: mongoose.Schema.Types.Mixed,
+			data: { type: mongoose.Schema.Types.Mixed, default: null },
 		},
 	],
 	canvas: [
