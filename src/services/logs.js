@@ -16,7 +16,7 @@ async function LogsService(fastify) {
 			time: { type: "string", format: "date-time" },
 			type: { type: "string", enum: Object.keys(LogType) },
 			source: { type: "string" },
-			data: { type: "object" },
+			data: {},
 		},
 		required: [
 			"time",

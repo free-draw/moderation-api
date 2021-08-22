@@ -7,7 +7,7 @@ const LogSchema = new mongoose.Schema({
 	time: { type: Date, default: Date.now, index: true },
 	type: { type: String, enum: Object.keys(LogType) },
 	source: { type: mongoose.Types.ObjectId, ref: "Moderator" },
-	data: Object,
+	data: { type: mongoose.Schema.Types.Mixed, default: null },
 }, {
 	collection: "logs",
 })
