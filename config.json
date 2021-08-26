@@ -16,7 +16,7 @@
 		"mod": [
 			"reports/actions/*",
 			"snapshots/get/**",
-			"logs/get/**"
+			"logs/get"
 		],
 
 		"basic": [
