@@ -19,6 +19,7 @@ async function ModeratorsService(fastify) {
 			permissions: { type: "array", items: { type: "string" } },
 		},
 		required: [
+			"id",
 			"name",
 			"enabled",
 			"accounts",
@@ -141,6 +142,10 @@ async function ModeratorsService(fastify) {
 				type: "object",
 				properties: {
 					name: { type: "string" },
+					permissions: {
+						type: "array",
+						items: { type: "string" },
+					},
 				},
 			},
 
@@ -155,8 +160,11 @@ async function ModeratorsService(fastify) {
 		},
 
 		async handler(request, reply) {
+			const { name, permissions } = request.body
+
 			const moderator = new Moderator({
-				name: request.body.name,
+				name, permissions,
+				enabled: true,
 			})
 
 			await moderator.save()
