@@ -91,13 +91,6 @@ async function ReportsService(fastify) {
 				const report = await Report.create(request.body)
 
 				redis.publish("reportCreate", JSON.stringify(report.serialize()))
-				await Log.create({
-					type: LogType.CREATE_REPORT,
-					source: request.identity,
-					data: {
-						report: report.serialize(),
-					},
-				})
 
 				reply.status(CREATED)
 				return {

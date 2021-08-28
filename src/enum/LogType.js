@@ -12,11 +12,7 @@ const LogType = enumerate("LogType", [
 	"CREATE_MODERATOR_ACCOUNT",
 	"DELETE_MODERATOR_ACCOUNT",
 
-	// Snapshots
-	"CREATE_SNAPSHOT",
-
 	// Reports
-	"CREATE_REPORT",
 	"ACCEPT_REPORT",
 	"DECLINE_REPORT",
 ])

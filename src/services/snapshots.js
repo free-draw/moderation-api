@@ -169,15 +169,6 @@ async function SnapshotsService(fastify) {
 			})
 
 			const snapshot = await Snapshot.create({ players, logs, canvas })
-
-			await Log.create({
-				type: LogType.CREATE_SNAPSHOT,
-				source: request.identity,
-				data: {
-					snapshotId: snapshot.id,
-				},
-			})
-
 			return {
 				snapshotId: snapshot.id,
 			}
