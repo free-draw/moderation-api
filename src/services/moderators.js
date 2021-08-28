@@ -19,7 +19,6 @@ async function ModeratorsService(fastify) {
 			permissions: { type: "array", items: { type: "string" } },
 		},
 		required: [
-			"id",
 			"name",
 			"enabled",
 			"accounts",
