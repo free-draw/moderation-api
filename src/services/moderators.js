@@ -361,6 +361,69 @@ async function ModeratorsService(fastify) {
 			}
 		},
 	})
+
+	fastify.route({
+		method: "PATCH",
+		path: "/:moderatorId",
+
+		config: {
+			auth: true,
+			permissions: "moderators/manage/update",
+		},
+
+		schema: {
+			params: {
+				type: "object",
+				properties: {
+					moderatorId: { type: "string" },
+				},
+			},
+
+			body: {
+				type: "object",
+				properties: {
+					name: { type: "string" },
+					enabled: { type: "boolean" },
+				},
+			},
+
+			response: {
+				[OK]: {
+					type: "object",
+					properties: {
+						moderator: { $ref: "#Moderator" },
+					},
+				},
+			},
+		},
+
+		async handler(request) {
+			const { name, enabled } = request.body
+
+			const moderator = await Moderator.findById(request.params.moderatorId)
+
+			if (name) {
+				moderator.name = name
+			}
+			if (enabled) {
+				moderator.enabled = enabled
+			}
+
+			await moderator.save()
+			await Log.create({
+				type: LogType.UPDATE_MODERATOR,
+				identity: request.identity,
+				data: {
+					name: name ?? null,
+					enabled: enabled ?? null,
+				},
+			})
+
+			return {
+				moderator: moderator.serialize(),
+			}
+		},
+	})
 }
 
 ModeratorsService.autoPrefix = "/moderators"
