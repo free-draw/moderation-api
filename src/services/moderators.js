@@ -384,6 +384,10 @@ async function ModeratorsService(fastify) {
 				properties: {
 					name: { type: "string" },
 					enabled: { type: "boolean" },
+					permissions: {
+						type: "array",
+						items: { type: "string" },
+					},
 				},
 			},
 
@@ -398,16 +402,13 @@ async function ModeratorsService(fastify) {
 		},
 
 		async handler(request) {
-			const { name, enabled } = request.body
+			const { name, enabled, permissions } = request.body
 
 			const moderator = await Moderator.findById(request.params.moderatorId)
 
-			if (name) {
-				moderator.name = name
-			}
-			if (enabled) {
-				moderator.enabled = enabled
-			}
+			if (name) moderator.name = name
+			if (enabled) moderator.enabled = enabled
+			if (permissions) moderator.permissions = permissions
 
 			await moderator.save()
 			await Log.create({
@@ -416,6 +417,7 @@ async function ModeratorsService(fastify) {
 				data: {
 					name: name ?? null,
 					enabled: enabled ?? null,
+					permissions: permissions ?? null,
 				},
 			})
 
