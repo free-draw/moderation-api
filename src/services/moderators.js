@@ -1,5 +1,6 @@
 const { OK, CREATED, NOT_FOUND } = require("../util/statusCodes")
 const parseAccount = require("../util/parseAccount")
+const clearUndefinedFields = require("../util/clearUndefinedFields")
 
 const AccountType = require("../enum/AccountType")
 const LogType = require("../enum/LogType")
@@ -382,11 +383,12 @@ async function ModeratorsService(fastify) {
 			body: {
 				type: "object",
 				properties: {
-					name: { type: "string" },
-					enabled: { type: "boolean" },
+					name: { type: "string", nullable: true, },
+					enabled: { type: "boolean", nullable: true, },
 					permissions: {
 						type: "array",
 						items: { type: "string" },
+						nullable: true,
 					},
 				},
 			},
@@ -415,9 +417,8 @@ async function ModeratorsService(fastify) {
 				type: LogType.UPDATE_MODERATOR,
 				identity: request.identity,
 				data: {
-					name: name ?? null,
-					enabled: enabled ?? null,
-					permissions: permissions ?? null,
+					moderator: moderator.serialize(),
+					changed: clearUndefinedFields({ name, enabled, permissions }),
 				},
 			})
 
