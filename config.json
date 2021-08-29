@@ -16,13 +16,14 @@
 		"mod": [
 			"reports/actions/*",
 			"snapshots/get/**",
-			"logs/get"
+			"logs/get",
+			"group:basic"
 		],
 
 		"basic": [
 			"auth/me",
 			"roblox/**",
-			"moderators/get"
+			"moderators/get/**"
 		]
 	}
 }
