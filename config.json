@@ -17,6 +17,7 @@
 			"reports/actions/*",
 			"snapshots/get/**",
 			"logs/get",
+			"reports/list",
 			"group:basic"
 		],
 
