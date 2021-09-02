@@ -14,10 +14,11 @@
 		],
 
 		"mod": [
-			"reports/actions/*",
 			"snapshots/get/**",
 			"logs/get",
 			"users/get/**",
+			"reports/get/**",
+			"reports/actions/*",
 			"reports/list",
 			"group:basic"
 		],
