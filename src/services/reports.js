@@ -194,7 +194,7 @@ async function ReportsService(fastify) {
 				if (report.result === ReportResult.PENDING) {
 					const { type, reason, duration } = request.body
 
-					await report.accept({
+					const action = await report.accept({
 						type,
 						reason,
 						duration,
@@ -207,6 +207,7 @@ async function ReportsService(fastify) {
 						source: request.identity,
 						data: {
 							report: report.serialize(),
+							action: action.serialize(),
 						},
 					})
 

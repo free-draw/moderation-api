@@ -30,7 +30,7 @@ ReportSchema.methods.accept = async function({ type, reason, duration, moderator
 		expiry.setSeconds(expiry.getSeconds() + duration)
 	}
 
-	user.issueAction({
+	const action = user.issueAction({
 		type,
 		expiry,
 
@@ -40,11 +40,12 @@ ReportSchema.methods.accept = async function({ type, reason, duration, moderator
 		report: this.id,
 		moderator,
 	})
-
 	await user.save()
 
 	this.result = ReportResult.ACCEPTED
 	await this.save()
+
+	return action
 }
 
 ReportSchema.methods.decline = async function() {
