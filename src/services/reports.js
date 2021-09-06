@@ -16,11 +16,11 @@ async function ReportsService(fastify) {
 		type: "object",
 		properties: {
 			id: { type: "string" },
+			result: { type: "string", enum: Object.keys(ReportResult) },
 			targetUserId: { type: "number" },
 			fromUserId: { type: "number" },
 			reason: { type: "string" },
 			notes: { type: "string" },
-			result: { type: "string", enum: Object.keys(ReportResult) },
 			snapshot: { type: "string" },
 		},
 		required: [

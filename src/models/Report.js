@@ -56,6 +56,7 @@ ReportSchema.methods.decline = async function() {
 ReportSchema.methods.serialize = function() {
 	return {
 		id: this.id,
+		result: this.result,
 		targetUserId: this.targetUserId,
 		fromUserId: this.fromUserId,
 		reason: this.reason,
