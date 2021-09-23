@@ -87,7 +87,12 @@ UserSchema.methods.filterActions = function(filter) {
 	return filteredActions
 }
 
-UserSchema.methods.issueAction = function(data) {
+UserSchema.methods.createAction = function(data) {
+	if (data.duration) {
+		data = { ...data, expiry: new Date(Date.now() + data.duration * 1000) }
+		delete data.duration
+	}
+
 	const action = this.actions.create({
 		type: data.type,
 		data: data.data,

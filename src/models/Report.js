@@ -24,15 +24,10 @@ ReportSchema.virtual("id").get(function() {
 ReportSchema.methods.accept = async function({ type, reason, duration, moderator }) {
 	const user = await User.get(this.targetUserId)
 
-	let expiry
-	if (duration) {
-		expiry = new Date()
-		expiry.setSeconds(expiry.getSeconds() + duration)
-	}
-
 	const action = user.issueAction({
 		type,
 		expiry,
+		duration,
 
 		reason: reason ?? this.reason,
 		notes: this.notes,

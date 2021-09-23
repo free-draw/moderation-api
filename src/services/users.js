@@ -132,10 +132,10 @@ async function UsersService(fastify) {
 					type: { type: "string", enum: Object.keys(ActionType) },
 					data: { type: "object" },
 					expiry: { type: "string", format: "date-time" },
+					duration: { type: "number" },
 					reason: { type: "string" },
 					notes: { type: "string" },
 					snapshot: { type: "string" },
-					moderator: { type: "string" },
 				},
 				required: [
 					"type",
@@ -155,9 +155,7 @@ async function UsersService(fastify) {
 
 		async handler(request, reply) {
 			const user = await User.get(request.params.userId)
-
-			const actionData = Object.assign({}, request.body, { moderator: request.identity ?? null })
-			const action = user.issueAction(actionData)
+			const action = user.createAction({ ...request.body, moderator: request.identity ?? null })
 			await user.save()
 
 			redis.publish("actionCreate", JSON.stringify({
