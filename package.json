@@ -8,7 +8,7 @@
     "dev": "node . | pino-pretty -c -t"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "fastify": "^3.12.0",
     "fastify-autoload": "^3.5.0",
     "fastify-cookie": "^5.3.1",
