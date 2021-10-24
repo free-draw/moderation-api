@@ -1,7 +1,6 @@
-FROM node:14.2.0-alpine3.11
-WORKDIR /app
-COPY ["package.json", "package-lock.json*", "./"]
-RUN "npm" "install" "--production"
+FROM node:16
+RUN curl -f https://get.pnpm.io/v6.14.js | node - add --global pnpm
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile --prod
 COPY . .
-ENV NODE_ENV=production
-CMD "npm" "start"
+CMD [ "pnpm", "run", "start" ]

@@ -1,7 +1,7 @@
-<div align="center">
-	The web API handling all moderation actions for Free Draw.
-</div>
+# Moderation API
 
-TODO:
-- Migrate to TypeScript
-- Maybe some tests?
+REST API handling all interactions for the Free Draw moderation system.
+
+## Moderation System
+
+**[API (moderation-api)](https://github.com/free-draw/moderation-api)**: REST API handling all interactions
