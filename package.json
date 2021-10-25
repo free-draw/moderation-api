@@ -8,6 +8,13 @@
     "check": "tsc --noEmit"
   },
   "dependencies": {
+    "@types/app-root-path": "^1.2.4",
+    "@types/ioredis": "^4.27.6",
+    "@types/lodash": "^4.14.175",
+    "@types/minimatch": "^3.0.5",
+    "@types/node": "^16.10.3",
+    "@types/pino": "^6.3.11",
+    "@types/yargs": "^17.0.3",
     "app-root-path": "^3.0.0",
     "axios": "^0.23.0",
     "fastify": "^3.22.0",
@@ -22,24 +29,17 @@
     "ioredis": "^4.27.10",
     "lodash": "^4.17.21",
     "make-promises-safe": "^5.1.0",
+    "json-schema-typed": "^7.0.3",
     "minimatch": "^3.0.4",
     "mongoose": "^6.0.10",
     "pino": "^6.13.3",
+    "typescript": "^4.4.3",
     "ts-node": "^10.4.0",
     "yargs": "^17.2.1"
   },
   "devDependencies": {
-    "@types/app-root-path": "^1.2.4",
-    "@types/ioredis": "^4.27.6",
-    "@types/lodash": "^4.14.175",
-    "@types/minimatch": "^3.0.5",
-    "@types/node": "^16.10.3",
-    "@types/pino": "^6.3.11",
-    "@types/yargs": "^17.0.3",
-    "dotenv": "^10.0.0",
-    "json-schema-typed": "^7.0.3",
-    "pino-pretty": "^7.0.1",
     "tsc": "^2.0.3",
-    "typescript": "^4.4.3"
+    "dotenv": "^10.0.0",
+    "pino-pretty": "^7.0.1"
   }
 }
