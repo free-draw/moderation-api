@@ -34,6 +34,13 @@ specifiers:
   yargs: ^17.2.1
 
 dependencies:
+  '@types/app-root-path': 1.2.4
+  '@types/ioredis': 4.27.6
+  '@types/lodash': 4.14.175
+  '@types/minimatch': 3.0.5
+  '@types/node': 16.10.3
+  '@types/pino': 6.3.11
+  '@types/yargs': 17.0.3
   app-root-path: 3.0.0
   axios: 0.23.0
   fastify: 3.22.0
@@ -46,27 +53,20 @@ dependencies:
   fastify-plugin: 3.0.0
   http-status-codes: 2.1.4
   ioredis: 4.27.10
+  json-schema-typed: 7.0.3
   lodash: 4.17.21
   make-promises-safe: 5.1.0
   minimatch: 3.0.4
   mongoose: 6.0.10
   pino: 6.13.3
   ts-node: 10.4.0_8304ecd715830f7c190b4d1dea90b100
+  typescript: 4.4.3
   yargs: 17.2.1
 
 devDependencies:
-  '@types/app-root-path': 1.2.4
-  '@types/ioredis': 4.27.6
-  '@types/lodash': 4.14.175
-  '@types/minimatch': 3.0.5
-  '@types/node': 16.10.3
-  '@types/pino': 6.3.11
-  '@types/yargs': 17.0.3
   dotenv: 10.0.0
-  json-schema-typed: 7.0.3
   pino-pretty: 7.0.1
   tsc: 2.0.3
-  typescript: 4.4.3
 
 packages:
 
@@ -106,13 +106,13 @@ packages:
 
   /@types/app-root-path/1.2.4:
     resolution: {integrity: sha1-p4twMoKzKsVN52j1US7MNWmRncc=}
-    dev: true
+    dev: false
 
   /@types/ioredis/4.27.6:
     resolution: {integrity: sha512-3FeeDlVQ2sdbvU436XnZzOiDMMgFbKfIsiUF2BnJnH7xxqCbJ1teJwfcu9fLwnfmV0qH2W1Vg3jFrtOehNIkMA==}
     dependencies:
       '@types/node': 16.10.3
-    dev: true
+    dev: false
 
   /@types/jsonwebtoken/8.5.5:
     resolution: {integrity: sha512-OGqtHQ7N5/Ap/TUwO6IgHDuLiAoTmHhGpNvgkCm/F4N6pKzx/RBSfr2OXZSwC6vkfnsEdb6+7DNZVtiXiwdwFw==}
@@ -122,26 +122,25 @@ packages:
 
   /@types/lodash/4.14.175:
     resolution: {integrity: sha512-XmdEOrKQ8a1Y/yxQFOMbC47G/V2VDO1GvMRnl4O75M4GW/abC5tnfzadQYkqEveqRM1dEJGFFegfPNA2vvx2iw==}
-    dev: true
+    dev: false
 
   /@types/minimatch/3.0.5:
     resolution: {integrity: sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==}
-    dev: true
+    dev: false
 
   /@types/node/16.10.3:
     resolution: {integrity: sha512-ho3Ruq+fFnBrZhUYI46n/bV2GjwzSkwuT4dTf0GkuNFmnb8nq4ny2z9JEVemFi6bdEJanHLlYfy9c6FN9B9McQ==}
+    dev: false
 
   /@types/pino-pretty/4.7.1:
     resolution: {integrity: sha512-l1ntNXdpVWsnPYUk5HyO5Lxfr38zLCgxVfEn/9Zhhm+nGF04/BiIou/m8XPwvoVZLV+livUo79VdHXMJPfUYxA==}
     dependencies:
       '@types/pino': 6.3.11
-    dev: true
 
   /@types/pino-std-serializers/2.4.1:
     resolution: {integrity: sha512-17XcksO47M24IVTVKPeAByWUd3Oez7EbIjXpSbzMPhXVzgjGtrOa49gKBwxH9hb8dKv58OelsWQ+A1G1l9S3wQ==}
     dependencies:
       '@types/node': 16.10.3
-    dev: true
 
   /@types/pino/6.3.11:
     resolution: {integrity: sha512-S7+fLONqSpHeW9d7TApUqO6VN47KYgOXhCNKwGBVLHObq8HhaAYlVqUNdfnvoXjCMiwE5xcPm/5R2ZUh8bgaXQ==}
@@ -150,7 +149,7 @@ packages:
       '@types/pino-pretty': 4.7.1
       '@types/pino-std-serializers': 2.4.1
       sonic-boom: 2.3.0
-    dev: true
+    dev: false
 
   /@types/webidl-conversions/6.1.1:
     resolution: {integrity: sha512-XAahCdThVuCFDQLT7R7Pk/vqeObFNL3YqRyFZg+AqAP/W1/w3xHaIxuW7WszQqTbIBOPRcItYJIou3i/mppu3Q==}
@@ -165,13 +164,12 @@ packages:
 
   /@types/yargs-parser/20.2.1:
     resolution: {integrity: sha512-7tFImggNeNBVMsn0vLrpn1H1uPrUBdnARPTpZoitY37ZrdJREzf7I16tMrlK3hen349gr1NYh8CmZQa7CTG6Aw==}
-    dev: true
 
   /@types/yargs/17.0.3:
     resolution: {integrity: sha512-K7rm3Ke3ag/pAniBe80A6J6fjoqRibvCrl3dRmtXV9eCEt9h/pZwmHX9MzjQVUc/elneQTL4Ky7XKorC71Lmxw==}
     dependencies:
       '@types/yargs-parser': 20.2.1
-    dev: true
+    dev: false
 
   /abstract-logging/2.0.1:
     resolution: {integrity: sha512-2BjRTZxTPvheOvGbBslFSYOUkr+SjPtOnrLP33f+VIWLzezQpZcqVg7ja3L4dBXmzzgwT+a029jRx5PCi3JuiA==}
@@ -695,7 +693,7 @@ packages:
 
   /json-schema-typed/7.0.3:
     resolution: {integrity: sha512-7DE8mpG+/fVw+dTpjbxnx47TaMnDfOI1jwft9g1VybltZCduyRQPJPvc+zzKY9WPHxhPWczyFuYa6I8Mw4iU5A==}
-    dev: true
+    dev: false
 
   /jsonwebtoken/8.5.1:
     resolution: {integrity: sha512-XjwVfRS6jTMsqYs0EsuJ4LGxXV14zQybNd4L2r0UvbVnSF9Af8x7p5MzbJ90Ioz/9TI41/hTCvznF/loiSzn8w==}
@@ -1112,7 +1110,6 @@ packages:
     resolution: {integrity: sha512-lEPaw654/4/rCJHz/TNzV4GIthqCq4inO+O3aFhbdOvR1bE+2//sVkcS+xlqPdb8gdjQCEE0hE9BuvnVixbnWQ==}
     dependencies:
       atomic-sleep: 1.0.0
-    dev: true
 
   /sparse-bitfield/3.0.3:
     resolution: {integrity: sha1-/0rm5oZWBWuks+eSqzM004JzyhE=}
@@ -1239,7 +1236,7 @@ packages:
     resolution: {integrity: sha512-4xfscpisVgqqDfPaJo5vkd+Qd/ItkoagnHpufr+i2QCHBsNYp+G7UAoyFl8aPtx879u38wPV65rZ8qbGZijalA==}
     engines: {node: '>=4.2.0'}
     hasBin: true
-    dev: true
+    dev: false
 
   /uri-js/4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
