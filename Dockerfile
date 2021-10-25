@@ -10,7 +10,7 @@ RUN npm install --global pnpm
 COPY package.json pnpm-lock.yaml ./
 
 # Install all dependencies
-RUN pnpm install
+RUN pnpm install --prod
 
 # Copy source files
 COPY . .
