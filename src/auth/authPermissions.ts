@@ -8,7 +8,7 @@ import TokenType from "../types/enum/TokenType"
 import Permission, { PermissionLiteral } from "../types/Permission"
 import config from "../util/option/config"
 
-const parsedPermissionCache = {} as { [permission: Permission]: PermissionData }
+const parsedPermissionCache = {} as Record<string, PermissionData>
 const groups = mapValues(config.permissions, parsePermissions)
 
 type PermissionData = {
