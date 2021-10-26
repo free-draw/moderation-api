@@ -83,7 +83,7 @@ export default async function(fastify: FastifyInstance) {
 			} as ModeratorAccount
 
 			if (request.identity) {
-				LogModel.push(request.identity, LogType.UNLINK_MODERATOR_ACCOUNT, {
+				await LogModel.push(request.identity, LogType.UNLINK_MODERATOR_ACCOUNT, {
 					moderatorId: moderator._id.toString(),
 					account,
 				})

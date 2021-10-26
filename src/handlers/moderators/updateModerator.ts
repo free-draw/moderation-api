@@ -91,7 +91,7 @@ export default async function(fastify: FastifyInstance) {
 			await moderator.save()
 
 			if (request.identity) {
-				LogModel.push(request.identity, LogType.UPDATE_MODERATOR, {
+				await LogModel.push(request.identity, LogType.UPDATE_MODERATOR, {
 					moderatorId: moderator._id.toString(),
 					name, permissions, active,
 				})
