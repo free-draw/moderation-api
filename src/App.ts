@@ -13,6 +13,7 @@ import FastifyJWT from "fastify-jwt"
 
 import DecoratePlugin from "./plugins/Decorate"
 import SchemaPlugin from "./plugins/Schema"
+import AppPublish from "./types/overloads/AppPublish"
 
 class App {
 	public fastify: FastifyInstance
@@ -23,6 +24,8 @@ class App {
 		this.redis = new IORedis(env.redisUrl)
 	}
 
+	public async publish<K extends keyof AppPublish>(name: K, data: AppPublish[K]): Promise<void>
+	public async publish<S extends string>(name: Exclude<S, keyof AppPublish>, data: any): Promise<void>
 	public async publish(name: string, data: any): Promise<void> {
 		await this.redis.publish(name, JSON.stringify(data))
 	}
