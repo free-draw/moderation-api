@@ -1,6 +1,7 @@
 import { FastifyInstance, FastifyRequest, RouteHandlerMethod } from "fastify"
 import { StatusCodes } from "http-status-codes"
 import { JSONSchema } from "json-schema-typed"
+import App from "../../../App"
 import authIdentity from "../../../auth/authIdentity"
 import authPermissions from "../../../auth/authPermissions"
 import authToken from "../../../auth/authToken"
@@ -82,6 +83,13 @@ export default async function(fastify: FastifyInstance) {
 			actions.forEach(action => action.active = false)
 
 			await user.save()
+
+			actions.forEach((action) => {
+				App.publish("actionDelete", {
+					userId: user._id,
+					action: action.serialize(),
+				})
+			})
 
 			if (request.identity) {
 				await LogModel.push(request.identity, LogType.DELETE_ACTIONS_BULK, {

@@ -1,6 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest, RouteHandlerMethod } from "fastify"
 import { StatusCodes } from "http-status-codes"
 import { JSONSchema } from "json-schema-typed"
+import App from "../../App"
 import authIdentity from "../../auth/authIdentity"
 import authPermissions from "../../auth/authPermissions"
 import authToken from "../../auth/authToken"
@@ -64,9 +65,13 @@ export default async function(fastify: FastifyInstance) {
 		handler: async function(request: CreateReportRequest, reply: FastifyReply) {
 			const report = await ReportModel.create(request.body) as ReportDocument
 
+			App.publish("reportCreate", {
+				report: report.serialize(),
+			})
+
 			reply.status(StatusCodes.CREATED)
 			return {
-				report: report.serialize(),
+				reportId: report._id.toString(),
 			}
 		} as RouteHandlerMethod,
 	})

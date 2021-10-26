@@ -2,6 +2,7 @@ import { FastifyInstance, FastifyRequest, RouteHandlerMethod } from "fastify"
 import createError from "fastify-error"
 import { StatusCodes } from "http-status-codes"
 import { JSONSchema } from "json-schema-typed"
+import App from "../../App"
 import authIdentity from "../../auth/authIdentity"
 import authPermissions from "../../auth/authPermissions"
 import authToken from "../../auth/authToken"
@@ -65,12 +66,12 @@ export default async function(fastify: FastifyInstance) {
 				[StatusCodes.OK]: {
 					type: "object",
 					properties: {
-						action: { $ref: "Action" },
-						report: { $ref: "Report" },
+						userId: { type: "string" },
+						actionId: { type: "string" },
 					},
 					required: [
-						"action",
-						"report",
+						"userId",
+						"actionId",
 					],
 					additionalProperties: false,
 				} as JSONSchema,
@@ -89,9 +90,18 @@ export default async function(fastify: FastifyInstance) {
 			const action = await report.accept(request.body)
 			await report.save()
 
-			return {
-				action: action.serialize(),
+			App.publish("reportDelete", {
 				report: report.serialize(),
+			})
+
+			App.publish("actionCreate", {
+				userId: report.target,
+				action: action.serialize(),
+			})
+
+			return {
+				userId: report.target,
+				actionId: action._id.toString(),
 			}
 		} as RouteHandlerMethod,
 	})

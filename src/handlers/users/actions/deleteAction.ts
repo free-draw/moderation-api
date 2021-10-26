@@ -2,6 +2,7 @@ import { FastifyInstance, FastifyRequest, RouteHandlerMethod } from "fastify"
 import createError from "fastify-error"
 import { StatusCodes } from "http-status-codes"
 import { JSONSchema } from "json-schema-typed"
+import App from "../../../App"
 import authIdentity from "../../../auth/authIdentity"
 import authPermissions from "../../../auth/authPermissions"
 import authToken from "../../../auth/authToken"
@@ -74,6 +75,11 @@ export default async function(fastify: FastifyInstance) {
 					action: action.serialize(),
 				})
 			}
+
+			App.publish("actionDelete", {
+				userId: user._id,
+				action: action.serialize(),
+			})
 
 			return {
 				action: action.serialize(),

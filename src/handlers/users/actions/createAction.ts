@@ -1,11 +1,12 @@
 import { FastifyInstance, FastifyReply, FastifyRequest, RouteHandlerMethod } from "fastify"
 import { StatusCodes } from "http-status-codes"
 import { JSONSchema } from "json-schema-typed"
+import App from "../../../App"
 import authIdentity from "../../../auth/authIdentity"
 import authPermissions from "../../../auth/authPermissions"
 import authToken from "../../../auth/authToken"
 import LogModel from "../../../model/Log"
-import UserModel from "../../../model/User"
+import UserModel, { UserDocument } from "../../../model/User"
 import ActionType from "../../../types/enum/ActionType"
 import LogType from "../../../types/enum/LogType"
 import ObjectId from "../../../types/ObjectId"
@@ -69,10 +70,10 @@ export default async function(fastify: FastifyInstance) {
 				[StatusCodes.CREATED]: {
 					type: "object",
 					properties: {
-						actionId: { type: "string" },
+						action: { $ref: "Action" },
 					},
 					required: [
-						"actionId",
+						"action",
 					],
 					additionalProperties: false,
 				},
@@ -97,9 +98,14 @@ export default async function(fastify: FastifyInstance) {
 				})
 			}
 
+			App.publish("actionCreate", {
+				userId: user._id,
+				action: action.serialize(),
+			})
+
 			reply.status(StatusCodes.CREATED)
 			return {
-				actionId: action._id.toString(),
+				action: action.serialize(),
 			}
 		} as RouteHandlerMethod,
 	})
