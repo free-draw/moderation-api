@@ -29,7 +29,6 @@ specifiers:
   pino: ^6.13.3
   pino-pretty: ^7.0.1
   ts-node: ^10.4.0
-  tsc: ^2.0.3
   typescript: ^4.4.3
   yargs: ^17.2.1
 
@@ -66,7 +65,6 @@ dependencies:
 devDependencies:
   dotenv: 10.0.0
   pino-pretty: 7.0.1
-  tsc: 2.0.3
 
 packages:
 
@@ -136,11 +134,13 @@ packages:
     resolution: {integrity: sha512-l1ntNXdpVWsnPYUk5HyO5Lxfr38zLCgxVfEn/9Zhhm+nGF04/BiIou/m8XPwvoVZLV+livUo79VdHXMJPfUYxA==}
     dependencies:
       '@types/pino': 6.3.11
+    dev: false
 
   /@types/pino-std-serializers/2.4.1:
     resolution: {integrity: sha512-17XcksO47M24IVTVKPeAByWUd3Oez7EbIjXpSbzMPhXVzgjGtrOa49gKBwxH9hb8dKv58OelsWQ+A1G1l9S3wQ==}
     dependencies:
       '@types/node': 16.10.3
+    dev: false
 
   /@types/pino/6.3.11:
     resolution: {integrity: sha512-S7+fLONqSpHeW9d7TApUqO6VN47KYgOXhCNKwGBVLHObq8HhaAYlVqUNdfnvoXjCMiwE5xcPm/5R2ZUh8bgaXQ==}
@@ -164,6 +164,7 @@ packages:
 
   /@types/yargs-parser/20.2.1:
     resolution: {integrity: sha512-7tFImggNeNBVMsn0vLrpn1H1uPrUBdnARPTpZoitY37ZrdJREzf7I16tMrlK3hen349gr1NYh8CmZQa7CTG6Aw==}
+    dev: false
 
   /@types/yargs/17.0.3:
     resolution: {integrity: sha512-K7rm3Ke3ag/pAniBe80A6J6fjoqRibvCrl3dRmtXV9eCEt9h/pZwmHX9MzjQVUc/elneQTL4Ky7XKorC71Lmxw==}
@@ -1226,11 +1227,6 @@ packages:
       typescript: 4.4.3
       yn: 3.1.1
     dev: false
-
-  /tsc/2.0.3:
-    resolution: {integrity: sha512-SN+9zBUtrpUcOpaUO7GjkEHgWtf22c7FKbKCA4e858eEM7Qz86rRDpgOU2lBIDf0fLCsEg65ms899UMUIB2+Ow==}
-    hasBin: true
-    dev: true
 
   /typescript/4.4.3:
     resolution: {integrity: sha512-4xfscpisVgqqDfPaJo5vkd+Qd/ItkoagnHpufr+i2QCHBsNYp+G7UAoyFl8aPtx879u38wPV65rZ8qbGZijalA==}
