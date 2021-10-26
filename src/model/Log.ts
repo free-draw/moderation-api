@@ -1,5 +1,6 @@
 import { Schema, model, EnforceDocument, Model } from "mongoose"
 import App from "../App"
+import LogTypeData from "../types/enum/data/LogTypeData"
 import LogType from "../types/enum/LogType"
 import Log from "../types/schema/Log"
 import Ref from "../types/util/Ref"
@@ -46,7 +47,7 @@ LogSchema.method("serialize", function(this: LogDocument): Log {
 })
 
 interface LogModel extends Model<LogDocument> {
-	push(moderator: ModeratorDocument | Schema.Types.ObjectId, type: LogType, data?: any): Promise<LogDocument>,
+	push<E extends LogType>(moderator: ModeratorDocument | Schema.Types.ObjectId, type: E, data: LogTypeData[E]): Promise<LogDocument>,
 }
 
 export default model("Log", LogSchema) as LogModel

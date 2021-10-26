@@ -67,7 +67,9 @@ export default async function(fastify: FastifyInstance) {
 			const moderator = await ModeratorModel.create(request.body) as ModeratorDocument
 
 			if (request.identity) {
-				await LogModel.push(request.identity, LogType.CREATE_MODERATOR, request.body)
+				await LogModel.push(request.identity, LogType.CREATE_MODERATOR, {
+					moderatorId: moderator._id.toString(),
+				})
 			}
 
 			reply.status(StatusCodes.CREATED)
