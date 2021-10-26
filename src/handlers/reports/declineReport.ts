@@ -6,7 +6,9 @@ import App from "../../App"
 import authIdentity from "../../auth/authIdentity"
 import authPermissions from "../../auth/authPermissions"
 import authToken from "../../auth/authToken"
+import LogModel from "../../model/Log"
 import ReportModel, { ReportDocument } from "../../model/Report"
+import LogType from "../../types/enum/LogType"
 
 const ReportNotFoundError = createError(
 	"NOT_FOUND",
@@ -62,6 +64,12 @@ export default async function(fastify: FastifyInstance) {
 			if (!report) throw new ReportNotFoundError()
 			report.decline()
 			await report.save()
+
+			if (request.identity) {
+				await LogModel.push(request.identity, LogType.DECLINE_REPORT, {
+					reportId: report._id.toString(),
+				})
+			}
 
 			App.publish("reportDelete", {
 				report: report.serialize(),
