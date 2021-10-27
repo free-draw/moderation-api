@@ -13,11 +13,16 @@ type LogDocument = EnforceDocument<LogDocumentData, {
 }, {}>
 
 const LogSchema = new Schema<LogDocumentData>({
-	time: { type: Date, default: () => new Date(), required: true, index: true },
-	type: { type: String, enum: Object.keys(LogType), required: true, index: true },
+	time: { type: Date, default: () => new Date(), required: true },
+	type: { type: String, enum: Object.keys(LogType), required: true },
 	data: { type: Schema.Types.Mixed },
-	moderator: { type: Schema.Types.ObjectId, ref: "Moderator", required: true, index: true },
+	moderator: { type: Schema.Types.ObjectId, ref: "Moderator", required: true },
 })
+
+LogSchema.index({ time: -1 })
+LogSchema.index({ time: -1, type: 1 })
+LogSchema.index({ time: -1, moderator: 1 })
+LogSchema.index({ time: -1, type: 1, moderator: 1 })
 
 LogSchema.static("push", async function(
 	moderator: ModeratorDocument | Schema.Types.ObjectId,

@@ -13,8 +13,8 @@ const ModeratorSchema = new Schema<ModeratorDocumentData>({
 	accounts: {
 		type: [
 			{
-				platform: { type: String, enum: Object.keys(AccountPlatform), required: true, index: true },
-				id: { type: Schema.Types.Mixed, required: true, index: true },
+				platform: { type: String, enum: Object.keys(AccountPlatform), required: true },
+				id: { type: Schema.Types.Mixed, required: true },
 			}
 		],
 		required: true,
@@ -23,6 +23,9 @@ const ModeratorSchema = new Schema<ModeratorDocumentData>({
 }, {
 	collection: "moderators",
 })
+
+ModeratorSchema.index({ name: 1 })
+ModeratorSchema.index({ "accounts.platform": 1, "accounts.id": 1 })
 
 ModeratorSchema.static("findByAccount", async function(platform: AccountPlatform, id: any): Promise<ModeratorDocument | null> {
 	return await this.findOne({

@@ -14,7 +14,7 @@ type ReportDocument = EnforceDocument<ReportDocumentData, {
 }, {}>
 
 const ReportSchema = new Schema<ReportDocumentData>({
-	status: { type: String, enum: Object.keys(ReportStatus), default: ReportStatus.PENDING, index: true },
+	status: { type: String, enum: Object.keys(ReportStatus), default: ReportStatus.PENDING },
 	target: { type: Number, required: true },
 	from: { type: Number, required: true },
 	reason: { type: String, required: true },
@@ -23,6 +23,8 @@ const ReportSchema = new Schema<ReportDocumentData>({
 }, {
 	collection: "reports",
 })
+
+ReportSchema.index({ status: 1 })
 
 ReportSchema.method("accept", async function(this: ReportDocument, options: ActionOptions): Promise<ActionDocument> {
 	this.status = ReportStatus.ACCEPTED
