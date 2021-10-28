@@ -39,9 +39,9 @@ ActionSchema.method("serialize", function(this: ActionDocument): Action {
 		expiry: this.expiry,
 		reason: this.reason,
 		notes: this.notes,
-		snapshot: getDocumentId<Schema.Types.ObjectId | undefined>(this.snapshot)?.toString(),
-		report: getDocumentId<Schema.Types.ObjectId | undefined>(this.report)?.toString(),
-		moderator: getDocumentId<Schema.Types.ObjectId | undefined>(this.moderator)?.toString(),
+		snapshot: getDocumentId<Types.ObjectId | undefined>(this.snapshot)?.toString(),
+		report: getDocumentId<Types.ObjectId | undefined>(this.report)?.toString(),
+		moderator: getDocumentId<Types.ObjectId | undefined>(this.moderator)?.toString(),
 	}
 })
 

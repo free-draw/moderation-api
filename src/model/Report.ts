@@ -1,4 +1,4 @@
-import { Schema, model, EnforceDocument } from "mongoose"
+import { Schema, model, EnforceDocument, Types } from "mongoose"
 import ReportStatus from "../types/enum/ReportStatus"
 import { ActionOptions } from "../types/schema/Action"
 import Report from "../types/schema/Report"
@@ -51,7 +51,7 @@ ReportSchema.method("serialize", function(this: ReportDocument): Report {
 		from: this.from,
 		reason: this.reason,
 		notes: this.notes,
-		snapshot: getDocumentId<Schema.Types.ObjectId | undefined>(this.snapshot)?.toString(),
+		snapshot: getDocumentId<Types.ObjectId | undefined>(this.snapshot)?.toString(),
 	}
 })
 
