@@ -64,31 +64,36 @@ class PaginatedCursor<M extends Model<any>, D extends Document<any>> {
 	private async navigate(direction: NavigationDirection): Promise<D[]> {
 		const { model, options, state } = this
 
-		let propertyFilter = {} as QuerySelector<any>
+		let primarySelector: QuerySelector<any> | undefined
 		if (this.state.initialized) {
-			// If there's an existing filter for the sort property, apply it to propertyFilter
-			const existingPropertyFilter = options.filter[options.sortProperty]
-			if (existingPropertyFilter) propertyFilter = { ...existingPropertyFilter }
+			let newPrimarySelector = {} as QuerySelector<any>
+
+			// If there's an existing filter for the sort property, apply it to primarySelector
+			const existingPrimarySelector = options.filter[options.sortProperty]
+			if (existingPrimarySelector) newPrimarySelector = { ...existingPrimarySelector }
 
 			const inverted = options.sortDirection === SortDirection.DESCENDING
 			const rangeStart = state.rangeStart as number
 			const rangeEnd = state.rangeEnd as number
 
 			if (inverted ? direction === NavigationDirection.PREVIOUS : direction === NavigationDirection.NEXT) {
-				propertyFilter.$gt = propertyFilter.$gt ? Math.min(rangeEnd, propertyFilter.$gt) : rangeEnd
+				newPrimarySelector.$gt = newPrimarySelector.$gt ? Math.min(rangeEnd, newPrimarySelector.$gt) : rangeEnd
 			} else if (inverted ? direction === NavigationDirection.NEXT : direction === NavigationDirection.PREVIOUS) {
-				propertyFilter.$lt = propertyFilter.$lt ? Math.max(rangeStart, propertyFilter.$lt) : rangeStart
+				newPrimarySelector.$lt = newPrimarySelector.$lt ? Math.max(rangeStart, newPrimarySelector.$lt) : rangeStart
 			}
+
+			primarySelector = newPrimarySelector
 		}
 
-		const filter = clearUndefinedFields<PaginatedCursorFilter>({
+		const filter = clearUndefinedFields({
 			...options.filter,
-			[options.sortProperty]: propertyFilter,
-		})
+			[options.sortProperty]: primarySelector,
+		} as PaginatedCursorFilter)
 		const sort = {
 			[options.sortProperty]: sortMap[options.sortDirection],
 		}
 		const results = await model.find(filter).sort(sort).limit(options.pageSize)
+		console.log(filter, sort, options.pageSize)
 
 		if (results.length > 0) {
 			const values = results.map(result => toNumber(result[options.sortProperty]))
