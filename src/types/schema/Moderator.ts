@@ -1,12 +1,12 @@
 import { JSONSchema } from "json-schema-typed"
 import ObjectId from "../ObjectId"
-import ModeratorAccount from "./ModeratorAccount"
+import ModeratorAccountData from "./ModeratorAccount"
 
 type ModeratorData = {
 	id: ObjectId,
 	name: string,
 	active: boolean,
-	accounts: ModeratorAccount[],
+	accounts: ModeratorAccountData[],
 	permissions: string[],
 }
 
