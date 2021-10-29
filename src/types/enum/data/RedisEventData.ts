@@ -1,11 +1,11 @@
-import Action from "../../schema/Action"
-import Report from "../../schema/Report"
+import ActionData from "../../schema/Action"
+import ReportData from "../../schema/Report"
 
 type RedisEventData = {
-	reportCreate: { report: Report },
-	reportDelete: { report: Report },
-	actionCreate: { userId: number, action: Action },
-	actionDelete: { userId: number, action: Action },
+	reportCreate: { report: ReportData },
+	reportDelete: { report: ReportData },
+	actionCreate: { userId: number, action: ActionData },
+	actionDelete: { userId: number, action: ActionData },
 }
 
 export default RedisEventData

@@ -2,7 +2,7 @@ import { JSONSchema } from "json-schema-typed"
 import ActionType from "../enum/ActionType"
 import ObjectId from "../ObjectId"
 
-type Action = {
+type ActionData = {
 	id: ObjectId,
 	active: boolean,
 	created: Date,
@@ -50,5 +50,5 @@ const ActionSchema = {
 	additionalProperties: false,
 } as JSONSchema
 
-export default Action
-export { Action, ActionOptions, ActionSchema }
+export default ActionData
+export { ActionData, ActionOptions, ActionSchema }

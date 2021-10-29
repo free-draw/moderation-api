@@ -2,7 +2,7 @@ import { JSONSchema } from "json-schema-typed"
 import ObjectId from "../ObjectId"
 import ModeratorAccount from "./ModeratorAccount"
 
-type Moderator = {
+type ModeratorData = {
 	id: ObjectId,
 	name: string,
 	active: boolean,
@@ -36,5 +36,5 @@ const ModeratorSchema = {
 	additionalProperties: false,
 } as JSONSchema
 
-export default Moderator
-export { Moderator, ModeratorSchema }
+export default ModeratorData
+export { ModeratorData, ModeratorSchema }

@@ -3,7 +3,7 @@ import ReportStatus from "../enum/ReportStatus"
 import ObjectId from "../ObjectId"
 import UserId from "../UserId"
 
-type Report = {
+type ReportData = {
 	id: ObjectId,
 	status: ReportStatus,
 	target: UserId,
@@ -36,5 +36,5 @@ const ReportSchema = {
 	additionalProperties: false,
 } as JSONSchema
 
-export default Report
-export { Report, ReportSchema }
+export default ReportData
+export { ReportData, ReportSchema }

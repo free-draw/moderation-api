@@ -1,16 +1,16 @@
 import { Schema, model, EnforceDocument, Types } from "mongoose"
 import ReportStatus from "../types/enum/ReportStatus"
 import { ActionOptions } from "../types/schema/Action"
-import Report from "../types/schema/Report"
+import ReportData from "../types/schema/Report"
 import { RefOptional } from "../types/util/Ref"
 import getDocumentId from "../util/getDocumentId"
 import User, { ActionDocument } from "./User"
 
-type ReportDocumentData = RefOptional<Omit<Report, "id">, "snapshot">
+type ReportDocumentData = RefOptional<Omit<ReportData, "id">, "snapshot">
 type ReportDocument = EnforceDocument<ReportDocumentData, {
 	accept(this: ReportDocument, actionOptions: ActionOptions): Promise<ActionDocument>,
 	decline(this: ReportDocument): void,
-	serialize(this: ReportDocument): Report,
+	serialize(this: ReportDocument): ReportData,
 }, {}>
 
 const ReportSchema = new Schema<ReportDocumentData>({
@@ -43,7 +43,7 @@ ReportSchema.method("decline", async function(this: ReportDocument): Promise<voi
 	this.status = ReportStatus.DECLINED
 })
 
-ReportSchema.method("serialize", function(this: ReportDocument): Report {
+ReportSchema.method("serialize", function(this: ReportDocument): ReportData {
 	return {
 		id: this._id.toString(),
 		status: this.status,

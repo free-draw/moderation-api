@@ -1,9 +1,9 @@
 import { JSONSchema } from "json-schema-typed"
-import Action from "./Action"
+import ActionData from "./Action"
 
-type User = {
+type UserData = {
 	id: number,
-	actions: Action[],
+	actions: ActionData[],
 }
 
 const UserSchema = {
@@ -23,5 +23,5 @@ const UserSchema = {
 	additionalProperties: false,
 } as JSONSchema
 
-export default User
-export { User, UserSchema }
+export default UserData
+export { UserData, UserSchema }

@@ -2,7 +2,7 @@ import { JSONSchema } from "json-schema-typed"
 import LogType from "../enum/LogType"
 import ObjectId from "../ObjectId"
 
-type Log = {
+type LogData = {
 	id: string,
 	time: Date,
 	type: LogType,
@@ -27,5 +27,5 @@ const LogSchema = {
 	additionalProperties: false,
 } as JSONSchema
 
-export default Log
-export { Log, LogSchema }
+export default LogData
+export { LogData, LogSchema }

@@ -1,10 +1,10 @@
 import { Schema, model, EnforceDocument, Model } from "mongoose"
 import AccountPlatform from "../types/enum/AccountPlatform"
-import Moderator from "../types/schema/Moderator"
+import ModeratorData from "../types/schema/Moderator"
 
-type ModeratorDocumentData = Omit<Moderator, "id">
+type ModeratorDocumentData = Omit<ModeratorData, "id">
 type ModeratorDocument = EnforceDocument<ModeratorDocumentData, {
-	serialize(this: ModeratorDocument): Moderator,
+	serialize(this: ModeratorDocument): ModeratorData,
 }, {}>
 
 const ModeratorSchema = new Schema<ModeratorDocumentData>({
@@ -35,7 +35,7 @@ ModeratorSchema.static("findByAccount", async function(platform: AccountPlatform
 	}) ?? null
 })
 
-ModeratorSchema.method("serialize", function(this: ModeratorDocument): Moderator {
+ModeratorSchema.method("serialize", function(this: ModeratorDocument): ModeratorData {
 	return {
 		id: this._id.toString(),
 		name: this.name,

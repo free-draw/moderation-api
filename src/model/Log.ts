@@ -2,14 +2,14 @@ import { Schema, model, EnforceDocument, Model, Types } from "mongoose"
 import App from "../App"
 import LogTypeData from "../types/enum/data/LogTypeData"
 import LogType from "../types/enum/LogType"
-import Log from "../types/schema/Log"
+import LogData from "../types/schema/Log"
 import Ref from "../types/util/Ref"
 import getDocumentId from "../util/getDocumentId"
 import { ModeratorDocument } from "./Moderator"
 
-type LogDocumentData = Ref<Omit<Log, "id">, "moderator">
+type LogDocumentData = Ref<Omit<LogData, "id">, "moderator">
 type LogDocument = EnforceDocument<LogDocumentData, {
-	serialize(this: LogDocument): Log,
+	serialize(this: LogDocument): LogData,
 }, {}>
 
 const LogSchema = new Schema<LogDocumentData>({
@@ -41,7 +41,7 @@ LogSchema.static("push", async function(
 	return log
 })
 
-LogSchema.method("serialize", function(this: LogDocument): Log {
+LogSchema.method("serialize", function(this: LogDocument): LogData {
 	return {
 		id: this._id.toString(),
 		time: this.time,

@@ -3,7 +3,7 @@ import ObjectId from "../ObjectId"
 import SnapshotLogType from "../enum/SnapshotLogType"
 import UserId from "../UserId"
 
-type SnapshotPlayer = {
+type SnapshotPlayerData = {
 	userId: UserId,
 	position: {
 		x: number,
@@ -11,22 +11,22 @@ type SnapshotPlayer = {
 	},
 }
 
-type SnapshotLog = {
+type SnapshotLogData = {
 	userId: UserId,
 	type: SnapshotLogType,
 	data: any,
 }
 
-type SnapshotCanvas = {
+type SnapshotCanvasData = {
 	userId: UserId,
 	data: string | Buffer,
 }
 
-type Snapshot = {
+type SnapshotData = {
 	id: ObjectId,
-	players: SnapshotPlayer[],
-	logs: SnapshotLog[],
-	canvas: SnapshotCanvas[],
+	players: SnapshotPlayerData[],
+	logs: SnapshotLogData[],
+	canvas: SnapshotCanvasData[],
 }
 
 const SnapshotSchema = {
@@ -98,5 +98,5 @@ const SnapshotSchema = {
 	additionalProperties: false,
 } as JSONSchema
 
-export default Snapshot
-export { Snapshot, SnapshotSchema }
+export default SnapshotData
+export { SnapshotData, SnapshotSchema }

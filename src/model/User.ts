@@ -1,15 +1,15 @@
 import { Schema, model, EnforceDocument, Model, Types } from "mongoose"
 import ActionType from "../types/enum/ActionType"
-import { Action, ActionOptions } from "../types/schema/Action"
-import User from "../types/schema/User"
+import { ActionData, ActionOptions } from "../types/schema/Action"
+import UserData from "../types/schema/User"
 import ObjectId from "../types/ObjectId"
 import { RefOptional } from "../types/util/Ref"
 import getDocumentId from "../util/getDocumentId"
 import toDate from "../util/toDate"
 
-type ActionDocumentData = RefOptional<Omit<Action, "id">, "snapshot" | "report" | "moderator">
+type ActionDocumentData = RefOptional<Omit<ActionData, "id">, "snapshot" | "report" | "moderator">
 type ActionDocument = EnforceDocument<ActionDocumentData, {
-	serialize(this: ActionDocument): Action,
+	serialize(this: ActionDocument): ActionData,
 }, {}>
 
 const ActionSchema = new Schema<ActionDocumentData>({
@@ -30,7 +30,7 @@ ActionSchema.post("init", function(this: ActionDocument): void {
 	}
 })
 
-ActionSchema.method("serialize", function(this: ActionDocument): Action {
+ActionSchema.method("serialize", function(this: ActionDocument): ActionData {
 	return {
 		id: this._id.toString(),
 		active: this.active,
@@ -45,10 +45,10 @@ ActionSchema.method("serialize", function(this: ActionDocument): Action {
 	}
 })
 
-type UserDocumentData = Omit<User, "id" | "actions"> & { _id: number, actions: Types.DocumentArray<ActionDocument> }
+type UserDocumentData = Omit<UserData, "id" | "actions"> & { _id: number, actions: Types.DocumentArray<ActionDocument> }
 type UserDocument = EnforceDocument<UserDocumentData, {
 	createAction(this: UserDocument, options: ActionOptions, identity?: ObjectId): ActionDocument,
-	serialize(this: UserDocument): User,
+	serialize(this: UserDocument): UserData,
 }, {}>
 
 const UserSchema = new Schema<UserDocumentData>({
@@ -98,7 +98,7 @@ UserSchema.method("createAction", function(this: UserDocument, options: ActionOp
 	return action
 })
 
-UserSchema.method("serialize", function(this: UserDocument): User {
+UserSchema.method("serialize", function(this: UserDocument): UserData {
 	return {
 		id: this._id.toString(),
 		actions: this.actions.map((action: ActionDocument) => action.serialize()),

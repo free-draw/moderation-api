@@ -1,10 +1,10 @@
 import { Schema, model, EnforceDocument } from "mongoose"
 import SnapshotLogType from "../types/enum/SnapshotLogType"
-import Snapshot from "../types/schema/Snapshot"
+import SnapshotData from "../types/schema/Snapshot"
 
-type SnapshotDocumentData = Omit<Snapshot, "id">
+type SnapshotDocumentData = Omit<SnapshotData, "id">
 type SnapshotDocument = EnforceDocument<SnapshotDocumentData, {
-	serialize(this: SnapshotDocument): Snapshot,
+	serialize(this: SnapshotDocument): SnapshotData,
 }, {}>
 
 const SnapshotSchema = new Schema({
@@ -44,7 +44,7 @@ const SnapshotSchema = new Schema({
 	},
 })
 
-SnapshotSchema.method("serialize", function(this: SnapshotDocument): Snapshot {
+SnapshotSchema.method("serialize", function(this: SnapshotDocument): SnapshotData {
 	return {
 		id: this._id.toString(),
 		players: this.players,

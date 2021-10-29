@@ -1,7 +1,7 @@
 import { JSONSchema } from "json-schema-typed"
 import AccountPlatform from "../enum/AccountPlatform"
 
-type ModeratorAccount = {
+type ModeratorAccountData = {
 	platform: AccountPlatform,
 	id: string | number,
 }
@@ -20,5 +20,5 @@ const ModeratorAccountSchema = {
 	additionalProperties: false,
 } as JSONSchema
 
-export default ModeratorAccount
-export { ModeratorAccount, ModeratorAccountSchema }
+export default ModeratorAccountData
+export { ModeratorAccountData, ModeratorAccountSchema }
