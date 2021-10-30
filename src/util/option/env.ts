@@ -2,7 +2,7 @@ type Environment = {
 	configFile?: string,
 	address?: string,
 	port?: number,
-	env?: string,
+	nodeEnv?: string,
 
 	redisUrl: string,
 	mongodbUrl: string,
@@ -26,7 +26,7 @@ const env = {
 	configFile: getEnvironmentVariable("CONFIG_FILE", false),
 	address: getEnvironmentVariable("ADDRESS", false),
 	port: getEnvironmentVariable("PORT", false),
-	env: getEnvironmentVariable("NODE_ENV", false),
+	nodeEnv: getEnvironmentVariable("NODE_ENV", false),
 
 	redisUrl: getEnvironmentVariable("REDIS_URL", true),
 	mongodbUrl: getEnvironmentVariable("MONGODB_URL", true),
