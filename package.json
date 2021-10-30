@@ -3,7 +3,7 @@
   "license": "AGPL-3.0",
   "main": "main.ts",
   "scripts": {
-    "dev": "ts-node . -v",
+    "dev": "ts-node . -v | pino-pretty",
     "start": "ts-node .",
     "check": "tsc --noEmit"
   },
