@@ -1,5 +1,5 @@
 import API from "../../API"
-import { Snapshot, SnapshotData } from "../../class/Snapshot"
+import Snapshot, { SnapshotData } from "../../class/Snapshot"
 
 type GetSnapshotResponse = {
 	snapshot: SnapshotData,

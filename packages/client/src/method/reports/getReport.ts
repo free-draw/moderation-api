@@ -1,5 +1,5 @@
 import API from "../../API"
-import { Report, ReportData } from "../../class/Report"
+import Report, { ReportData } from "../../class/Report"
 
 type GetReportResponse = {
 	report: ReportData,

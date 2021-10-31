@@ -1,5 +1,5 @@
 import API from "../../API"
-import { User, UserData } from "../../class/User"
+import User, { UserData } from "../../class/User"
 
 type GetUsersBulkRequest = number[]
 

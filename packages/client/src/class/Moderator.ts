@@ -1,5 +1,5 @@
 import API from "../API"
-import { ModeratorAccount, ModeratorAccountData } from "./ModeratorAccount"
+import ModeratorAccount, { ModeratorAccountData } from "./ModeratorAccount"
 
 type ModeratorData = {
 	id: string,
@@ -38,4 +38,4 @@ class Moderator {
 }
 
 export default Moderator
-export { Moderator, ModeratorData }
+export { ModeratorData }

@@ -1,4 +1,4 @@
-import { Action, ActionData } from "./Action"
+import Action, { ActionData } from "./Action"
 
 type UserData = {
 	id: number,
@@ -16,4 +16,4 @@ class User {
 }
 
 export default User
-export { User, UserData }
+export { UserData }

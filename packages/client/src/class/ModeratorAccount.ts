@@ -16,4 +16,4 @@ class ModeratorAccount {
 }
 
 export default ModeratorAccount
-export { ModeratorAccount, ModeratorAccountData }
+export { ModeratorAccountData }

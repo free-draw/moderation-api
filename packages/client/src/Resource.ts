@@ -1,4 +1,4 @@
-import EventEmitter from "eventemitter2"
+import { EventEmitter2 } from "eventemitter2"
 import NodeCache from "node-cache"
 import lodash from "lodash"
 
@@ -23,7 +23,7 @@ type ResourceItem<I, O> = {
 	listeners: ResourceItemListener<O>[],
 }
 
-class ResourceQueue<I, O, D> extends EventEmitter {
+class ResourceQueue<I, O, D> extends EventEmitter2 {
 	public designator: D
 	public fetcher: ResourceFetcher<I, O, D>
 	public timeout: number

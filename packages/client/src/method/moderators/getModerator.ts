@@ -1,5 +1,5 @@
 import API from "../../API"
-import { Moderator, ModeratorData } from "../../class/Moderator"
+import Moderator, { ModeratorData } from "../../class/Moderator"
 import { ModeratorAccountData } from "../../class/ModeratorAccount"
 
 type GetModeratorResponse = {

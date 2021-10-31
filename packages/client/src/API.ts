@@ -16,19 +16,21 @@ class API {
 
 	public async request<T>(config: AxiosRequestConfig): Promise<AxiosResponse<T>> {
 		const url = new URL(urljoin(this.url, config.url as string))
-
 		if (this.identity) {
 			url.searchParams.set("identity", `${this.identity.platform}/${this.identity.id}`)
 		}
 
-		return await axios({
-			...config,
+		const headers = {
+			...(config.headers ?? {})
+		} as Record<string, string>
+		if (this.token) {
+			headers.authorization = `Bearer ${this.token}`
+		}
 
+		return await axios.request<T>({
+			...config,
 			url: url.toString(),
-			headers: {
-				...(config.headers ?? {}),
-				authorization: this.token ? `Bearer ${this.token}` : config.headers?.authorization,
-			},
+			headers,
 		})
 	}
 

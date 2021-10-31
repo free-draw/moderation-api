@@ -2,10 +2,14 @@ lockfileVersion: 5.3
 
 specifiers:
   '@types/lodash': ^4.14.176
+  '@types/node': ^16.11.6
+  '@types/url-join': ^4.0.1
+  '@types/web': ^0.0.44
   axios: ^0.24.0
   eventemitter2: ^6.4.5
   lodash: ^4.17.21
   node-cache: ^5.1.2
+  typescript: ^4.4.4
   url-join: ^4.0.1
 
 dependencies:
@@ -17,11 +21,27 @@ dependencies:
 
 devDependencies:
   '@types/lodash': 4.14.176
+  '@types/node': 16.11.6
+  '@types/url-join': 4.0.1
+  '@types/web': 0.0.44
+  typescript: 4.4.4
 
 packages:
 
   /@types/lodash/4.14.176:
     resolution: {integrity: sha512-xZmuPTa3rlZoIbtDUyJKZQimJV3bxCmzMIO2c9Pz9afyDro6kr7R79GwcB6mRhuoPmV2p1Vb66WOJH7F886WKQ==}
+    dev: true
+
+  /@types/node/16.11.6:
+    resolution: {integrity: sha512-ua7PgUoeQFjmWPcoo9khiPum3Pd60k4/2ZGXt18sm2Slk0W0xZTqt5Y0Ny1NyBiN1EVQ/+FaF9NcY4Qe6rwk5w==}
+    dev: true
+
+  /@types/url-join/4.0.1:
+    resolution: {integrity: sha512-wDXw9LEEUHyV+7UWy7U315nrJGJ7p1BzaCxDpEoLr789Dk1WDVMMlf3iBfbG2F8NdWnYyFbtTxUn2ZNbm1Q4LQ==}
+    dev: true
+
+  /@types/web/0.0.44:
+    resolution: {integrity: sha512-qYL7fI6zaSU/GONRJpkvm5pM4yfSxg8KHwEkU5nflGmPCNVNamAPq/JqFJMcnC3RS/8MVnO8xTdkr5kpis+xjw==}
     dev: true
 
   /axios/0.24.0:
@@ -61,6 +81,12 @@ packages:
     dependencies:
       clone: 2.1.2
     dev: false
+
+  /typescript/4.4.4:
+    resolution: {integrity: sha512-DqGhF5IKoBl8WNf8C1gu8q0xZSInh9j1kJJMqT3a94w1JzVaBU4EXOSMrz9yDqMT0xt3selp83fuFMQ0uzv6qA==}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
+    dev: true
 
   /url-join/4.0.1:
     resolution: {integrity: sha512-jk1+QP6ZJqyOiuEI9AEWQfju/nB2Pw466kbA0LEZljHwKeMgd9WrAEgEGxjPDD2+TNbbb37rTyhEfrCXfuKXnA==}

@@ -33,4 +33,4 @@ class Snapshot {
 }
 
 export default Snapshot
-export { Snapshot, SnapshotData }
+export { SnapshotData }

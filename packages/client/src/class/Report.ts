@@ -45,4 +45,4 @@ class Report {
 }
 
 export default Report
-export { Report, ReportData }
+export { ReportData }
