@@ -1,14 +1,13 @@
 import API from "../../API"
 import Moderator, { ModeratorData } from "../../class/Moderator"
-import { ModeratorAccountData } from "../../class/ModeratorAccount"
 
 type GetModeratorResponse = {
 	moderator: ModeratorData,
 }
 
-async function getModerator(api: API, id: string | ModeratorAccountData): Promise<Moderator | null> {
+async function getModerator(api: API, moderatorId: string): Promise<Moderator> {
 	const { data } = await api.request<GetModeratorResponse>({
-		url: typeof id === "string" ? `/moderators/${id}` : `/moderators/${id.platform}/${id.id}`,
+		url: `/moderators/${moderatorId}`,
 		method: "GET",
 	})
 

@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyRequest, RouteHandlerMethod } from "fastify"
+import { FastifyInstance, RouteHandlerMethod } from "fastify"
 import { StatusCodes } from "http-status-codes"
 import { JSONSchema } from "json-schema-typed"
 import authIdentity from "../../auth/authIdentity"

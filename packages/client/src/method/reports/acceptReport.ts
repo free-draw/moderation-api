@@ -2,6 +2,7 @@ import ActionType from "../../enum/ActionType"
 import API from "../../API"
 import ActionResolvable from "../../class/resolvable/ActionResolvable"
 import UserResolvable from "../../class/resolvable/UserResolvable"
+import { ActionOptions } from "../../class/Action"
 
 type AcceptReportRequest = {
 	type: ActionType,
@@ -16,17 +17,9 @@ type AcceptReportResponse = {
 	actionId: string,
 }
 
-type AcceptReportOptions = {
-	type: ActionType,
-	reason: string,
-	notes?: string,
-	expiry?: Date,
-	duration?: number,
-}
-
-async function acceptReport(api: API, id: string, options: AcceptReportOptions): Promise<ActionResolvable> {
+async function acceptReport(api: API, reportId: string, options: Omit<ActionOptions, "snapshot">): Promise<ActionResolvable> {
 	const { data } = await api.request<AcceptReportResponse>({
-		url: `/reports/${id}/accept`,
+		url: `/reports/${reportId}/accept`,
 		method: "POST",
 		data: {
 			type: options.type,
@@ -42,4 +35,3 @@ async function acceptReport(api: API, id: string, options: AcceptReportOptions):
 }
 
 export default acceptReport
-export { AcceptReportOptions }

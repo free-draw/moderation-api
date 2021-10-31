@@ -1,8 +1,8 @@
 import API from "../../API"
 
-async function declineReport(api: API, id: string): Promise<void> {
+async function declineReport(api: API, reportId: string): Promise<void> {
 	await api.request({
-		url: `/reports/${id}/decline`,
+		url: `/reports/${reportId}/decline`,
 		method: "POST",
 	})
 }

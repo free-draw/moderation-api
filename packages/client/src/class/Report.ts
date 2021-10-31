@@ -16,6 +16,14 @@ type ReportData = {
 	snapshot?: string,
 }
 
+type ReportOptions = {
+	target: number,
+	from: number,
+	reason: string,
+	notes: string,
+	snapshot?: string,
+}
+
 class Report {
 	public id: string
 	public status: ReportStatus
@@ -45,4 +53,4 @@ class Report {
 }
 
 export default Report
-export { ReportData }
+export { ReportData, ReportOptions }

@@ -1,7 +1,9 @@
+import Snapshot from "./Snapshot"
+import Moderator from "./Moderator"
 import ActionType from "../enum/ActionType"
-//import ModeratorResolvable from "./resolvable/ModeratorResolvable"
-//import ReportResolvable from "./resolvable/ReportResolvable"
-//import SnapshotResolvable from "./resolvable/SnapshotResolvable"
+import ModeratorResolvable from "./resolvable/ModeratorResolvable"
+import ReportResolvable from "./resolvable/ReportResolvable"
+import SnapshotResolvable from "./resolvable/SnapshotResolvable"
 
 type ActionData = {
 	id: string,
@@ -16,6 +18,15 @@ type ActionData = {
 	moderator?: string,
 }
 
+type ActionOptions = {
+	type: ActionType,
+	reason: string,
+	notes?: string,
+	expiry?: Date,
+	duration?: number,
+	snapshot?: Snapshot | SnapshotResolvable,
+}
+
 class Action {
 	public id: string
 	public active: boolean
@@ -24,9 +35,9 @@ class Action {
 	public expiry?: Date
 	public reason: string
 	public notes?: string
-	//public snapshot?: SnapshotResolvable
-	//public report?: ReportResolvable
-	//public moderator?: ModeratorResolvable
+	public snapshot?: SnapshotResolvable
+	public report?: ReportResolvable
+	public moderator?: ModeratorResolvable
 
 	constructor(data: ActionData) {
 		this.id = data.id
@@ -36,9 +47,9 @@ class Action {
 		this.expiry = data.expiry ? new Date(data.expiry) : undefined
 		this.reason = data.reason
 		this.notes = data.notes
-		//this.snapshot = data.snapshot ? new SnapshotResolvable(data.snapshot) : undefined
-		//this.report = data.report ? new ReportResolvable(data.report) : undefined
-		//this.moderator = data.moderator ? new ModeratorResolvable(data.moderator) : undefined
+		this.snapshot = data.snapshot ? new SnapshotResolvable(data.snapshot) : undefined
+		this.report = data.report ? new ReportResolvable(data.report) : undefined
+		this.moderator = data.moderator ? new ModeratorResolvable(data.moderator) : undefined
 	}
 
 	public async delete(): Promise<void> {
@@ -47,4 +58,4 @@ class Action {
 }
 
 export default Action
-export { ActionData }
+export { ActionData, ActionOptions }

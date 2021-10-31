@@ -21,7 +21,6 @@ type CreateActionRequest = FastifyRequest<{
 		reason: string,
 		notes?: string,
 		snapshot?: ObjectId,
-		report?: ObjectId,
 		expiry?: Date | number,
 		duration?: number,
 	},
@@ -87,6 +86,7 @@ export default async function(fastify: FastifyInstance) {
 		], { relation: "and" }),
 
 		handler: async function(request: CreateActionRequest, reply: FastifyReply) {
+			// TODO: Use identity as moderator
 			const user = await UserModel.get(request.params.userId)
 			const action = user.createAction(request.body)
 			await user.save()
