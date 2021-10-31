@@ -1,5 +1,5 @@
 {
-  "name": "moderation-api",
+  "name": "@free-draw/moderation-server",
   "license": "AGPL-3.0",
   "main": "main.ts",
   "scripts": {

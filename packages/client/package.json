@@ -1,0 +1,24 @@
+{
+  "name": "@free-draw/moderation-client",
+  "version": "0.0.2",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": "Reselim",
+  "license": "AGPL-3.0",
+  "scripts": {
+    "prepublish": "tsc"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "axios": "^0.24.0",
+    "eventemitter2": "^6.4.5",
+    "lodash": "^4.17.21",
+    "node-cache": "^5.1.2",
+    "url-join": "^4.0.1"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.176"
+  }
+}
