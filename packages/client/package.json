@@ -17,6 +17,7 @@
     "eventemitter2": "^6.4.5",
     "lodash": "^4.17.21",
     "node-cache": "^5.1.2",
+    "socket.io-client": "^4.3.2",
     "url-join": "^4.0.1"
   },
   "devDependencies": {

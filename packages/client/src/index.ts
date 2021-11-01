@@ -5,3 +5,4 @@ export * from "./type"
 
 export { default as API } from "./API"
 export { default as Resource } from "./Resource"
+export { default as Realtime } from "./Realtime"
