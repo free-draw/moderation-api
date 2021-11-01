@@ -1,6 +1,7 @@
+import { ActionOptions } from "./Action"
 import API from "../API"
 import ReportStatus from "../enum/ReportStatus"
-import acceptReport, { AcceptReportOptions } from "../method/reports/acceptReport"
+import acceptReport from "../method/reports/acceptReport"
 import declineReport from "../method/reports/declineReport"
 import ActionResolvable from "./resolvable/ActionResolvable"
 import SnapshotResolvable from "./resolvable/SnapshotResolvable"
@@ -43,7 +44,7 @@ class Report {
 		this.snapshot = data.snapshot ? new SnapshotResolvable(data.snapshot) : undefined
 	}
 
-	public async accept(api: API, options: AcceptReportOptions): Promise<ActionResolvable> {
+	public async accept(api: API, options: ActionOptions): Promise<ActionResolvable> {
 		return await acceptReport(api, this.id, options)
 	}
 
