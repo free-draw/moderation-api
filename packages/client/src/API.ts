@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
-import { URL } from "url"
 import { ModeratorAccountData } from "./class/ModeratorAccount"
 import urljoin from "url-join"
 
@@ -15,21 +14,23 @@ class API {
 	}
 
 	public async request<T>(config: AxiosRequestConfig): Promise<AxiosResponse<T>> {
-		const url = new URL(urljoin(this.url, config.url as string))
-		if (this.identity) {
-			url.searchParams.set("identity", `${this.identity.platform}/${this.identity.id}`)
-		}
-
 		const headers = {
-			...(config.headers ?? {})
+			...(config.headers ?? {}),
 		} as Record<string, string>
 		if (this.token) {
 			headers.authorization = `Bearer ${this.token}`
 		}
 
+		const params = {
+			...(config.params ?? {}),
+		} as Record<string, string>
+		if (this.identity) {
+			params.identity = `${this.identity.platform}/${this.identity.id}`
+		}
+
 		return await axios.request<T>({
 			...config,
-			url: url.toString(),
+			url: urljoin(this.url, config.url as string),
 			headers,
 		})
 	}
