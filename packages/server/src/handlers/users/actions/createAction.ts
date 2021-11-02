@@ -6,10 +6,11 @@ import authIdentity from "../../../auth/authIdentity"
 import authPermissions from "../../../auth/authPermissions"
 import authToken from "../../../auth/authToken"
 import LogModel from "../../../model/Log"
-import UserModel, { UserDocument } from "../../../model/User"
+import UserModel from "../../../model/User"
 import ActionType from "../../../types/enum/ActionType"
 import LogType from "../../../types/enum/LogType"
 import ObjectId from "../../../types/ObjectId"
+import ActionData from "../../../types/schema/Action"
 
 type CreateActionRequest = FastifyRequest<{
 	Params: {
@@ -86,8 +87,8 @@ export default async function(fastify: FastifyInstance) {
 		], { relation: "and" }),
 
 		handler: async function(request: CreateActionRequest, reply: FastifyReply) {
-			const actionData = { ...request.body }
-			if (request.identity) actionData.moderator = request.identity
+			const actionData = { ...request.body } as ActionData
+			if (request.identity) actionData.moderator = request.identity._id.toString()
 
 			const user = await UserModel.get(request.params.userId)
 			const action = user.createAction(actionData)
