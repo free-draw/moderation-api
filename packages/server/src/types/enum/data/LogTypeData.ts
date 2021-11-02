@@ -16,8 +16,8 @@ type LogTypeData = {
 	[LogType.LINK_MODERATOR_ACCOUNT]: { moderatorId: string, account: ModeratorAccountData },
 	[LogType.UNLINK_MODERATOR_ACCOUNT]: { moderatorId: string, account: ModeratorAccountData },
 
-	[LogType.ACCEPT_REPORT]: { reportId: ReportData },
-	[LogType.DECLINE_REPORT]: { reportId: ReportData },
+	[LogType.ACCEPT_REPORT]: { reportId: string },
+	[LogType.DECLINE_REPORT]: { reportId: string },
 }
 
 export default LogTypeData
