@@ -77,24 +77,27 @@ export default async function(fastify: FastifyInstance) {
 					type: "object",
 					properties: {
 						data: {
-							type: "object",
-							properties: {
-								requestId: { type: ["string", "null"] },
-								state: { type: "string", enum: Object.keys(RobloxThumbnailState) },
-								errorCode: { type: "integer" },
-								errorMessage: { type: "string" },
-								targetId: { type: "integer" },
-								imageUrl: { type: ["string", "null"], format: "uri" },
+							type: "array",
+							items: {
+								type: "object",
+								properties: {
+									requestId: { type: ["string", "null"] },
+									state: { type: "string", enum: Object.keys(RobloxThumbnailState) },
+									errorCode: { type: "integer" },
+									errorMessage: { type: "string" },
+									targetId: { type: "integer" },
+									imageUrl: { type: ["string", "null"], format: "uri" },
+								},
+								required: [
+									"requestId",
+									"state",
+									"errorCode",
+									"errorMessage",
+									"targetId",
+									"imageUrl",
+								],
+								additionalProperties: false,
 							},
-							required: [
-								"requestId",
-								"state",
-								"errorCode",
-								"errorMessage",
-								"targetId",
-								"imageUrl",
-							],
-							additionalProperties: false,
 						},
 					},
 					required: [
@@ -122,6 +125,8 @@ export default async function(fastify: FastifyInstance) {
 					imageUrl: string,
 				}[],
 			}>("https://thumbnails.roblox.com/v1/batch", request.body)
+
+			console.log(response.data)
 
 			return response.data
 		} as RouteHandlerMethod,
