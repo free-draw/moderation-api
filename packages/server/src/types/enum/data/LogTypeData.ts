@@ -1,5 +1,4 @@
 import LogType from "../LogType"
-import ReportData from "../../schema/Report"
 import ActionData from "../../schema/Action"
 import ModeratorData from "../../schema/Moderator"
 import Permission from "../../Permission"
