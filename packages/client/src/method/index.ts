@@ -13,6 +13,10 @@ export { default as linkModeratorAccount } from "./moderators/accounts/linkModer
 export { default as unlinkModeratorAccount } from "./moderators/accounts/unlinkModeratorAccount"
 
 export { default as getReport } from "./reports/getReport"
+export { default as getPendingReports } from "./reports/getPendingReports"
+export { default as createReport } from "./reports/createReport"
+export { default as acceptReport } from "./reports/acceptReport"
+export { default as declineReport } from "./reports/declineReport"
 
 export { default as getRobloxUser } from "./roblox/getRobloxUser"
 export { default as getRobloxUsername } from "./roblox/getRobloxUsername"
