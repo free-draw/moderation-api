@@ -94,7 +94,7 @@ export default async function(fastify: FastifyInstance) {
 			if (request.identity) {
 				await LogModel.push(request.identity, LogType.CREATE_ACTION, {
 					userId: user._id,
-					actionId: action._id.toString(),
+					action: action.serialize(),
 				})
 			}
 

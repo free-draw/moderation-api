@@ -6,11 +6,11 @@ import Permission from "../../Permission"
 import ModeratorAccountData from "../../schema/ModeratorAccount"
 
 type LogTypeData = {
-	[LogType.CREATE_ACTION]: { userId: number, actionId: string },
+	[LogType.CREATE_ACTION]: { userId: number, action: ActionData },
 	[LogType.DELETE_ACTION]: { userId: number, action: ActionData },
 	[LogType.DELETE_ACTIONS_BULK]: { userId: number, actions: ActionData[] },
 
-	[LogType.CREATE_MODERATOR]: { moderatorId: string },
+	[LogType.CREATE_MODERATOR]: { moderator: ModeratorData },
 	[LogType.DELETE_MODERATOR]: { moderator: ModeratorData },
 	[LogType.UPDATE_MODERATOR]: { moderatorId: string, name?: string, permissions?: Permission[], active?: boolean },
 	[LogType.LINK_MODERATOR_ACCOUNT]: { moderatorId: string, account: ModeratorAccountData },

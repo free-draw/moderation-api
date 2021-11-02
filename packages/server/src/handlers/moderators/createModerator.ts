@@ -68,7 +68,7 @@ export default async function(fastify: FastifyInstance) {
 
 			if (request.identity) {
 				await LogModel.push(request.identity, LogType.CREATE_MODERATOR, {
-					moderatorId: moderator._id.toString(),
+					moderator: moderator.serialize(),
 				})
 			}
 
