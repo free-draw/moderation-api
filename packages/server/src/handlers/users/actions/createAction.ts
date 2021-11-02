@@ -86,9 +86,11 @@ export default async function(fastify: FastifyInstance) {
 		], { relation: "and" }),
 
 		handler: async function(request: CreateActionRequest, reply: FastifyReply) {
-			// TODO: Use identity as moderator
+			const actionData = { ...request.body }
+			if (request.identity) actionData.moderator = request.identity
+
 			const user = await UserModel.get(request.params.userId)
-			const action = user.createAction(request.body)
+			const action = user.createAction(actionData)
 			await user.save()
 
 			if (request.identity) {
