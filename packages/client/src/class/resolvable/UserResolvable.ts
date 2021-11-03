@@ -1,6 +1,6 @@
 import API from "../../API"
 import getUser from "../../method/users/getUser"
-import Resolvable from "./Resolvable"
+import Resolvable from "../../type/interface/Resolvable"
 import User from "../User"
 
 class UserResolvable implements Resolvable<User> {

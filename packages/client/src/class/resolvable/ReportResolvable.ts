@@ -1,7 +1,7 @@
 import API from "../../API"
 import getReport from "../../method/reports/getReport"
 import Report from "../Report"
-import Resolvable from "./Resolvable"
+import Resolvable from "../../type/interface/Resolvable"
 
 class ReportResolvable implements Resolvable<Report> {
 	public id: string

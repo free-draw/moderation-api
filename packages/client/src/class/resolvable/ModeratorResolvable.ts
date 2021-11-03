@@ -1,4 +1,4 @@
-import Resolvable from "./Resolvable"
+import Resolvable from "../../type/interface/Resolvable"
 import Moderator from "../Moderator"
 import API from "../../API"
 import getModerator from "../../method/moderators/getModerator"

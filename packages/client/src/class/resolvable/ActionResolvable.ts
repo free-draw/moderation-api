@@ -1,6 +1,6 @@
 import API from "../../API"
 import Action from "../Action"
-import Resolvable from "./Resolvable"
+import Resolvable from "../../type/interface/Resolvable"
 import User from "../User"
 import UserResolvable from "./UserResolvable"
 

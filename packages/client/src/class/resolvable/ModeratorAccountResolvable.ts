@@ -2,7 +2,7 @@ import API from "../../API"
 import AccountPlatform from "../../enum/AccountPlatform"
 import findModerator from "../../method/moderators/findModerator"
 import ModeratorAccount from "../ModeratorAccount"
-import Resolvable from "./Resolvable"
+import Resolvable from "../../type/interface/Resolvable"
 
 class ModeratorAccountResolvable implements Resolvable<ModeratorAccount> {
 	public platform: AccountPlatform

@@ -1,5 +1,5 @@
 import API from "../../API"
-import Resolvable from "./Resolvable"
+import Resolvable from "../../type/interface/Resolvable"
 import Snapshot from "../Snapshot"
 import getSnapshot from "../../method/snapshots/getSnapshot"
 
