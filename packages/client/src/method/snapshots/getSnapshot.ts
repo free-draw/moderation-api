@@ -5,7 +5,7 @@ type GetSnapshotResponse = {
 	snapshot: SnapshotData,
 }
 
-async function getSnapshot(api: API, snapshotId: string): Promise<Snapshot | null> {
+async function getSnapshot(api: API, snapshotId: string): Promise<Snapshot> {
 	const { data } = await api.request<GetSnapshotResponse>({
 		url: `/snapshots/${snapshotId}`,
 		method: "GET",

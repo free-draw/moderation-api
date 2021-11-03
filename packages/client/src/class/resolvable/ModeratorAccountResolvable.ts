@@ -13,7 +13,7 @@ class ModeratorAccountResolvable implements Resolvable<ModeratorAccount> {
 		this.id = id
 	}
 
-	public async resolve(api: API): Promise<ModeratorAccount | null> {
+	public async resolve(api: API): Promise<ModeratorAccount> {
 		const moderator = await findModerator(api, {
 			account: {
 				platform: this.platform,
@@ -21,7 +21,10 @@ class ModeratorAccountResolvable implements Resolvable<ModeratorAccount> {
 			},
 		})
 
-		return moderator?.accounts.find(account => account.platform === this.platform && account.id === this.id) ?? null
+		const account = moderator.accounts.find(account => account.platform === this.platform && account.id === this.id)
+		if (!account) throw new Error("Unable to find ModeratorAccount")
+
+		return account
 	}
 }
 

@@ -5,7 +5,7 @@ type GetReportResponse = {
 	report: ReportData,
 }
 
-async function getReport(api: API, reportId: string): Promise<Report | null> {
+async function getReport(api: API, reportId: string): Promise<Report> {
 	const { data } = await api.request<GetReportResponse>({
 		url: `/reports/${reportId}`,
 		method: "GET",
