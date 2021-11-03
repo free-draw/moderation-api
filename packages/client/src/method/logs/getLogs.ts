@@ -2,8 +2,9 @@ import LogType from "../../enum/LogType"
 import SortDirection from "../../enum/SortDirection"
 import API from "../../API"
 import Log, { LogData } from "../../class/Log"
+import Page from "../../type/interface/Page"
 
-class LogsPage {
+class LogsPage implements Page<Log> {
 	private nextPageCursor: string
 	private previousPageCursor: string
 	public logs: Log[]
