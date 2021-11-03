@@ -24,14 +24,6 @@ class Moderator {
 		this.permissions = data.permissions
 	}
 
-	public async linkAccount(account: ModeratorAccount | ModeratorAccountData): Promise<void> {
-		// TODO
-	}
-
-	public async unlinkAccount(account: ModeratorAccount | ModeratorAccountData): Promise<void> {
-		// TODO
-	}
-
 	public async delete(api: API): Promise<void> {
 		// TODO
 	}
