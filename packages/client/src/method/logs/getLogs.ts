@@ -1,8 +1,20 @@
 import LogType from "../../enum/LogType"
 import SortDirection from "../../enum/SortDirection"
 import API from "../../API"
-import Log, { LogData } from "../../class/Log"
+import Log, { LogData, LogTypeData } from "../../class/Log"
+import Moderator from "../../class/Moderator"
+import ModeratorResolvable from "../../class/resolvable/ModeratorResolvable"
 import Page from "../../type/interface/Page"
+
+type LogModeratorResolved = {
+	log: Log,
+	moderator: Moderator
+}
+type LogDataResolved = {
+	log: Log,
+	data: LogTypeData[keyof LogTypeData],
+}
+type LogResolved = LogModeratorResolved & LogDataResolved
 
 class LogsPage implements Page<Log> {
 	private nextPageCursor: string
@@ -21,6 +33,57 @@ class LogsPage implements Page<Log> {
 
 	public async previous(api: API): Promise<LogsPage> {
 		return await getLogs(api, { cursor: this.previousPageCursor })
+	}
+
+	// Resolving
+
+	public async resolveLogModerators(api: API): Promise<LogModeratorResolved[]> {
+		const moderatorResolvables = {} as Record<string, ModeratorResolvable>
+		this.logs.forEach(log => moderatorResolvables[log.moderator.id] = log.moderator)
+
+		const moderators = await Promise.all(
+			Object.values(moderatorResolvables).map(moderatorResolvable => moderatorResolvable.resolve(api))
+		)
+
+		const moderatorMap = {} as Record<string, Moderator>
+		moderators.forEach(moderator => moderatorMap[moderator.id] = moderator)
+
+		return this.logs.map((log) => {
+			return {
+				log,
+				moderator: moderatorMap[log.moderator.id],
+			}
+		})
+	}
+
+	public async resolveLogData(api: API): Promise<LogDataResolved[]> {
+		return await Promise.all(
+			this.logs.map(async (log) => {
+				return {
+					log,
+					data: await log.resolveData(api),
+				}
+			})
+		)
+	}
+
+	public async resolveAll(api: API): Promise<LogResolved[]> {
+		const [ logModerators, logData ] = await Promise.all([
+			this.resolveLogModerators(api),
+			this.resolveLogData(api),
+		])
+
+		const results = [] as LogResolved[]
+
+		for (let index = 0; index < this.logs.length; index++) {
+			results.push({
+				log: this.logs[index],
+				moderator: logModerators[index].moderator,
+				data: logData[index].data,
+			})
+		}
+
+		return results
 	}
 }
 
