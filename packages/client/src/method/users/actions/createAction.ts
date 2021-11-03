@@ -1,4 +1,5 @@
 import Action, { ActionData, ActionOptions } from "../../../class/Action"
+import UserResolvable from "../../../class/resolvable/UserResolvable"
 import API from "../../../API"
 
 type CreateActionResponse = {
@@ -12,7 +13,7 @@ async function createAction(api: API, userId: number, options: ActionOptions) {
 		data: options,
 	})
 
-	return new Action(data.action)
+	return new Action(new UserResolvable(userId), data.action)
 }
 
 export default createAction

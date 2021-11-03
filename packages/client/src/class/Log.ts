@@ -3,6 +3,7 @@ import Moderator from "./Moderator"
 import ModeratorAccount from "./ModeratorAccount"
 import ModeratorResolvable from "./resolvable/ModeratorResolvable"
 import ReportResolvable from "./resolvable/ReportResolvable"
+import UserResolvable from "./resolvable/UserResolvable"
 import LogType from "../enum/LogType"
 import RobloxUser from "../type/RobloxUser"
 import getRobloxUser from "../method/roblox/getRobloxUser"
@@ -51,17 +52,17 @@ class Log {
 			case LogType.CREATE_ACTION:
 				return {
 					user: await getRobloxUser(api, this.data.userId),
-					action: new Action(this.data.action),
+					action: new Action(new UserResolvable(this.data.userId), this.data.action),
 				}
 			case LogType.DELETE_ACTION:
 				return {
 					user: await getRobloxUser(api, this.data.userId),
-					action: new Action(this.data.action),
+					action: new Action(new UserResolvable(this.data.userId), this.data.action),
 				}
 			case LogType.DELETE_ACTIONS_BULK:
 				return {
 					user: await getRobloxUser(api, this.data.userId),
-					actions: this.data.actions.map((actionData: ActionData) => new Action(actionData)),
+					actions: this.data.actions.map((actionData: ActionData) => new Action(new UserResolvable(this.data.userId), actionData)),
 				}
 
 			case LogType.CREATE_MODERATOR:
@@ -79,12 +80,12 @@ class Log {
 			case LogType.LINK_MODERATOR_ACCOUNT:
 				return {
 					moderator: new ModeratorResolvable(this.data.moderatorId),
-					account: new ModeratorAccount(this.data.account),
+					account: new ModeratorAccount(new ModeratorResolvable(this.data.moderatorId), this.data.account),
 				}
 			case LogType.UNLINK_MODERATOR_ACCOUNT:
 				return {
 					moderator: new ModeratorResolvable(this.data.moderatorId),
-					account: new ModeratorAccount(this.data.account),
+					account: new ModeratorAccount(new ModeratorResolvable(this.data.moderatorId), this.data.account),
 				}
 
 			case LogType.ACCEPT_REPORT:

@@ -4,6 +4,10 @@ import ActionType from "../enum/ActionType"
 import ModeratorResolvable from "./resolvable/ModeratorResolvable"
 import ReportResolvable from "./resolvable/ReportResolvable"
 import SnapshotResolvable from "./resolvable/SnapshotResolvable"
+import deleteAction from "../method/users/actions/deleteAction"
+import API from "../API"
+import User from "./User"
+import UserResolvable from "./resolvable/UserResolvable"
 
 type ActionData = {
 	id: string,
@@ -28,6 +32,8 @@ type ActionOptions = {
 }
 
 class Action {
+	public user: User | UserResolvable
+
 	public id: string
 	public active: boolean
 	public created: Date
@@ -39,7 +45,9 @@ class Action {
 	public report?: ReportResolvable
 	public moderator?: ModeratorResolvable
 
-	constructor(data: ActionData) {
+	constructor(user: User | UserResolvable, data: ActionData) {
+		this.user = user
+
 		this.id = data.id
 		this.active = data.active
 		this.created = new Date(data.created)

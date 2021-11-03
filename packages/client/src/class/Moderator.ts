@@ -20,7 +20,7 @@ class Moderator {
 		this.id = data.id
 		this.name = data.name
 		this.active = data.active
-		this.accounts = data.accounts.map(accountData => new ModeratorAccount(accountData))
+		this.accounts = data.accounts.map(accountData => new ModeratorAccount(this, accountData))
 		this.permissions = data.permissions
 	}
 

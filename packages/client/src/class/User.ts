@@ -11,7 +11,7 @@ class User {
 
 	constructor(data: UserData) {
 		this.id = data.id
-		this.actions = data.actions.map(actionData => new Action(actionData))
+		this.actions = data.actions.map(actionData => new Action(this, actionData))
 	}
 }
 

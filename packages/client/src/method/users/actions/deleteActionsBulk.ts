@@ -1,4 +1,5 @@
 import Action, { ActionData } from "../../../class/Action"
+import UserResolvable from "../../../class/resolvable/UserResolvable"
 import API from "../../../API"
 import { ActionType } from "../../.."
 
@@ -15,7 +16,7 @@ async function deleteActionsBulk(api: API, userId: number, options: {
 		params: options,
 	})
 
-	return data.actions.map(actionData => new Action(actionData))
+	return data.actions.map(actionData => new Action(new UserResolvable(userId), actionData))
 }
 
 export default deleteActionsBulk

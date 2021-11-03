@@ -1,4 +1,5 @@
 import Action, { ActionData } from "../../../class/Action"
+import UserResolvable from "../../../class/resolvable/UserResolvable"
 import API from "../../../API"
 
 type DeleteActionResponse = {
@@ -11,7 +12,7 @@ async function deleteAction(api: API, userId: number, actionId: string): Promise
 		method: "DELETE",
 	})
 
-	return new Action(data.action)
+	return new Action(new UserResolvable(userId), data.action)
 }
 
 export default deleteAction
