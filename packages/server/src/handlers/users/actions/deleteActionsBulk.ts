@@ -50,13 +50,13 @@ export default async function(fastify: FastifyInstance) {
 				[StatusCodes.OK]: {
 					type: "object",
 					properties: {
-						actions: {
+						actionIds: {
 							type: "array",
-							items: { $ref: "Action" },
+							items: { type: "string" },
 						},
 					},
 					required: [
-						"actions",
+						"actionIds",
 					],
 					additionalProperties: false,
 				} as JSONSchema,
@@ -99,7 +99,7 @@ export default async function(fastify: FastifyInstance) {
 			}
 
 			return {
-				actions: actions.map(action => action.serialize()),
+				actionIds: actions.map(action => action._id.toString()),
 			}
 		} as RouteHandlerMethod,
 	})
