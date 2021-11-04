@@ -1,3 +1,4 @@
+import updateModerator from "../method/moderators/updateModerator"
 import API from "../API"
 import ModeratorAccount, { ModeratorAccountData } from "./ModeratorAccount"
 
@@ -24,8 +25,22 @@ class Moderator {
 		this.permissions = data.permissions
 	}
 
-	public async delete(api: API): Promise<void> {
-		// TODO
+	public async update(api: API, options: {
+		name?: string,
+		permissions?: string[],
+		active?: boolean,
+	}): Promise<void> {
+		await updateModerator(api, this.id, options)
+
+		if (options.name) this.name = options.name
+		if (options.permissions) this.permissions = options.permissions
+		if (options.active) this.active = options.active
+	}
+
+	public async linkAccount(api: API, accountData: ModeratorAccountData): Promise<ModeratorAccount> {
+		const account = new ModeratorAccount(this, accountData)
+		await account.link(api)
+		return account
 	}
 }
 

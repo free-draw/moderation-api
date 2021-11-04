@@ -7,7 +7,7 @@ type UpdateModeratorResponse = {
 
 async function updateModerator(api: API, moderatorId: string, options: {
 	name?: string,
-	permissions?: string,
+	permissions?: string[],
 	active?: boolean,
 }) {
 	const { data } = await api.request<UpdateModeratorResponse>({

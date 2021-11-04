@@ -60,8 +60,9 @@ class Action {
 		this.moderator = data.moderator ? new ModeratorResolvable(data.moderator) : undefined
 	}
 
-	public async delete(): Promise<void> {
-		// TODO
+	public async delete(api: API): Promise<void> {
+		await deleteAction(api, this.user.id, this.id)
+		this.active = false
 	}
 }
 
