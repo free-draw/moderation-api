@@ -14,7 +14,9 @@
   ],
   "dependencies": {
     "axios": "^0.24.0",
+    "binary-parser": "^2.0.1",
     "eventemitter2": "^6.4.5",
+    "js-base64": "^3.7.2",
     "lodash": "^4.17.21",
     "node-cache": "^5.1.2",
     "socket.io-client": "^4.3.2",

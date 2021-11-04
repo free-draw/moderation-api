@@ -6,7 +6,9 @@ specifiers:
   '@types/url-join': ^4.0.1
   '@types/web': ^0.0.44
   axios: ^0.24.0
+  binary-parser: ^2.0.1
   eventemitter2: ^6.4.5
+  js-base64: ^3.7.2
   lodash: ^4.17.21
   node-cache: ^5.1.2
   socket.io-client: ^4.3.2
@@ -15,7 +17,9 @@ specifiers:
 
 dependencies:
   axios: 0.24.0
+  binary-parser: 2.0.1
   eventemitter2: 6.4.5
+  js-base64: 3.7.2
   lodash: 4.17.21
   node-cache: 5.1.2
   socket.io-client: 4.3.2
@@ -65,6 +69,11 @@ packages:
   /base64-arraybuffer/1.0.1:
     resolution: {integrity: sha512-vFIUq7FdLtjZMhATwDul5RZWv2jpXQ09Pd6jcVEOvIsqCWTRFD/ONHNfyOS8dA/Ippi5dsIgpyKWKZaAKZltbA==}
     engines: {node: '>= 0.6.0'}
+    dev: false
+
+  /binary-parser/2.0.1:
+    resolution: {integrity: sha512-7kZx8vZCq+V/0XkaOjLpCkBdOYCzjau+yt1PDMM04Q73WgtNYSoM6gOpl/Ky7qbANrEkcbX9ya+6Fdmj1WeU+w==}
+    engines: {node: '>=12'}
     dev: false
 
   /clone/2.1.2:
@@ -125,6 +134,10 @@ packages:
 
   /has-cors/1.1.0:
     resolution: {integrity: sha1-XkdHk/fqmEPRu5nCPu9J/xJv/zk=}
+    dev: false
+
+  /js-base64/3.7.2:
+    resolution: {integrity: sha512-NnRs6dsyqUXejqk/yv2aiXlAvOs56sLkX6nUdeaNezI5LFFLlsZjOThmwnrcwh5ZZRwZlCMnVAY3CvhIhoVEKQ==}
     dev: false
 
   /lodash/4.17.21:
