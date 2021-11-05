@@ -1,4 +1,4 @@
-import Action, { ActionData } from "./Action"
+import Action, { ActionData, ActionOptions } from "./Action"
 import Moderator from "./Moderator"
 import ModeratorAccount from "./ModeratorAccount"
 import ModeratorResolvable from "./resolvable/ModeratorResolvable"
@@ -24,11 +24,11 @@ type LogTypeData = {
 
 	[LogType.CREATE_MODERATOR]: { moderator: Moderator },
 	[LogType.DELETE_MODERATOR]: { moderator: Moderator },
-	[LogType.UPDATE_MODERATOR]: { moderator: ModeratorResolvable, name?: string, permissions?: string[], active?: boolean },
+	[LogType.UPDATE_MODERATOR]: { moderator: ModeratorResolvable, options: { name?: string, permissions?: string[], active?: boolean } },
 	[LogType.LINK_MODERATOR_ACCOUNT]: { moderator: ModeratorResolvable, account: ModeratorAccount },
 	[LogType.UNLINK_MODERATOR_ACCOUNT]: { moderator: ModeratorResolvable, account: ModeratorAccount },
 
-	[LogType.ACCEPT_REPORT]: { report: ReportResolvable },
+	[LogType.ACCEPT_REPORT]: { report: ReportResolvable, options: ActionOptions },
 	[LogType.DECLINE_REPORT]: { report: ReportResolvable },
 }
 
@@ -76,6 +76,7 @@ class Log {
 			case LogType.UPDATE_MODERATOR:
 				return {
 					moderator: new ModeratorResolvable(this.data.moderatorId),
+					options: this.data.options,
 				}
 			case LogType.LINK_MODERATOR_ACCOUNT:
 				return {
@@ -91,6 +92,7 @@ class Log {
 			case LogType.ACCEPT_REPORT:
 				return {
 					report: new ReportResolvable(this.data.reportId),
+					options: this.data.options,
 				}
 			case LogType.DECLINE_REPORT:
 				return {
