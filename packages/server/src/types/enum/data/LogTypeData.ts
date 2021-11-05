@@ -1,8 +1,9 @@
 import LogType from "../LogType"
-import ActionData from "../../schema/Action"
+import ActionData, { ActionOptions } from "../../schema/Action"
 import ModeratorData from "../../schema/Moderator"
 import Permission from "../../Permission"
 import ModeratorAccountData from "../../schema/ModeratorAccount"
+import ActionType from "../ActionType"
 
 type LogTypeData = {
 	[LogType.CREATE_ACTION]: { userId: number, action: ActionData },
@@ -15,7 +16,7 @@ type LogTypeData = {
 	[LogType.LINK_MODERATOR_ACCOUNT]: { moderatorId: string, account: ModeratorAccountData },
 	[LogType.UNLINK_MODERATOR_ACCOUNT]: { moderatorId: string, account: ModeratorAccountData },
 
-	[LogType.ACCEPT_REPORT]: { reportId: string },
+	[LogType.ACCEPT_REPORT]: { reportId: string, options: ActionOptions },
 	[LogType.DECLINE_REPORT]: { reportId: string },
 }
 
