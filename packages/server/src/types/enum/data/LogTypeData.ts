@@ -3,7 +3,6 @@ import ActionData, { ActionOptions } from "../../schema/Action"
 import ModeratorData from "../../schema/Moderator"
 import Permission from "../../Permission"
 import ModeratorAccountData from "../../schema/ModeratorAccount"
-import ActionType from "../ActionType"
 
 type LogTypeData = {
 	[LogType.CREATE_ACTION]: { userId: number, action: ActionData },
