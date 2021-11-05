@@ -2,11 +2,13 @@ import Action, { ActionData, ActionOptions } from "./Action"
 import Moderator from "./Moderator"
 import ModeratorAccount from "./ModeratorAccount"
 import ModeratorResolvable from "./resolvable/ModeratorResolvable"
-import ReportResolvable from "./resolvable/ReportResolvable"
+import Report from "./Report"
 import UserResolvable from "./resolvable/UserResolvable"
 import LogType from "../enum/LogType"
 import RobloxUser from "../type/RobloxUser"
 import getRobloxUser from "../method/roblox/getRobloxUser"
+import getModerator from "../method/moderators/getModerator"
+import getReport from "../method/reports/getReport"
 import API from "../API"
 
 type LogData = {
@@ -24,12 +26,12 @@ type LogTypeData = {
 
 	[LogType.CREATE_MODERATOR]: { moderator: Moderator },
 	[LogType.DELETE_MODERATOR]: { moderator: Moderator },
-	[LogType.UPDATE_MODERATOR]: { moderator: ModeratorResolvable, options: { name?: string, permissions?: string[], active?: boolean } },
-	[LogType.LINK_MODERATOR_ACCOUNT]: { moderator: ModeratorResolvable, account: ModeratorAccount },
-	[LogType.UNLINK_MODERATOR_ACCOUNT]: { moderator: ModeratorResolvable, account: ModeratorAccount },
+	[LogType.UPDATE_MODERATOR]: { moderator: Moderator, options: { name?: string, permissions?: string[], active?: boolean } },
+	[LogType.LINK_MODERATOR_ACCOUNT]: { moderator: Moderator, account: ModeratorAccount },
+	[LogType.UNLINK_MODERATOR_ACCOUNT]: { moderator: Moderator, account: ModeratorAccount },
 
-	[LogType.ACCEPT_REPORT]: { report: ReportResolvable, options: ActionOptions },
-	[LogType.DECLINE_REPORT]: { report: ReportResolvable },
+	[LogType.ACCEPT_REPORT]: { report: Report, options: ActionOptions },
+	[LogType.DECLINE_REPORT]: { report: Report },
 }
 
 class Log {
@@ -48,57 +50,60 @@ class Log {
 	}
 
 	public async resolveData(api: API): Promise<LogTypeData[keyof LogTypeData]> {
-		switch (this.type) {
-			case LogType.CREATE_ACTION:
-				return {
-					user: await getRobloxUser(api, this.data.userId),
-					action: new Action(new UserResolvable(this.data.userId), this.data.action),
-				}
-			case LogType.DELETE_ACTION:
-				return {
-					user: await getRobloxUser(api, this.data.userId),
-					action: new Action(new UserResolvable(this.data.userId), this.data.action),
-				}
-			case LogType.DELETE_ACTIONS_BULK:
-				return {
-					user: await getRobloxUser(api, this.data.userId),
-					actions: this.data.actions.map((actionData: ActionData) => new Action(new UserResolvable(this.data.userId), actionData)),
-				}
+		const type = this.type
 
-			case LogType.CREATE_MODERATOR:
-				return {
-					moderator: new Moderator(this.data.moderator),
-				}
-			case LogType.DELETE_MODERATOR:
-				return {
-					moderator: new Moderator(this.data.moderator),
-				}
-			case LogType.UPDATE_MODERATOR:
-				return {
-					moderator: new ModeratorResolvable(this.data.moderatorId),
-					options: this.data.options,
-				}
-			case LogType.LINK_MODERATOR_ACCOUNT:
-				return {
-					moderator: new ModeratorResolvable(this.data.moderatorId),
-					account: new ModeratorAccount(new ModeratorResolvable(this.data.moderatorId), this.data.account),
-				}
-			case LogType.UNLINK_MODERATOR_ACCOUNT:
-				return {
-					moderator: new ModeratorResolvable(this.data.moderatorId),
-					account: new ModeratorAccount(new ModeratorResolvable(this.data.moderatorId), this.data.account),
-				}
-
-			case LogType.ACCEPT_REPORT:
-				return {
-					report: new ReportResolvable(this.data.reportId),
-					options: this.data.options,
-				}
-			case LogType.DECLINE_REPORT:
-				return {
-					report: new ReportResolvable(this.data.reportId),
-				}
+		if (type === LogType.CREATE_ACTION) {
+			return {
+				user: await getRobloxUser(api, this.data.userId),
+				action: new Action(new UserResolvable(this.data.userId), this.data.action),
+			}
+		} else if (type === LogType.DELETE_ACTION) {
+			return {
+				user: await getRobloxUser(api, this.data.userId),
+				action: new Action(new UserResolvable(this.data.userId), this.data.action),
+			}
+		} else if (type === LogType.DELETE_ACTIONS_BULK) {
+			return {
+				user: await getRobloxUser(api, this.data.userId),
+				actions: this.data.actions.map((actionData: ActionData) => new Action(new UserResolvable(this.data.userId), actionData)),
+			}
+		} else if (type === LogType.CREATE_MODERATOR) {
+			return {
+				moderator: new Moderator(this.data.moderator),
+			}
+		} else if (type === LogType.DELETE_MODERATOR) {
+			return {
+				moderator: new Moderator(this.data.moderator),
+			}
+		} else if (type === LogType.UPDATE_MODERATOR) {
+			return {
+				moderator: await getModerator(api, this.data.moderatorId),
+				options: this.data.options,
+			}
+		} else if (type === LogType.LINK_MODERATOR_ACCOUNT) {
+			const moderator = await getModerator(api, this.data.moderatorId)
+			return {
+				moderator,
+				account: new ModeratorAccount(moderator, this.data.account),
+			}
+		} else if (type === LogType.UNLINK_MODERATOR_ACCOUNT) {
+			const moderator = await getModerator(api, this.data.moderatorId)
+			return {
+				moderator,
+				account: new ModeratorAccount(moderator, this.data.account),
+			}
+		} else if (type === LogType.ACCEPT_REPORT) {
+			return {
+				report: await getReport(api, this.data.reportId),
+				options: this.data.options,
+			}
+		} else if (type === LogType.DECLINE_REPORT) {
+			return {
+				report: await getReport(api, this.data.reportId),
+			}
 		}
+
+		throw new Error("what")
 	}
 }
 
