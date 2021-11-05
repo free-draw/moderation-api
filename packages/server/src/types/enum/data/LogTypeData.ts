@@ -12,7 +12,7 @@ type LogTypeData = {
 
 	[LogType.CREATE_MODERATOR]: { moderator: ModeratorData },
 	[LogType.DELETE_MODERATOR]: { moderator: ModeratorData },
-	[LogType.UPDATE_MODERATOR]: { moderatorId: string, name?: string, permissions?: Permission[], active?: boolean },
+	[LogType.UPDATE_MODERATOR]: { moderatorId: string, options: { name?: string, permissions?: Permission[], active?: boolean } },
 	[LogType.LINK_MODERATOR_ACCOUNT]: { moderatorId: string, account: ModeratorAccountData },
 	[LogType.UNLINK_MODERATOR_ACCOUNT]: { moderatorId: string, account: ModeratorAccountData },
 
