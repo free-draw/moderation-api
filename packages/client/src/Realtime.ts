@@ -1,10 +1,14 @@
 import { EventEmitter2, Listener } from "eventemitter2"
 import { io, Socket } from "socket.io-client"
 import Report, { ReportData } from "./class/Report"
+import Action, { ActionData } from "./class/Action"
+import UserResolvable from "./class/resolvable/UserResolvable"
 
 type RealtimeEvents = {
 	reportCreate: [ Report ],
 	reportDelete: [ Report ],
+	actionCreate: [ UserResolvable, Action ],
+	actionDelete: [ UserResolvable, Action ],
 }
 
 interface Realtime {
@@ -23,13 +27,23 @@ class Realtime extends EventEmitter2 {
 			auth: { token },
 		})
 
-		this.socket.on("reportCreate", ({ report: reportData }: { report: ReportData }) => {
-			this.emit("reportCreate", new Report(reportData))
-		})
+		const reportEventHandler = (emitEvent: keyof RealtimeEvents) => {
+			return ({ report: reportData }: { report: ReportData }) => {
+				this.emit(emitEvent, new Report(reportData))
+			}
+		}
 
-		this.socket.on("reportDelete", ({ report: reportData }: { report: ReportData }) => {
-			this.emit("reportDelete", new Report(reportData))
-		})
+		const actionEventHandler = (emitEvent: keyof RealtimeEvents) => {
+			return ({ userId, action: actionData }: { userId: number, action: ActionData }) => {
+				const user = new UserResolvable(userId)
+				this.emit(emitEvent, user, new Action(user, actionData))
+			}
+		}
+
+		this.socket.on("reportCreate", reportEventHandler("reportCreate"))
+		this.socket.on("reportDelete", reportEventHandler("reportDelete"))
+		this.socket.on("actionCreate", actionEventHandler("actionCreate"))
+		this.socket.on("actionDelete", actionEventHandler("actionDelete"))
 	}
 
 	public connect(): Promise<void> {
