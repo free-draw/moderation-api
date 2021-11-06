@@ -23,11 +23,11 @@ class Realtime extends EventEmitter2 {
 			auth: { token },
 		})
 
-		this.socket.on("reportCreate", (reportData: ReportData) => {
+		this.socket.on("reportCreate", ({ report: reportData }: { report: ReportData }) => {
 			this.emit("reportCreate", new Report(reportData))
 		})
 
-		this.socket.on("reportDelete", (reportData: ReportData) => {
+		this.socket.on("reportDelete", ({ report: reportData }: { report: ReportData }) => {
 			this.emit("reportDelete", new Report(reportData))
 		})
 	}
