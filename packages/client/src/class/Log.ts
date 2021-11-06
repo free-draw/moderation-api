@@ -1,4 +1,4 @@
-import Action, { ActionData, ActionOptions } from "./Action"
+import Action, { ActionData } from "./Action"
 import Moderator from "./Moderator"
 import ModeratorAccount from "./ModeratorAccount"
 import ModeratorResolvable from "./resolvable/ModeratorResolvable"
@@ -30,7 +30,7 @@ type LogTypeData = {
 	[LogType.LINK_MODERATOR_ACCOUNT]: { moderator: Moderator, account: ModeratorAccount },
 	[LogType.UNLINK_MODERATOR_ACCOUNT]: { moderator: Moderator, account: ModeratorAccount },
 
-	[LogType.ACCEPT_REPORT]: { report: Report, options: ActionOptions },
+	[LogType.ACCEPT_REPORT]: { report: Report, action: ActionData },
 	[LogType.DECLINE_REPORT]: { report: Report },
 }
 
@@ -93,9 +93,10 @@ class Log {
 				account: new ModeratorAccount(moderator, this.data.account),
 			}
 		} else if (type === LogType.ACCEPT_REPORT) {
+			const report = await getReport(api, this.data.reportId)
 			return {
-				report: await getReport(api, this.data.reportId),
-				options: this.data.options,
+				report,
+				action: new Action(report.target, this.data.action),
 			}
 		} else if (type === LogType.DECLINE_REPORT) {
 			return {
