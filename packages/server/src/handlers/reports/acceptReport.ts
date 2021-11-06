@@ -95,7 +95,7 @@ export default async function(fastify: FastifyInstance) {
 			if (request.identity) {
 				await LogModel.push(request.identity, LogType.ACCEPT_REPORT, {
 					reportId: report._id.toString(),
-					options: request.body,
+					action: action.serialize(),
 				})
 			}
 
