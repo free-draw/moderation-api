@@ -52,6 +52,7 @@ type LayerData = {
 }
 
 type ParsedLayer = {
+	index: number,
 	name: string,
 	visible: boolean,
 	lines: ParsedLine[],
