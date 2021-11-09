@@ -108,4 +108,13 @@ class Snapshot {
 }
 
 export default Snapshot
-export { SnapshotData }
+export {
+	SnapshotPlayer,
+	SnapshotLog,
+	SnapshotCanvas,
+
+	SnapshotData,
+	SnapshotPlayerData,
+	SnapshotLogData,
+	SnapshotCanvasData,
+}
