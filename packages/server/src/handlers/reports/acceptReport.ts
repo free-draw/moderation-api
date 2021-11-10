@@ -89,7 +89,7 @@ export default async function(fastify: FastifyInstance) {
 		handler: async function(request: AcceptReportRequest) {
 			const report = await ReportModel.findById(request.params.reportId) as ReportDocument
 			if (!report) throw new ReportNotFoundError()
-			const action = await report.accept(request.body)
+			const action = await report.accept(request.body, request.identity?._id?.toString())
 			await report.save()
 
 			if (request.identity) {

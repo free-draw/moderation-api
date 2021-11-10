@@ -4,11 +4,12 @@ import { ActionOptions } from "../types/schema/Action"
 import ReportData from "../types/schema/Report"
 import { RefOptional } from "../types/util/Ref"
 import getDocumentId from "../util/getDocumentId"
+import ObjectId from "../types/ObjectId"
 import User, { ActionDocument } from "./User"
 
 type ReportDocumentData = RefOptional<Omit<ReportData, "id">, "snapshot">
 type ReportDocument = EnforceDocument<ReportDocumentData, {
-	accept(this: ReportDocument, actionOptions: ActionOptions): Promise<ActionDocument>,
+	accept(this: ReportDocument, actionOptions: ActionOptions, identity?: ObjectId): Promise<ActionDocument>,
 	decline(this: ReportDocument): void,
 	serialize(this: ReportDocument): ReportData,
 }, {}>
@@ -26,14 +27,14 @@ const ReportSchema = new Schema<ReportDocumentData>({
 
 ReportSchema.index({ status: 1 })
 
-ReportSchema.method("accept", async function(this: ReportDocument, options: ActionOptions): Promise<ActionDocument> {
+ReportSchema.method("accept", async function(this: ReportDocument, options: ActionOptions, identity?: ObjectId): Promise<ActionDocument> {
 	this.status = ReportStatus.ACCEPTED
 
 	const user = await User.get(this.target)
 	const action = user.createAction({
 		...options,
 		report: this._id.toString(),
-	})
+	}, identity)
 	await user.save()
 
 	return action
