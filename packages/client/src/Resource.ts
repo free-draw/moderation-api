@@ -88,7 +88,9 @@ class ResourceQueue<I, O, D> extends EventEmitter2 {
 				this.setState(ResourceState.REQUEST_PENDING)
 
 				setTimeout(() => {
-					this.flush()
+					if (this.state === ResourceState.READY) {
+						this.flush()
+					}
 				}, this.timeout)
 			}
 
