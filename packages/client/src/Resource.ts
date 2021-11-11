@@ -88,9 +88,7 @@ class ResourceQueue<I, O, D> extends EventEmitter2 {
 				this.setState(ResourceState.REQUEST_PENDING)
 
 				setTimeout(() => {
-					if (this.state === ResourceState.READY) {
-						this.flush()
-					}
+					this.flush()
 				}, this.timeout)
 			}
 
@@ -130,7 +128,7 @@ class Resource<I, O, D> {
 		this.defaultCacheOptions = options?.defaultCacheOptions
 	}
 
-	private queue(designator: D): ResourceQueue<I, O, D> {
+	private getQueue(designator: D): ResourceQueue<I, O, D> {
 		let queue = this.queues.find(findQueue => findQueue.designator === designator)
 
 		if (!queue) {
@@ -145,12 +143,14 @@ class Resource<I, O, D> {
 					this.queues = this.queues.filter(filterQueue => filterQueue !== queue)
 				}
 			})
+
+			this.queues.push(queue)
 		}
 
 		return queue
 	}
 
-	private cache(designator: D): NodeCache {
+	private getCache(designator: D): NodeCache {
 		let cache = this.caches.find(cache => cache.designator === designator)
 
 		if (!cache) {
@@ -166,17 +166,19 @@ class Resource<I, O, D> {
 					this.caches = this.caches.filter(filterCache => filterCache !== cache)
 				}
 			})
+
+			this.caches.push(cache)
 		}
 
 		return cache.cache
 	}
 
 	public request(designator: D, data: I, key: string, ignoreCache?: boolean): Promise<O> {
-		const cache = this.cache(designator)
+		const cache = this.getCache(designator)
 		let value = cache.get<O>(key)
 
 		if (!value || ignoreCache) {
-			const queue = this.queue(designator)
+			const queue = this.getQueue(designator)
 
 			return queue.request(data, key).then((result: O) => {
 				cache.set(key, data)
