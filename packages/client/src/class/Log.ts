@@ -30,7 +30,7 @@ type LogTypeData = {
 	[LogType.LINK_MODERATOR_ACCOUNT]: { moderator: Moderator, account: ModeratorAccount },
 	[LogType.UNLINK_MODERATOR_ACCOUNT]: { moderator: Moderator, account: ModeratorAccount },
 
-	[LogType.ACCEPT_REPORT]: { report: Report, action: ActionData },
+	[LogType.ACCEPT_REPORT]: { report: Report, action: Action },
 	[LogType.DECLINE_REPORT]: { report: Report },
 }
 
