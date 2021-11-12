@@ -1,6 +1,6 @@
 export { default as AccountPlatform } from "./AccountPlatform"
 export { default as ActionType } from "./ActionType"
-export { default as LogType } from "./TokenType"
+export { default as LogType } from "./LogType"
 export { default as ReportStatus } from "./ReportStatus"
 export { default as RobloxThumbnailType } from "./RobloxThumbnailType"
 export { default as SnapshotLogType } from "./SnapshotLogType"
