@@ -181,7 +181,7 @@ class Resource<I, O, D> {
 			const queue = this.getQueue(designator)
 
 			return queue.request(data, key).then((result: O) => {
-				cache.set(key, data)
+				cache.set(key, result)
 				return result
 			})
 		} else {
