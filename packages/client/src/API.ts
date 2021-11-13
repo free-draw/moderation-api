@@ -32,6 +32,7 @@ class API {
 			...config,
 			url: urljoin(this.url, config.url as string),
 			headers,
+			params,
 		})
 	}
 
