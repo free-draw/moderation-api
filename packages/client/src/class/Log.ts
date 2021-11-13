@@ -30,8 +30,8 @@ type LogTypeData = {
 	[LogType.LINK_MODERATOR_ACCOUNT]: { moderator: Moderator, account: ModeratorAccount },
 	[LogType.UNLINK_MODERATOR_ACCOUNT]: { moderator: Moderator, account: ModeratorAccount },
 
-	[LogType.ACCEPT_REPORT]: { report: Report, action: Action },
-	[LogType.DECLINE_REPORT]: { report: Report },
+	[LogType.ACCEPT_REPORT]: { report: Report, action: Action, target: RobloxUser, from: RobloxUser },
+	[LogType.DECLINE_REPORT]: { report: Report, target: RobloxUser, from: RobloxUser },
 }
 
 class Log {
@@ -94,13 +94,26 @@ class Log {
 			}
 		} else if (type === LogType.ACCEPT_REPORT) {
 			const report = await getReport(api, this.data.reportId)
+			const [ target, from ] = await Promise.all([
+				getRobloxUser(api, report.target.id),
+				getRobloxUser(api, report.from.id),
+			])
 			return {
-				report,
 				action: new Action(report.target, this.data.action),
+				report,
+				target,
+				from,
 			}
 		} else if (type === LogType.DECLINE_REPORT) {
+			const report = await getReport(api, this.data.reportId)
+			const [ target, from ] = await Promise.all([
+				getRobloxUser(api, report.target.id),
+				getRobloxUser(api, report.from.id),
+			])
 			return {
-				report: await getReport(api, this.data.reportId),
+				report,
+				target,
+				from,
 			}
 		}
 
