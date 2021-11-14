@@ -79,8 +79,10 @@ function checkPermissions(permissions: Permission[], requiredPermission: Permiss
 	})
 
 	for (const permissionData of permissionDatas) {
-		const minimatch = new Minimatch(permissionData.content + "/**")
-		if (minimatch.match(requiredPermission)) {
+		if (
+			new Minimatch(permissionData.content).match(requiredPermission) ||
+			new Minimatch(permissionData.content + "/**").match(requiredPermission)
+		) {
 			return !permissionData.isInverted
 		}
 	}
