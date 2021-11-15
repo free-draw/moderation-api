@@ -66,7 +66,7 @@ UserSchema.static("get", async function(id: number | string): Promise<UserDocume
 	if (!user) {
 		user = new this({
 			_id: id,
-			actions: {},
+			actions: [],
 		}) as UserDocument
 	}
 
