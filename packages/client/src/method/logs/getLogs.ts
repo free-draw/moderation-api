@@ -3,8 +3,8 @@ import SortDirection from "../../enum/SortDirection"
 import API from "../../API"
 import Log, { LogData, LogTypeData } from "../../class/Log"
 import Moderator from "../../class/Moderator"
-import ModeratorResolvable from "../../class/resolvable/ModeratorResolvable"
 import Page from "../../type/interface/Page"
+import getModerator from "../moderators/getModerator"
 
 type LogModeratorResolved = {
 	log: Log,
@@ -38,15 +38,19 @@ class LogsPage implements Page<Log> {
 	// Resolving
 
 	public async resolveLogModerators(api: API): Promise<LogModeratorResolved[]> {
-		const moderatorResolvables = {} as Record<string, ModeratorResolvable>
-		this.logs.forEach(log => moderatorResolvables[log.moderator.id] = log.moderator)
+		const moderatorIds = new Set<string>()
+		for (const log of this.logs) {
+			moderatorIds.add(log.moderator.id)
+		}
 
 		const moderators = await Promise.all(
-			Object.values(moderatorResolvables).map(moderatorResolvable => moderatorResolvable.resolve(api))
+			[ ...moderatorIds ].map(moderatorId => getModerator(api, moderatorId))
 		)
 
 		const moderatorMap = {} as Record<string, Moderator>
-		moderators.forEach(moderator => moderatorMap[moderator.id] = moderator)
+		for (const moderator of moderators) {
+			moderatorMap[moderator.id] = moderator
+		}
 
 		return this.logs.map((log) => {
 			return {
