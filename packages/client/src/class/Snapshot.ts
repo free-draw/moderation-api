@@ -31,17 +31,15 @@ type SnapshotData = {
 	canvas: SnapshotCanvasData[],
 }
 
-class SnapshotPlayer {
+class SnapshotPlayerPartial {
 	public id: number
 	public name?: string
-	public position: Vector2
 
-	constructor(data: SnapshotPlayerData) {
-		this.id = data.userId
-		this.position = new Vector2(data.position.x, data.position.y)
+	constructor(id: number) {
+		this.id = id
 	}
 
-	public async fetchName(api: API): Promise<string> {
+	public async fetchData(api: API): Promise<string> {
 		if (!this.name) {
 			const user = await getRobloxUser(api, this.id)
 			this.name = user.name
@@ -49,14 +47,34 @@ class SnapshotPlayer {
 
 		return this.name
 	}
+
+	public applyDataFrom(player: SnapshotPlayerPartial): void {
+		this.name = player.name
+	}
+
+	public asPlayer(position: Vector2): SnapshotPlayer {
+		return new SnapshotPlayer({
+			userId: this.id,
+			position,
+		})
+	}
+}
+
+class SnapshotPlayer extends SnapshotPlayerPartial {
+	public position: Vector2
+
+	constructor(data: SnapshotPlayerData) {
+		super(data.userId)
+		this.position = new Vector2(data.position.x, data.position.y)
+	}
 }
 
 class SnapshotLog {
-	public player: SnapshotPlayer
+	public player: SnapshotPlayer | SnapshotPlayerPartial
 	public type: SnapshotLogType
 	public data: any
 
-	constructor(player: SnapshotPlayer, data: SnapshotLogData) {
+	constructor(player: SnapshotPlayer | SnapshotPlayerPartial, data: SnapshotLogData) {
 		this.player = player
 		this.type = data.type
 		this.data = data.data
@@ -78,21 +96,46 @@ class SnapshotCanvas {
 	}
 }
 
+function collectUserIds(data: SnapshotData): number[] {
+	const userIds = new Set<number>()
+
+	for (const player of data.players) {
+		userIds.add(player.userId)
+	}
+
+	for (const log of data.logs) {
+		userIds.add(log.userId)
+	}
+
+	for (const canvas of data.canvas) {
+		userIds.add(canvas.userId)
+	}
+
+	return [ ...userIds ]
+}
+
 class Snapshot {
 	public id: string
+
 	public players: Record<number, SnapshotPlayer>
 	public logs: SnapshotLog[]
 	public canvas: Record<number, SnapshotCanvas>
 
+	private partialPlayers: Record<number, SnapshotPlayerPartial> = {}
+
 	constructor(data: SnapshotData) {
 		this.id = data.id
+
+		collectUserIds(data).forEach((userId) => {
+			this.partialPlayers[userId] = new SnapshotPlayerPartial(userId)
+		})
 
 		this.players = {}
 		data.players.forEach((playerData) => {
 			this.players[playerData.userId] = new SnapshotPlayer(playerData)
 		})
 
-		this.logs = data.logs.map(logData => new SnapshotLog(this.players[logData.userId], logData))
+		this.logs = data.logs.map(logData => new SnapshotLog(this.players[logData.userId] ?? this.partialPlayers[logData.userId], logData))
 
 		this.canvas = {}
 		data.canvas.forEach((canvasData) => {
@@ -100,10 +143,14 @@ class Snapshot {
 		})
 	}
 
-	public async fetchPlayerNames(api: API): Promise<void> {
+	public async fetchPlayerData(api: API): Promise<void> {
 		await Promise.all(
-			Object.values(this.players).map((player) => player.fetchName(api))
+			Object.values(this.partialPlayers).map((player) => player.fetchData(api))
 		)
+
+		for (const userId in this.players) {
+			this.players[userId].applyDataFrom(this.partialPlayers[userId])
+		}
 	}
 }
 
