@@ -44,7 +44,7 @@ class Report {
 		this.snapshot = data.snapshot ? new SnapshotResolvable(data.snapshot) : undefined
 	}
 
-	public async accept(api: API, options: ActionOptions): Promise<ActionResolvable> {
+	public async accept(api: API, options: Omit<ActionOptions, "snapshot">): Promise<ActionResolvable> {
 		return await acceptReport(api, this.id, options)
 	}
 
