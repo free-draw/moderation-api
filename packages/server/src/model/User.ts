@@ -79,7 +79,7 @@ UserSchema.method("createAction", function(this: UserDocument, options: ActionOp
 	if (options.expiry) {
 		expiry = toDate(options.expiry)
 	} else if (options.duration) {
-		expiry = new Date(Date.now() + options.duration)
+		expiry = new Date(Date.now() + options.duration * 1000)
 	}
 
 	const action = this.actions.create({
