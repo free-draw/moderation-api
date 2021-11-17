@@ -33,6 +33,7 @@ const SnapshotSchema = {
 	$id: "Snapshot",
 	type: "object",
 	properties: {
+		id: { type: "string" },
 		players: {
 			type: "array",
 			items: {
