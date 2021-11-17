@@ -14,7 +14,7 @@ type GetUsersBulkRequest = FastifyRequest<{
 
 export default async function(fastify: FastifyInstance) {
 	fastify.route({
-		url: "/users",
+		url: "/bulk/users",
 		method: "POST",
 
 		schema: {
