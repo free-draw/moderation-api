@@ -10,8 +10,11 @@ class SnapshotResolvable implements Resolvable<Snapshot> {
 		this.id = id
 	}
 
-	public async resolve(api: API): Promise<Snapshot> {
-		return getSnapshot(api, this.id)
+	public async resolve(api: API, allowCache?: boolean): Promise<Snapshot> {
+		const snapshot = await getSnapshot(api, this.id, allowCache)
+		if (!snapshot) throw new Error("Snapshot not found")
+
+		return snapshot
 	}
 }
 

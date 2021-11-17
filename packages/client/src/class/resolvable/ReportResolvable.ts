@@ -10,8 +10,11 @@ class ReportResolvable implements Resolvable<Report> {
 		this.id = id
 	}
 
-	public async resolve(api: API): Promise<Report> {
-		return getReport(api, this.id)
+	public async resolve(api: API, allowCache?: boolean): Promise<Report> {
+		const report = await getReport(api, this.id, allowCache)
+		if (!report) throw new Error("Report not found")
+
+		return report
 	}
 }
 

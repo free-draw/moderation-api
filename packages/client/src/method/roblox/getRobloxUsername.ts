@@ -31,9 +31,9 @@ const RobloxUsernameResource = new Resource<string, RobloxUser, API>(async (requ
 	return users
 })
 
-function getRobloxUsername(api: API, username: string) {
+function getRobloxUsername(api: API, username: string, ignoreCache?: boolean) {
 	username = username.toLowerCase()
-	return RobloxUsernameResource.request(api, username, username)
+	return RobloxUsernameResource.request(api, username, username, ignoreCache)
 }
 
 export default getRobloxUsername

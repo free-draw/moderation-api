@@ -38,26 +38,14 @@ class LogsPage implements Page<Log> {
 	// Resolving
 
 	public async resolveLogModerators(api: API): Promise<LogModeratorResolved[]> {
-		const moderatorIds = new Set<string>()
-		for (const log of this.logs) {
-			moderatorIds.add(log.moderator.id)
-		}
-
-		const moderators = await Promise.all(
-			[ ...moderatorIds ].map(moderatorId => getModerator(api, moderatorId))
+		return await Promise.all(
+			this.logs.map(async (log) => {
+				return {
+					log,
+					moderator: await log.moderator.resolve(api),
+				}
+			})
 		)
-
-		const moderatorMap = {} as Record<string, Moderator>
-		for (const moderator of moderators) {
-			moderatorMap[moderator.id] = moderator
-		}
-
-		return this.logs.map((log) => {
-			return {
-				log,
-				moderator: moderatorMap[log.moderator.id],
-			}
-		})
 	}
 
 	public async resolveLogData(api: API): Promise<LogDataResolved[]> {

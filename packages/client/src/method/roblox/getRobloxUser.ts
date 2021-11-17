@@ -27,8 +27,8 @@ const RobloxUserResource = new Resource<number, RobloxUser, API>(async (requeste
 	return users
 })
 
-function getRobloxUser(api: API, id: number): Promise<RobloxUser> {
-	return RobloxUserResource.request(api, id, id.toString())
+function getRobloxUser(api: API, id: number, ignoreCache?: boolean): Promise<RobloxUser> {
+	return RobloxUserResource.request(api, id, id.toString(), ignoreCache)
 }
 
 export default getRobloxUser

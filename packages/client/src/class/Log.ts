@@ -76,28 +76,38 @@ class Log {
 				moderator: new Moderator(this.data.moderator),
 			}
 		} else if (type === LogType.UPDATE_MODERATOR) {
+			const moderator = await getModerator(api, this.data.moderatorId, true)
+			if (!moderator) throw new Error("Moderator not found")
+
 			return {
-				moderator: await getModerator(api, this.data.moderatorId),
+				moderator,
 				options: this.data.options,
 			}
 		} else if (type === LogType.LINK_MODERATOR_ACCOUNT) {
-			const moderator = await getModerator(api, this.data.moderatorId)
+			const moderator = await getModerator(api, this.data.moderatorId, true)
+			if (!moderator) throw new Error("Moderator not found")
+
 			return {
 				moderator,
 				account: new ModeratorAccount(moderator, this.data.account),
 			}
 		} else if (type === LogType.UNLINK_MODERATOR_ACCOUNT) {
-			const moderator = await getModerator(api, this.data.moderatorId)
+			const moderator = await getModerator(api, this.data.moderatorId, true)
+			if (!moderator) throw new Error("Moderator not found")
+
 			return {
 				moderator,
 				account: new ModeratorAccount(moderator, this.data.account),
 			}
 		} else if (type === LogType.ACCEPT_REPORT) {
-			const report = await getReport(api, this.data.reportId)
+			const report = await getReport(api, this.data.reportId, true)
+			if (!report) throw new Error("Report not found")
+
 			const [ target, from ] = await Promise.all([
 				getRobloxUser(api, report.target.id),
 				getRobloxUser(api, report.from.id),
 			])
+
 			return {
 				action: new Action(report.target, this.data.action),
 				report,
@@ -105,11 +115,14 @@ class Log {
 				from,
 			}
 		} else if (type === LogType.DECLINE_REPORT) {
-			const report = await getReport(api, this.data.reportId)
+			const report = await getReport(api, this.data.reportId, true)
+			if (!report) throw new Error("Report not found")
+
 			const [ target, from ] = await Promise.all([
 				getRobloxUser(api, report.target.id),
 				getRobloxUser(api, report.from.id),
 			])
+
 			return {
 				report,
 				target,

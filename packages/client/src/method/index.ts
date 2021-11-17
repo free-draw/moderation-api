@@ -25,7 +25,6 @@ export { default as getRobloxThumbnail } from "./roblox/getRobloxThumbnail"
 export { default as getSnapshot } from "./snapshots/getSnapshot"
 
 export { default as getUser } from "./users/getUser"
-export { default as getUsersBulk } from "./users/getUsersBulk"
 export { default as createAction } from "./users/actions/createAction"
 export { default as deleteAction } from "./users/actions/deleteAction"
 export { default as deleteActionsBulk } from "./users/actions/deleteActionsBulk"

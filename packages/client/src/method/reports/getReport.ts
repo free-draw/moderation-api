@@ -1,17 +1,27 @@
 import API from "../../API"
 import Report, { ReportData } from "../../class/Report"
+import Resource from "../../Resource"
 
-type GetReportResponse = {
-	report: ReportData,
+type GetReportsBulkResponse = {
+	reports: ReportData[],
 }
 
-async function getReport(api: API, reportId: string): Promise<Report> {
-	const { data } = await api.request<GetReportResponse>({
-		url: `/reports/${reportId}`,
-		method: "GET",
+const ReportResource = new Resource<string, Report, API>(async (reportIds, api) => {
+	const { data } = await api.request<GetReportsBulkResponse>({
+		url: "/bulk/reports",
+		method: "POST",
+		data: { reportIds },
 	})
 
-	return new Report(data.report)
+	const reports = {} as Record<string, Report>
+	for (const reportData of data.reports) {
+		reports[reportData.id] = new Report(reportData)
+	}
+	return reports
+})
+
+async function getReport(api: API, reportId: string, allowCache?: boolean): Promise<Report | null> {
+	return await ReportResource.request(api, reportId, reportId, !allowCache) ?? null
 }
 
 export default getReport

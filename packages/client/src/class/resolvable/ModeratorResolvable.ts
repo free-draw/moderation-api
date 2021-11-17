@@ -10,8 +10,11 @@ class ModeratorResolvable implements Resolvable<Moderator> {
 		this.id = id
 	}
 
-	public async resolve(api: API): Promise<Moderator> {
-		return getModerator(api, this.id)
+	public async resolve(api: API, allowCache?: boolean): Promise<Moderator> {
+		const moderator = await getModerator(api, this.id, allowCache)
+		if (!moderator) throw new Error("Moderator not found")
+
+		return moderator
 	}
 }
 

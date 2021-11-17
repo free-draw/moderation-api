@@ -47,7 +47,7 @@ const RobloxThumbnailResource = new Resource<RobloxThumbnailOptions, RobloxThumb
 	return thumbnails
 })
 
-function getRobloxThumbnail(api: API, options: RobloxThumbnailOptions): Promise<RobloxThumbnail> {
+function getRobloxThumbnail(api: API, options: RobloxThumbnailOptions, ignoreCache?: boolean): Promise<RobloxThumbnail> {
 	const key = `${options.id}-${options.type}-${options.size}`
 	return RobloxThumbnailResource.request(api, options, key)
 }

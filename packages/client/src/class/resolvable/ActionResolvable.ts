@@ -13,13 +13,13 @@ class ActionResolvable implements Resolvable<Action> {
 		this.id = id
 	}
 
-	public async resolve(api: API): Promise<Action> {
+	public async resolve(api: API, allowCache?: boolean): Promise<Action> {
 		let user: User
 
 		if (this.user instanceof User) {
 			user = this.user
 		} else {
-			user = await this.user.resolve(api)
+			user = await this.user.resolve(api, allowCache)
 		}
 
 		const action = user.actions.find(action => this.id === action.id)

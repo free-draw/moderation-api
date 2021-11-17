@@ -1,17 +1,27 @@
 import API from "../../API"
 import Snapshot, { SnapshotData } from "../../class/Snapshot"
+import Resource from "../../Resource"
 
-type GetSnapshotResponse = {
-	snapshot: SnapshotData,
+type GetSnapshotsBulkResponse = {
+	snapshots: SnapshotData[],
 }
 
-async function getSnapshot(api: API, snapshotId: string): Promise<Snapshot> {
-	const { data } = await api.request<GetSnapshotResponse>({
-		url: `/snapshots/${snapshotId}`,
-		method: "GET",
+const SnapshotResource = new Resource<string, Snapshot, API>(async (snapshotIds, api) => {
+	const { data } = await api.request<GetSnapshotsBulkResponse>({
+		url: "/bulk/snapshots",
+		method: "POST",
+		data: { snapshotIds },
 	})
 
-	return new Snapshot(data.snapshot)
+	const snapshots = {} as Record<string, Snapshot>
+	for (const snapshotData of data.snapshots) {
+		snapshots[snapshotData.id] = new Snapshot(snapshotData)
+	}
+	return snapshots
+})
+
+async function getSnapshot(api: API, snapshotId: string, allowCache?: boolean): Promise<Snapshot | null> {
+	return await SnapshotResource.request(api, snapshotId, snapshotId, !allowCache) ?? null
 }
 
 export default getSnapshot

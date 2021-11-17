@@ -14,6 +14,7 @@ class ModeratorAccountResolvable implements Resolvable<ModeratorAccount> {
 	}
 
 	public async resolve(api: API): Promise<ModeratorAccount> {
+
 		const moderator = await findModerator(api, {
 			account: {
 				platform: this.platform,
