@@ -10,7 +10,9 @@ const SnapshotResource = new Resource<string, Snapshot, API>(async (snapshotIds,
 	const { data } = await api.request<GetSnapshotsBulkResponse>({
 		url: "/bulk/snapshots",
 		method: "POST",
-		data: { snapshotIds },
+		data: {
+			snapshotIds: Object.values(snapshotIds),
+		},
 	})
 
 	const snapshots = {} as Record<string, Snapshot>

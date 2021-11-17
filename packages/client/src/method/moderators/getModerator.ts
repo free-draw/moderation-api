@@ -10,7 +10,9 @@ const ModeratorResource = new Resource<string, Moderator, API>(async (moderatorI
 	const { data } = await api.request<GetModeratorsBulkResponse>({
 		url: "/bulk/moderators",
 		method: "POST",
-		data: { moderatorIds },
+		data: {
+			moderatorIds: Object.values(moderatorIds),
+		},
 	})
 
 	const moderators = {} as Record<string, Moderator>

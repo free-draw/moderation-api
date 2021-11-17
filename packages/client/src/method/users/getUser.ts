@@ -10,7 +10,9 @@ const UserResource = new Resource<number, User, API>(async (userIds, api) => {
 	const { data } = await api.request<GetUsersBulkResponse>({
 		url: "/bulk/users",
 		method: "POST",
-		data: { userIds },
+		data: {
+			userIds: Object.values(userIds),
+		},
 	})
 
 	const users = {} as Record<number, User>

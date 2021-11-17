@@ -10,7 +10,9 @@ const ReportResource = new Resource<string, Report, API>(async (reportIds, api) 
 	const { data } = await api.request<GetReportsBulkResponse>({
 		url: "/bulk/reports",
 		method: "POST",
-		data: { reportIds },
+		data: {
+			reportIds: Object.values(reportIds),
+		},
 	})
 
 	const reports = {} as Record<string, Report>
