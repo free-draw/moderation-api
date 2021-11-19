@@ -160,6 +160,8 @@ export {
 	SnapshotLog,
 	SnapshotCanvas,
 
+	SnapshotPlayerPartial,
+
 	SnapshotData,
 	SnapshotPlayerData,
 	SnapshotLogData,
