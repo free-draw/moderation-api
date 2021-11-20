@@ -1,6 +1,6 @@
 {
   "name": "@free-draw/moderation-client",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": "Reselim",
