@@ -3,7 +3,7 @@ export { default as signServerToken } from "./auth/signServerToken"
 export { default as signModeratorToken } from "./auth/signModeratorToken"
 
 export { default as getLogCount } from "./logs/getLogCount"
-export { default as getLogs, LogsPage, LogModeratorResolved, LogDataResolved, LogResolved, LogsOptions } from "./logs/getLogs"
+export { default as getLogs, LogsPage, LogModeratorResolved, LogDataResolved, LogResolved, GetLogsOptions } from "./logs/getLogs"
 
 export { default as getModerator } from "./moderators/getModerator"
 export { default as createModerator } from "./moderators/createModerator"
