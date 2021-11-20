@@ -8,12 +8,9 @@
 			"group:full-mod"
 		],
 
-		"full-mod": [
-			"users",
-			"group:mod"
-		],
-
 		"mod": [
+			"users",
+			"group:mod",
 			"snapshots/get",
 			"logs/get",
 			"users/get",
