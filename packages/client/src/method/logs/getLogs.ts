@@ -105,3 +105,9 @@ async function getLogs(api: API, options?: {
 }
 
 export default getLogs
+export {
+	LogsPage,
+	LogResolved,
+	LogDataResolved,
+	LogModeratorResolved,
+}
