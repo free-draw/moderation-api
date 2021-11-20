@@ -10,7 +10,6 @@
 
 		"mod": [
 			"users",
-			"group:mod",
 			"snapshots/get",
 			"logs/get",
 			"users/get",
