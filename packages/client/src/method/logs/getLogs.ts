@@ -86,7 +86,7 @@ type GetLogsResponse = {
 	logs: LogData[],
 }
 
-async function getLogs(api: API, options?: {
+type LogsOptions = {
 	cursor?: string,
 	type?: LogType,
 	source?: string,
@@ -94,7 +94,9 @@ async function getLogs(api: API, options?: {
 	after?: string,
 	before?: string,
 	size?: string,
-}): Promise<LogsPage> {
+}
+
+async function getLogs(api: API, options?: LogsOptions): Promise<LogsPage> {
 	const { data } = await api.request<GetLogsResponse>({
 		url: "/logs",
 		method: "GET",
@@ -110,4 +112,5 @@ export {
 	LogResolved,
 	LogDataResolved,
 	LogModeratorResolved,
+	LogsOptions,
 }
