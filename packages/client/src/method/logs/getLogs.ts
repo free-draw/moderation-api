@@ -93,7 +93,7 @@ type GetLogsOptions = {
 	direction?: SortDirection,
 	after?: string,
 	before?: string,
-	size?: string,
+	size?: number,
 }
 
 async function getLogs(api: API, options?: GetLogsOptions): Promise<LogsPage> {
