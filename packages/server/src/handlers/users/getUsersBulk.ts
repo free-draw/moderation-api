@@ -56,10 +56,14 @@ export default async function(fastify: FastifyInstance) {
 		], { relation: "and" }),
 
 		handler: async function(request: GetUsersBulkRequest) {
-			const users = await Promise.all(request.body.userIds.map(id => UserModel.get(id)))
+			const users = await UserModel.find({ _id: { $in: request.body.userIds } })
+			const ensuredUsers = request.body.userIds.map((userId) => {
+				const user = users.find((findUser) => findUser._id === userId)
+				return UserModel.ensure(userId, user)
+			})
 
 			return {
-				users: users.map(user => user.serialize()),
+				users: ensuredUsers.map(user => user.serialize()),
 			}
 		} as RouteHandlerMethod,
 	})

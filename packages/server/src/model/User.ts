@@ -73,6 +73,17 @@ UserSchema.static("get", async function(id: number | string): Promise<UserDocume
 	return user
 })
 
+UserSchema.static("ensure", function(id: number | string, user?: UserDocument): UserDocument {
+	if (!user) {
+		user = new this({
+			_id: id,
+			actions: [],
+		}) as UserDocument
+	}
+
+	return user
+})
+
 UserSchema.method("createAction", function(this: UserDocument, options: ActionOptions, identity?: ObjectId): ActionDocument {
 	let expiry: Date | undefined
 
@@ -107,6 +118,7 @@ UserSchema.method("serialize", function(this: UserDocument): UserData {
 
 interface UserModel extends Model<UserDocument> {
 	get(id: number | string): Promise<UserDocument>,
+	ensure(id: number | string, user?: UserDocument): UserDocument,
 }
 
 export default model("User", UserSchema) as UserModel
