@@ -26,8 +26,8 @@ export default async function(fastify: FastifyInstance) {
 						items: { type: "integer" },
 					},
 				},
-				userIds: [
-					"users",
+				required: [
+					"userIds",
 				],
 				additionalProperties: false,
 			} as JSONSchema,
