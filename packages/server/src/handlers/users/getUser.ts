@@ -7,6 +7,10 @@ import authToken from "../../auth/authToken"
 import UserModel from "../../model/User"
 
 type GetUserRequest = FastifyRequest<{
+	Querystring: {
+		excludeInactiveActions?: "true" | "false",
+	},
+
 	Params: {
 		userId: string,
 	},
@@ -18,6 +22,13 @@ export default async (fastify: FastifyInstance) => {
 		method: "GET",
 
 		schema: {
+			querystring: {
+				type: "object",
+				properties: {
+					excludeInactiveActions: { type: "string", enum: [ "true", "false" ] },
+				},
+			} as JSONSchema,
+
 			params: {
 				type: "object",
 				properties: {
@@ -44,10 +55,12 @@ export default async (fastify: FastifyInstance) => {
 		], { relation: "and" }),
 
 		handler: async function(request: GetUserRequest) {
+			const excludeInactiveActions = request.query.excludeInactiveActions === "true"
+
 			const user = await UserModel.get(request.params.userId)
 
 			return {
-				user: user.serialize(),
+				user: user.serialize(excludeInactiveActions),
 			}
 		} as RouteHandlerMethod,
 	})

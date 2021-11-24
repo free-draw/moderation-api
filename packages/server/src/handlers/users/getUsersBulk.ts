@@ -7,6 +7,10 @@ import authToken from "../../auth/authToken"
 import UserModel from "../../model/User"
 
 type GetUsersBulkRequest = FastifyRequest<{
+	Querystring: {
+		excludeInactiveActions?: "true" | "false",
+	},
+
 	Body: {
 		userIds: number[],
 	},
@@ -18,6 +22,13 @@ export default async function(fastify: FastifyInstance) {
 		method: "POST",
 
 		schema: {
+			querystring: {
+				type: "object",
+				properties: {
+					excludeInactiveActions: { type: "string", enum: [ "true", "false" ] },
+				},
+			} as JSONSchema,
+
 			body: {
 				type: "object",
 				properties: {
@@ -56,6 +67,8 @@ export default async function(fastify: FastifyInstance) {
 		], { relation: "and" }),
 
 		handler: async function(request: GetUsersBulkRequest) {
+			const excludeInactiveActions = request.query.excludeInactiveActions === "true"
+
 			const users = await UserModel.find({ _id: { $in: request.body.userIds } })
 			const ensuredUsers = request.body.userIds.map((userId) => {
 				const user = users.find((findUser) => findUser._id === userId)
@@ -63,7 +76,7 @@ export default async function(fastify: FastifyInstance) {
 			})
 
 			return {
-				users: ensuredUsers.map(user => user.serialize()),
+				users: ensuredUsers.map(user => user.serialize(excludeInactiveActions)),
 			}
 		} as RouteHandlerMethod,
 	})

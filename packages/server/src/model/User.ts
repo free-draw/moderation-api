@@ -48,7 +48,7 @@ ActionSchema.method("serialize", function(this: ActionDocument): ActionData {
 type UserDocumentData = Omit<UserData, "id" | "actions"> & { _id: number, actions: Types.DocumentArray<ActionDocument> }
 type UserDocument = EnforceDocument<UserDocumentData, {
 	createAction(this: UserDocument, options: ActionOptions, identity?: ObjectId): ActionDocument,
-	serialize(this: UserDocument): UserData,
+	serialize(this: UserDocument, excludeInactiveActions?: boolean): UserData,
 }, {}>
 
 const UserSchema = new Schema<UserDocumentData>({
@@ -109,10 +109,12 @@ UserSchema.method("createAction", function(this: UserDocument, options: ActionOp
 	return action
 })
 
-UserSchema.method("serialize", function(this: UserDocument): UserData {
+UserSchema.method("serialize", function(this: UserDocument, excludeInactiveActions?: boolean): UserData {
+	const actions = excludeInactiveActions ? this.actions.filter(action => action.active) : this.actions
+
 	return {
 		id: this._id.toString(),
-		actions: this.actions.map((action: ActionDocument) => action.serialize()),
+		actions: actions.map((action: ActionDocument) => action.serialize()),
 	}
 })
 
