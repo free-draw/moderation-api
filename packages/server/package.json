@@ -31,7 +31,7 @@
     "lodash": "^4.17.21",
     "make-promises-safe": "^5.1.0",
     "minimatch": "^3.0.4",
-    "mongoose": "^6.0.10",
+    "mongoose": "^6.11.3",
     "pino": "^6.13.3",
     "ts-node": "^10.4.0",
     "typescript": "^4.4.3",
