@@ -17,7 +17,7 @@
     "@types/yargs": "^17.0.3",
     "app-root-path": "^3.0.0",
     "axios": "^0.23.0",
-    "fastify": "^3.22.0",
+    "fastify": "^3.29.4",
     "fastify-auth": "^1.1.0",
     "fastify-autoload": "^3.9.0",
     "fastify-cookie": "^5.3.1",
