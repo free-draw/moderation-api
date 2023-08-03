@@ -30,7 +30,7 @@
     "json-schema-typed": "^7.0.3",
     "lodash": "^4.17.21",
     "make-promises-safe": "^5.1.0",
-    "minimatch": "^3.0.4",
+    "minimatch": "^3.0.5",
     "mongoose": "^6.0.10",
     "pino": "^6.13.3",
     "ts-node": "^10.4.0",
